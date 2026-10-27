@@ -331,7 +331,8 @@ export function FacebookSkin(p: Props) {
 }
 function RedbookCard({ p, item, onComment }: { p: Props; item: Item; onComment: (i: Item) => void }) {
   const [liked, setLiked] = useSkinState<boolean>(p, `liked-${item.id}`, false);
-  const [saved, setSaved] = useSkinState<boolean>(p, `saved-${item.id}`, item.favorite);
+  const [favorites, setFavorites] = useSkinState<string[]>(p, "redbook-favorites", []);
+  const saved = item.favorite || favorites.includes(item.id);
   const [comments] = useSkinState<string[]>(p, `comments-${item.id}`, []);
   return (
     <article className="redbook-interactive-card">
@@ -347,7 +348,7 @@ function RedbookCard({ p, item, onComment }: { p: Props; item: Item; onComment: 
       </div>
       <div className="social-card-controls">
         <button aria-label={`评论${item.title}`} onClick={() => onComment(item)}><MessageCircle size={14} />{item.comments.length + comments.length}</button>
-        <button aria-label={`收藏${item.title}`} aria-pressed={saved} onClick={() => setSaved(!saved)}><Bookmark size={14} fill={saved ? "currentColor" : "none"} /></button>
+        <button aria-label={`收藏${item.title}`} aria-pressed={saved} onClick={() => setFavorites(saved ? favorites.filter((id) => id !== item.id) : [...favorites, item.id])}><Bookmark size={14} fill={saved ? "currentColor" : "none"} /></button>
       </div>
     </article>
   );
