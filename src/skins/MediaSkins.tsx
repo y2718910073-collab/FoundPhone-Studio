@@ -1,4 +1,5 @@
 import { AudioPlayer, useTrack } from "../audio";
+import { DemoAudioPlayer } from "../DemoAudio";
 import { useSkinState } from "../skinState";
 import {
   Bookmark,
@@ -12,6 +13,7 @@ import {
   Plus,
   Search,
   SkipForward,
+  SkipBack,
   User,
   Users,
   Video,
@@ -35,10 +37,12 @@ function TrackPlayer({
   item,
   p,
   onNext,
+  onPrev,
 }: {
   item: Item;
   p: Props;
   onNext: () => void;
+  onPrev: () => void;
 }) {
   return (
     <div className="track-player">
@@ -49,10 +53,11 @@ function TrackPlayer({
           <small>{item.sender}</small>
         </span>
       </button>
+      <button aria-label="上一首" onClick={onPrev}><SkipBack size={19} /></button>
       {item.kind === "audio" && safeMedia(item.media) ? (
         <AudioPlayer p={p} item={item} />
       ) : (
-        <button onClick={() => p.onItem(item)}>查看</button>
+        <DemoAudioPlayer item={item} />
       )}
       <button aria-label="下一首" onClick={onNext}>
         <SkipForward size={19} />
@@ -86,7 +91,7 @@ export function SpotifySkin(p: Props) {
             音乐库
           </button>
         </div>
-        {tab === "搜索" && <SearchBox value={q} set={setQ} />}
+        <SearchBox value={q} set={setQ} placeholder="搜索歌曲或歌手" />
         <h1>{playlist || (tab === "音乐库" ? "音乐库" : "为你收藏")}</h1>
         {!playlist && (
           <div className="spotify-playlists">
@@ -122,12 +127,20 @@ export function SpotifySkin(p: Props) {
             </button>
           ))}
         </div>
-        <Empty items={list} />
+        <Empty items={list} label="没有找到歌曲；请试试其他关键词。" />
+        <p className="music-library-disclaimer">这是离线虚构音乐播放器，含原创合成试听，不提供 Spotify 商业曲库。</p>
       </div>
       {track && (
         <TrackPlayer
           item={track}
           p={p}
+          onPrev={() =>
+            setTrack(
+              items[
+                (items.findIndex((i) => i.id === track.id) - 1 + items.length) % items.length
+              ],
+            )
+          }
           onNext={() =>
             setTrack(
               items[
@@ -220,6 +233,13 @@ export function NeteaseSkin(p: Props) {
         <TrackPlayer
           item={track}
           p={p}
+          onPrev={() =>
+            setTrack(
+              items[
+                (items.findIndex((i) => i.id === track.id) - 1 + items.length) % items.length
+              ],
+            )
+          }
           onNext={() =>
             setTrack(
               items[
