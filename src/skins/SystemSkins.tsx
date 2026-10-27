@@ -314,6 +314,9 @@ export function CameraSkin(p: Props) {
 export function SafariSkin(p: Props) {
   const [q, setQ] = useState(""),
     [tab, setTab] = useState("书签");
+  const target = q.trim().match(/^(?:https:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s]*)?$/i)
+    ? (q.trim().startsWith("https://") ? q.trim() : "https://" + q.trim())
+    : "https://www.google.com/search?q=" + encodeURIComponent(q.trim());
   const items = p.items
     .filter((i) =>
       (i.title + i.body + meta(i, "url"))
@@ -348,7 +351,7 @@ export function SafariSkin(p: Props) {
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="搜索或输入虚构网址"
+          placeholder="搜索或输入网址"
           aria-label="地址栏"
           onKeyDown={(e) => {
             if (e.key === "Enter" && items[0]) p.onItem(items[0]);
