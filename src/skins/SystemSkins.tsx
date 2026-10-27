@@ -95,6 +95,15 @@ export function PhoneSkin(p: Props) {
             <button onClick={() => setDigits((s) => s.slice(0, -1))}>
               删除
             </button>
+            {/^[+]?[0-9]{3,15}$/.test(digits) && (
+              <a className="dial-native-call" href={`tel:${digits}`} aria-label={`使用系统拨号器拨打${digits}`}>
+                <Phone size={18} /> 使用系统电话拨打 {digits}
+              </a>
+            )}
+            <p className="dial-native-info">
+              绿色电话按钮是剧情模拟；上方系统拨号链接会尝试打开你设备的真实电话功能，可能产生话费。
+              虚构联系人没有真实号码，网页不能代替 SIM 卡拨打电话。
+            </p>
           </div>
         ) : (
           <>
@@ -305,6 +314,9 @@ export function CameraSkin(p: Props) {
 export function SafariSkin(p: Props) {
   const [q, setQ] = useState(""),
     [tab, setTab] = useState("书签");
+  const target = q.trim().match(/^(?:https:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s]*)?$/i)
+    ? (q.trim().startsWith("https://") ? q.trim() : "https://" + q.trim())
+    : "https://www.google.com/search?q=" + encodeURIComponent(q.trim());
   const items = p.items
     .filter((i) =>
       (i.title + i.body + meta(i, "url"))
@@ -339,7 +351,7 @@ export function SafariSkin(p: Props) {
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="搜索或输入虚构网址"
+          placeholder="搜索或输入网址"
           aria-label="地址栏"
           onKeyDown={(e) => {
             if (e.key === "Enter" && items[0]) p.onItem(items[0]);
@@ -347,6 +359,10 @@ export function SafariSkin(p: Props) {
         />
         <Search size={16} />
       </label>
+      <div className="native-web-shortcut">
+        <a href={target} target="_blank" rel="noopener noreferrer" aria-label="在真实浏览器打开网址或搜索">在真实浏览器打开 ↗</a>
+        <small>将打开真实外部网站，不影响游戏中的虚构网页。</small>
+      </div>
       <Tabs
         tabs={["书签", "历史记录"]}
         value={tab}
@@ -856,7 +872,11 @@ export function MapsSkin(p: Props) {
       <Header p={p} />
       <LocationMap items={items} onItem={p.onItem} />
       <div className="map-sheet">
-        <SearchBox value={q} set={setQ} placeholder="搜索虚构地点" />
+        <SearchBox value={q} set={setQ} placeholder="搜索虚构地点或真实地点" />
+        <a className="map-real-link"
+          href={"https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q || "咖啡店")}
+          target="_blank" rel="noopener noreferrer">在真实地图搜索 ↗</a>
+        <small className="map-disclaimer">上方是故事里的虚构地点，真实地图将打开外部网站。</small>
         <div className="map-places">
           {items.map((i) => (
             <Row key={i.id} item={i} onItem={p.onItem} leading={<MapPin />} />

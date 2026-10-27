@@ -916,6 +916,36 @@
     ],
     "douyin": [
       {
+        "id": "douyin-open-video-2",
+        "title": "Big Buck Bunny · 短视频节选",
+        "body": "10秒短片，来自 CC BY 3.0 授权动画，可用于竖向刷视频的演示。",
+        "sender": "Blender / MDN 开放素材",
+        "time": "2026-10-27 22:17",
+        "kind": "video",
+        "folder": "推荐",
+        "meta": {
+          "openVideo": "bunny-sample",
+          "duration": "0:10",
+          "views": "开放许可素材",
+          "license": "© 2008 Blender Foundation · CC BY 3.0"
+        }
+      },
+      {
+        "id": "douyin-open-video-1",
+        "title": "花朵 · CC0 演示影片",
+        "body": "MDN 提供的 CC0 视频短片，可直接在线播放和调节进度。",
+        "sender": "Blender / MDN 开放素材",
+        "time": "2026-10-27 22:17",
+        "kind": "video",
+        "folder": "推荐",
+        "meta": {
+          "openVideo": "flower",
+          "duration": "0:05",
+          "views": "开放许可素材",
+          "license": "MDN · CC0"
+        }
+      },
+      {
         "id": "douyin-promo",
         "title": "志愿者的一天",
         "body": "整理绘本、贴标签、给新书架除尘。",
@@ -1287,7 +1317,20 @@
         "meta": {}
       }
     ],
-    "messages": [],
+    "messages": [
+      {
+        "id": "messages-real-1",
+        "title": "夜间提醒",
+        "body": "【故事系统】拾光书屋 21:17 有一份记录发生过修改。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "收件箱",
+        "meta": {
+          "status": "虚构短信"
+        }
+      }
+    ],
     "safari": [
       {
         "id": "safari-check",
@@ -1304,7 +1347,56 @@
         "time": "2026-10-27 21:17"
       }
     ],
-    "contacts": [],
+    "contacts": [
+      {
+        "id": "contacts-real-1",
+        "title": "唐夏",
+        "body": "拾光书屋志愿者 · 剧情联系人",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "朋友",
+        "meta": {
+          "number": ""
+        }
+      },
+      {
+        "id": "contacts-real-2",
+        "title": "沈之遥",
+        "body": "旧仓库记录的保管人 · 剧情联系人",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "朋友",
+        "meta": {
+          "number": ""
+        }
+      },
+      {
+        "id": "contacts-real-3",
+        "title": "徐言",
+        "body": "参与过书屋登记 · 剧情联系人",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "朋友",
+        "meta": {
+          "number": ""
+        }
+      },
+      {
+        "id": "contacts-real-4",
+        "title": "何主任",
+        "body": "拾光书屋负责人 · 剧情联系人",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "工作",
+        "meta": {
+          "number": ""
+        }
+      }
+    ],
     "clock": [
       {
         "id": "alarm-meeting",
@@ -1323,6 +1415,36 @@
     ],
     "settings": [],
     "tiktok": [
+      {
+        "id": "tiktok-open-video-2",
+        "title": "Big Buck Bunny · 短视频节选",
+        "body": "10秒短片，来自 CC BY 3.0 授权动画，可用于竖向刷视频的演示。",
+        "sender": "Blender / MDN 开放素材",
+        "time": "2026-10-27 22:17",
+        "kind": "video",
+        "folder": "推荐",
+        "meta": {
+          "openVideo": "bunny-sample",
+          "duration": "0:10",
+          "views": "开放许可素材",
+          "license": "© 2008 Blender Foundation · CC BY 3.0"
+        }
+      },
+      {
+        "id": "tiktok-open-video-1",
+        "title": "花朵 · CC0 演示影片",
+        "body": "MDN 提供的 CC0 视频短片，可直接在线播放和调节进度。",
+        "sender": "Blender / MDN 开放素材",
+        "time": "2026-10-27 22:17",
+        "kind": "video",
+        "folder": "推荐",
+        "meta": {
+          "openVideo": "flower",
+          "duration": "0:05",
+          "views": "开放许可素材",
+          "license": "MDN · CC0"
+        }
+      },
       {
         "id": "tt-feed-01",
         "title": "After the Rain",
@@ -2156,6 +2278,51 @@
     ],
     "youtube": [
       {
+        "id": "youtube-open-video-0",
+        "title": "Big Buck Bunny · 大雄兔",
+        "body": "Blender Foundation 制作的完整开放许可动画短片（约10分钟），播放源由第三方公开镜像托管。",
+        "sender": "Blender / MDN 开放素材",
+        "time": "2026-10-27 22:17",
+        "kind": "video",
+        "folder": "Shorts",
+        "meta": {
+          "openVideo": "big-buck-bunny",
+          "duration": "10:00",
+          "views": "开放许可素材",
+          "license": "© 2008 Blender Foundation · CC BY 3.0"
+        }
+      },
+      {
+        "id": "youtube-open-video-1",
+        "title": "花朵 · CC0 演示影片",
+        "body": "MDN 提供的 CC0 视频短片，可直接在线播放和调节进度。",
+        "sender": "Blender / MDN 开放素材",
+        "time": "2026-10-27 22:17",
+        "kind": "video",
+        "folder": "Shorts",
+        "meta": {
+          "openVideo": "flower",
+          "duration": "0:05",
+          "views": "开放许可素材",
+          "license": "MDN · CC0"
+        }
+      },
+      {
+        "id": "youtube-open-video-2",
+        "title": "Big Buck Bunny · 短视频节选",
+        "body": "10秒短片，来自 CC BY 3.0 授权动画，可用于竖向刷视频的演示。",
+        "sender": "Blender / MDN 开放素材",
+        "time": "2026-10-27 22:17",
+        "kind": "video",
+        "folder": "Shorts",
+        "meta": {
+          "openVideo": "bunny-sample",
+          "duration": "0:10",
+          "views": "开放许可素材",
+          "license": "© 2008 Blender Foundation · CC BY 3.0"
+        }
+      },
+      {
         "id": "yt-01",
         "title": "旧书屋直播预告",
         "body": "今晚我们把装满回忆的旧书放回书架。虚构视频频道内容。",
@@ -2373,6 +2540,51 @@
       }
     ],
     "bilibili": [
+      {
+        "id": "bilibili-open-video-0",
+        "title": "Big Buck Bunny · 大雄兔",
+        "body": "Blender Foundation 制作的完整开放许可动画短片（约10分钟），播放源由第三方公开镜像托管。",
+        "sender": "Blender / MDN 开放素材",
+        "time": "2026-10-27 22:17",
+        "kind": "video",
+        "folder": "动画",
+        "meta": {
+          "openVideo": "big-buck-bunny",
+          "duration": "10:00",
+          "views": "开放许可素材",
+          "license": "© 2008 Blender Foundation · CC BY 3.0"
+        }
+      },
+      {
+        "id": "bilibili-open-video-1",
+        "title": "花朵 · CC0 演示影片",
+        "body": "MDN 提供的 CC0 视频短片，可直接在线播放和调节进度。",
+        "sender": "Blender / MDN 开放素材",
+        "time": "2026-10-27 22:17",
+        "kind": "video",
+        "folder": "动画",
+        "meta": {
+          "openVideo": "flower",
+          "duration": "0:05",
+          "views": "开放许可素材",
+          "license": "MDN · CC0"
+        }
+      },
+      {
+        "id": "bilibili-open-video-2",
+        "title": "Big Buck Bunny · 短视频节选",
+        "body": "10秒短片，来自 CC BY 3.0 授权动画，可用于竖向刷视频的演示。",
+        "sender": "Blender / MDN 开放素材",
+        "time": "2026-10-27 22:17",
+        "kind": "video",
+        "folder": "动画",
+        "meta": {
+          "openVideo": "bunny-sample",
+          "duration": "0:10",
+          "views": "开放许可素材",
+          "license": "© 2008 Blender Foundation · CC BY 3.0"
+        }
+      },
       {
         "id": "bili-01",
         "title": "旧书屋直播预告",
@@ -2811,6 +3023,36 @@
       }
     ],
     "netflix": [
+      {
+        "id": "netflix-open-video-0",
+        "title": "Big Buck Bunny · 大雄兔",
+        "body": "Blender Foundation 制作的完整开放许可动画短片（约10分钟），播放源由第三方公开镜像托管。",
+        "sender": "Blender / MDN 开放素材",
+        "time": "2026-10-27 22:17",
+        "kind": "video",
+        "folder": "开放授权放映厅",
+        "meta": {
+          "openVideo": "big-buck-bunny",
+          "duration": "10:00",
+          "views": "开放许可素材",
+          "license": "© 2008 Blender Foundation · CC BY 3.0"
+        }
+      },
+      {
+        "id": "netflix-open-video-1",
+        "title": "花朵 · CC0 演示影片",
+        "body": "MDN 提供的 CC0 视频短片，可直接在线播放和调节进度。",
+        "sender": "Blender / MDN 开放素材",
+        "time": "2026-10-27 22:17",
+        "kind": "video",
+        "folder": "开放授权放映厅",
+        "meta": {
+          "openVideo": "flower",
+          "duration": "0:05",
+          "views": "开放许可素材",
+          "license": "MDN · CC0"
+        }
+      },
       {
         "id": "netflix-01",
         "title": "雨夜书屋",
@@ -3467,7 +3709,365 @@
           "duration": "3:03"
         }
       }
-    ]
+    ],
+    "wallet": [
+      {
+        "id": "wallet-real-1",
+        "title": "书屋活动电子票",
+        "body": "虚构活动票 · 周末旧书交换会。无法用于真实付款或入场。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "票券",
+        "meta": {
+          "status": "未使用"
+        }
+      },
+      {
+        "id": "wallet-real-2",
+        "title": "旧书屋会员纪念卡",
+        "body": "虚构收藏卡，无支付功能。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "卡片",
+        "meta": {
+          "status": "纪念"
+        }
+      }
+    ],
+    "health": [
+      {
+        "id": "health-real-1",
+        "title": "步数",
+        "body": "剧情模拟记录：6082 步",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "活动",
+        "meta": {
+          "metric": "步数",
+          "value": "6082",
+          "unit": "步",
+          "series": "[4200,5300,6100,5800,6082]"
+        }
+      }
+    ],
+    "find": [
+      {
+        "id": "find-real-1",
+        "title": "江予晴的手机",
+        "body": "剧情虚构定位：最后一次出现于拾光书屋附近。并非真实 GPS 位置。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "设备",
+        "meta": {
+          "locationLabel": "拾光书屋"
+        }
+      },
+      {
+        "id": "find-real-2",
+        "title": "书屋钥匙串",
+        "body": "剧情虚构道具，还没有登记位置信息。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "物品",
+        "meta": {
+          "locationLabel": "位置未知"
+        }
+      }
+    ],
+    "alipay": [
+      {
+        "id": "alipay-real-1",
+        "title": "旧书交换活动捐赠收据",
+        "body": "作品内虚构账单，不发生真实交易。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "账单",
+        "meta": {
+          "amount": "¥ 0.00",
+          "merchant": "拾光书屋",
+          "status": "已记录"
+        }
+      },
+      {
+        "id": "alipay-real-2",
+        "title": "社区活动电子券",
+        "body": "模拟卡券，无实际支付能力。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "卡包",
+        "meta": {
+          "status": "可查看"
+        }
+      }
+    ],
+    "taobao": [
+      {
+        "id": "taobao-real-1",
+        "title": "灯芯笔记本",
+        "body": "虚构道具商品，浏览不会真实下单。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "price": "18.00",
+          "status": "模拟展示"
+        }
+      },
+      {
+        "id": "taobao-real-2",
+        "title": "蓝色帆布书袋",
+        "body": "故事道具商品，不连接真实电商。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "商品",
+        "meta": {
+          "price": "29.00",
+          "status": "模拟展示"
+        }
+      },
+      {
+        "id": "taobao-real-3",
+        "title": "纸质书签套装",
+        "body": "剧情中已下单的虚构商品。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "订单",
+        "meta": {
+          "price": "12.00",
+          "status": "已签收",
+          "number": "SIM-20261027-001"
+        }
+      },
+      {
+        "id": "taobao-real-4",
+        "title": "旧书活动物资",
+        "body": "模拟物流记录。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "物流",
+        "meta": {
+          "price": "12.00",
+          "status": "已配送",
+          "tracking": "已交给书屋管理员"
+        }
+      }
+    ],
+    "delivery": [
+      {
+        "id": "delivery-real-1",
+        "title": "夜间饭团小店",
+        "body": "虚构商家，不能实际下单。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "商家",
+        "meta": {
+          "price": "16.00",
+          "rating": "4.8",
+          "duration": "25分钟",
+          "address": "拾光书屋附近（虚构）"
+        }
+      },
+      {
+        "id": "delivery-real-2",
+        "title": "热可可便利店",
+        "body": "虚构饮品店。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "商家",
+        "meta": {
+          "price": "12.00",
+          "rating": "4.9",
+          "duration": "20分钟"
+        }
+      },
+      {
+        "id": "delivery-real-3",
+        "title": "热可可订单",
+        "body": "模拟订单：今晚22:00已送到门口。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "订单",
+        "meta": {
+          "price": "12.00",
+          "status": "已送达",
+          "address": "虚构书屋门口"
+        }
+      }
+    ],
+    "snapchat": [
+      {
+        "id": "snapchat-real-1",
+        "title": "今晚的玻璃窗",
+        "body": "唐夏的虚构限时动态：玻璃窗上映着夜雨。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "Story",
+        "meta": {
+          "views": "43"
+        }
+      },
+      {
+        "id": "snapchat-real-2",
+        "title": "书屋合照",
+        "body": "朋友们在旧书交换会上留下的纪念。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "回忆",
+        "meta": {
+          "views": "28"
+        }
+      }
+    ],
+    "telegram": [
+      {
+        "id": "telegram-real-1",
+        "title": "旧书屋交流频道",
+        "body": "虚构聊天频道。你可以在微信联系唐夏，也可以阅读telegram界面内的演示消息。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "聊天",
+        "meta": {}
+      },
+      {
+        "id": "telegram-real-2",
+        "title": "明天的旧书交换会",
+        "body": "活动时间尚待确认。请留意故事里的通知。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "频道",
+        "meta": {}
+      }
+    ],
+    "line": [
+      {
+        "id": "line-real-1",
+        "title": "旧书屋交流频道",
+        "body": "虚构聊天频道。你可以在微信联系唐夏，也可以阅读line界面内的演示消息。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "聊天",
+        "meta": {}
+      },
+      {
+        "id": "line-real-2",
+        "title": "明天的旧书交换会",
+        "body": "活动时间尚待确认。请留意故事里的通知。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "频道",
+        "meta": {}
+      }
+    ],
+    "messenger": [
+      {
+        "id": "messenger-real-1",
+        "title": "旧书屋交流频道",
+        "body": "虚构聊天频道。你可以在微信联系唐夏，也可以阅读messenger界面内的演示消息。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "聊天",
+        "meta": {}
+      },
+      {
+        "id": "messenger-real-2",
+        "title": "明天的旧书交换会",
+        "body": "活动时间尚待确认。请留意故事里的通知。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "频道",
+        "meta": {}
+      }
+    ],
+    "kakao": [
+      {
+        "id": "kakao-real-1",
+        "title": "旧书屋交流频道",
+        "body": "虚构聊天频道。你可以在微信联系唐夏，也可以阅读kakao界面内的演示消息。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "聊天",
+        "meta": {}
+      },
+      {
+        "id": "kakao-real-2",
+        "title": "明天的旧书交换会",
+        "body": "活动时间尚待确认。请留意故事里的通知。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "频道",
+        "meta": {}
+      }
+    ],
+    "discord": [
+      {
+        "id": "discord-real-1",
+        "title": "旧书屋交流频道",
+        "body": "虚构聊天频道。你可以在微信联系唐夏，也可以阅读discord界面内的演示消息。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "聊天",
+        "meta": {}
+      },
+      {
+        "id": "discord-real-2",
+        "title": "明天的旧书交换会",
+        "body": "活动时间尚待确认。请留意故事里的通知。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "频道",
+        "meta": {}
+      }
+    ],
+    "qq": [
+      {
+        "id": "qq-real-1",
+        "title": "周末摆书小分队",
+        "body": "徐言：清单应该是36本，实际却只有12本。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "聊天",
+        "meta": {}
+      },
+      {
+        "id": "qq-real-2",
+        "title": "关于旧书屋",
+        "body": "大家先保护原件，不要在群里指责别人。",
+        "sender": "游戏内虚构资料",
+        "time": "2026-10-27 22:17",
+        "kind": "text",
+        "folder": "空间",
+        "meta": {}
+      }
+    ],
+    "calculator": [],
+    "appstore": []
   },
   "variables": {},
   "events": [
