@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { CommentsSheet } from "./CommentsSheet";
+import { hasOpenVideo, LicensedVideoDialog, OpenVideoPlayer, type OpenVideoId } from "./LicensedVideo";
 import { safeMedia, type Item } from "../schema";
 import {
   Avatar,
@@ -264,6 +265,8 @@ export function NeteaseSkin(p: Props) {
 export function YouTubeSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "首页");
   const [category, setCategory] = useState("全部");
+  const [watching, setWatching] = useState<Item | null>(null);
+  const openVideo = (i: Item) => hasOpenVideo(i) ? setWatching(i) : p.onItem(i);
   const list = items.filter((i) =>
     tab === "Shorts"
       ? i.folder === "Shorts"
@@ -294,11 +297,11 @@ export function YouTubeSkin(p: Props) {
         <div className={tab === "Shorts" ? "youtube-shorts" : "youtube-videos"}>
           {list.map((i) => (
             <article key={i.id}>
-              <button className="youtube-thumb" onClick={() => p.onItem(i)}>
+              <button className="youtube-thumb" onClick={() => openVideo(i)}>
                 <Media item={i} />
                 {meta(i, "duration") && <time>{meta(i, "duration")}</time>}
               </button>
-              <button className="youtube-byline" onClick={() => p.onItem(i)}>
+              <button className="youtube-byline" onClick={() => openVideo(i)}>
                 <Avatar name={i.sender} />
                 <div>
                   <strong>{i.title}</strong>
@@ -312,6 +315,7 @@ export function YouTubeSkin(p: Props) {
         </div>
         <Empty items={list} />
       </div>
+      {watching && <LicensedVideoDialog item={watching} onClose={() => setWatching(null)} />}
       <Tabs
         tabs={["首页", "Shorts", "订阅", "播放列表"]}
         value={tab}
@@ -324,6 +328,8 @@ export function YouTubeSkin(p: Props) {
 export function BilibiliSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "首页");
   const [category, setCategory] = useState("推荐");
+  const [watching, setWatching] = useState<Item | null>(null);
+  const openVideo = (i: Item) => hasOpenVideo(i) ? setWatching(i) : p.onItem(i);
   const list =
     tab === "历史"
       ? items.filter((i) => i.folder === "历史")
@@ -353,7 +359,7 @@ export function BilibiliSkin(p: Props) {
       <div className="catalog-scroll">
         <div className="bili-grid">
           {list.map((i) => (
-            <button key={i.id} onClick={() => p.onItem(i)}>
+            <button key={i.id} onClick={() => openVideo(i)}>
               <div>
                 <Media item={i} />
                 <small>
@@ -369,6 +375,7 @@ export function BilibiliSkin(p: Props) {
         </div>
         <Empty items={list} />
       </div>
+      {watching && <LicensedVideoDialog item={watching} onClose={() => setWatching(null)} />}
       <Tabs
         tabs={["首页", "动态", "历史"]}
         value={tab}
@@ -384,7 +391,7 @@ function VerticalVideo({ p, item, onComment }: { p: Props; item: Item; onComment
   const [replies] = useSkinState<string[]>(p, `comments-${item.id}`, []);
   return (
     <article className="vertical-video" data-video-id={item.id}>
-      <Media item={item} />
+      {hasOpenVideo(item) ? <OpenVideoPlayer videoId={item.meta.openVideo as OpenVideoId}/> : <Media item={item} />}
       <div className="vertical-actions">
         <button aria-label={`作者${item.sender}`} onClick={() => p.onItem(item)}><Avatar name={item.sender} /></button>
         <button aria-label={`喜欢${item.title}`} aria-pressed={liked} onClick={() => setLiked(!liked)}>
@@ -502,6 +509,8 @@ export function TikTokSkin(p: Props) {
 export function NetflixSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "首页");
   const [saved, setSaved] = useSkinState<string[]>(p, "saved", []);
+  const [watching, setWatching] = useState<Item | null>(null);
+  const openVideo = (i: Item) => hasOpenVideo(i) ? setWatching(i) : p.onItem(i);
   const list =
     tab === "我的片单"
       ? items.filter((i) => i.favorite || saved.includes(i.id))
@@ -521,7 +530,7 @@ export function NetflixSkin(p: Props) {
                 {meta(featured, "year")} · {meta(featured, "genre")} ·{" "}
                 {meta(featured, "duration")}
               </small>
-              <button onClick={() => p.onItem(featured)}>
+              <button onClick={() => openVideo(featured)}>
                 <Play size={16} />
                 播放 / 详情
               </button>
@@ -551,7 +560,7 @@ export function NetflixSkin(p: Props) {
               {list
                 .filter((i) => (i.folder || "影片") === g)
                 .map((i) => (
-                  <button key={i.id} onClick={() => p.onItem(i)}>
+                  <button key={i.id} onClick={() => openVideo(i)}>
                     <Media item={i} />
                     <strong>{i.title}</strong>
                   </button>
@@ -561,6 +570,7 @@ export function NetflixSkin(p: Props) {
         ))}
         <Empty items={list} />
       </div>
+      {watching && <LicensedVideoDialog item={watching} onClose={() => setWatching(null)} />}
       <Tabs
         tabs={["首页", "我的片单"]}
         value={tab}
