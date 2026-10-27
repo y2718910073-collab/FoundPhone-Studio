@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./music-demo.css";
 import type { Item } from "./schema";
 
 /** Small original synthesized loops: no remote API, media download or third-party recording. */
