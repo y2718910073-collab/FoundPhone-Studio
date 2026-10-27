@@ -3,7 +3,7 @@
   "id": "rainy-phone-b17",
   "title": "雨夜捡手机：22:17",
   "description": "你在雨夜的地铁出口拾到一部手机。机主的朋友留下最后一句话：不要把它交给第一个认领的人。探索聊天、隐藏相册、加密备忘录和一通深夜电话，决定手机与证据的去向。纯虚构故事。",
-  "revision": 1,
+  "revision": 2,
   "phone": {
     "owner": "江予晴",
     "date": "2026-10-27",
@@ -573,6 +573,156 @@
         "body": "明天照常开放旧书交换，欢迎读者来玩。",
         "time": "2026-10-27 21:17",
         "sender": "拾光志愿者"
+      },
+      {
+        "id": "wb-feed-01",
+        "title": "今晚的雨也太大了",
+        "body": "路过的朋友注意积水，最好结伴回家。",
+        "sender": "街角电台",
+        "time": "2026-10-27 21:03",
+        "kind": "post",
+        "folder": "关注",
+        "likes": 14,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "wb-feed-02",
+        "title": "城市书屋明天开放",
+        "body": "旧书交换会按原计划筹备，欢迎来看看。",
+        "sender": "拾光书屋",
+        "time": "2026-10-27 21:10",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 37,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "wb-feed-03",
+        "title": "你会保存旧车票吗",
+        "body": "有些小票明明已经没用，还是舍不得丢。",
+        "sender": "糖水小站",
+        "time": "2026-10-27 21:17",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 60,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "wb-feed-04",
+        "title": "志愿者日记",
+        "body": "今天帮忙贴完了新书签，手上都是胶带。",
+        "sender": "徐言",
+        "time": "2026-10-27 21:24",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 83,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "wb-feed-05",
+        "title": "周末读什么",
+        "body": "投票：轻小说、悬疑小说、漫画？",
+        "sender": "阅读派",
+        "time": "2026-10-27 21:31",
+        "kind": "post",
+        "folder": "关注",
+        "likes": 106,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "wb-feed-06",
+        "title": "晚上的路灯像电影",
+        "body": "刚好遇到微雨，整条巷子都亮起来了。",
+        "sender": "慢慢走",
+        "time": "2026-10-27 21:38",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 129,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "wb-feed-07",
+        "title": "信息转发前先核实",
+        "body": "遇到不同版本的公告，以有出处的正式信息为准。",
+        "sender": "城市服务号",
+        "time": "2026-10-27 21:45",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 152,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "wb-feed-08",
+        "title": "每一本书都有故事",
+        "body": "整理捐赠书的时候发现了十年前的留言。",
+        "sender": "唐夏",
+        "time": "2026-10-27 21:52",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 175,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "wb-feed-09",
+        "title": "热可可口味之争",
+        "body": "你们加棉花糖吗？我先投不加一票。",
+        "sender": "甜饮观察员",
+        "time": "2026-10-27 21:59",
+        "kind": "post",
+        "folder": "关注",
+        "likes": 198,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "wb-feed-10",
+        "title": "雨停后再出发",
+        "body": "今晚的云压得很低，明早应该会有好天气。",
+        "sender": "天气随手记",
+        "time": "2026-10-27 22:06",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 221,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
       }
     ],
     "redbook": [
@@ -582,6 +732,186 @@
         "body": "随手交换一本书，也许就能认识一个新朋友。",
         "time": "2026-10-27 21:17",
         "sender": "唐夏"
+      },
+      {
+        "id": "rb-feed-01",
+        "title": "雨夜的治愈感真的存在吗",
+        "body": "分享我常去的温暖小店，最后一家很适合一个人读书。",
+        "sender": "北窗小姐",
+        "time": "2026-10-27 21:03",
+        "kind": "post",
+        "folder": "关注",
+        "likes": 14,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "rb-feed-02",
+        "title": "在旧书里发现手写信",
+        "body": "拆书的时候一定要小心！每张纸都可能是某个人的故事。",
+        "sender": "纸飞机",
+        "time": "2026-10-27 21:10",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 37,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "rb-feed-03",
+        "title": "低预算布置读书角",
+        "body": "普通木板和小台灯就能拥有漂亮的小角落。",
+        "sender": "软糖装修队",
+        "time": "2026-10-27 21:17",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 60,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "rb-feed-04",
+        "title": "周末旧书交换活动攻略",
+        "body": "不需要带很多书，一本喜欢的就够了。",
+        "sender": "拾光书屋",
+        "time": "2026-10-27 21:24",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 83,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "rb-feed-05",
+        "title": "雨天通勤穿什么",
+        "body": "轻便的防水外套和鞋子比好看重要一点点。",
+        "sender": "一颗栗子",
+        "time": "2026-10-27 21:31",
+        "kind": "post",
+        "folder": "关注",
+        "likes": 106,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "rb-feed-06",
+        "title": "零失败热可可",
+        "body": "只有三个步骤，不会弄脏厨房。",
+        "sender": "烘焙小方",
+        "time": "2026-10-27 21:38",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 129,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "rb-feed-07",
+        "title": "适合雨天看的治愈漫画",
+        "body": "看完想去打个电话给老朋友。",
+        "sender": "漫画信箱",
+        "time": "2026-10-27 21:45",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 152,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "rb-feed-08",
+        "title": "城市散步地图",
+        "body": "不要去危险的封闭场所，安全路线最重要。",
+        "sender": "兜风散步",
+        "time": "2026-10-27 21:52",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 175,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "rb-feed-09",
+        "title": "我收藏的书签",
+        "body": "这些小纸片让我记住读完一本书的日子。",
+        "sender": "仓鼠书签",
+        "time": "2026-10-27 21:59",
+        "kind": "post",
+        "folder": "关注",
+        "likes": 198,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "rb-feed-10",
+        "title": "夜晚的手机摄影技巧",
+        "body": "记得关掉过度增强，才能留住真实的灯光。",
+        "sender": "晚光",
+        "time": "2026-10-27 22:06",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 221,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "rb-feed-11",
+        "title": "用旧报纸包礼物",
+        "body": "环保又有仪式感的小方法。",
+        "sender": "手作日记",
+        "time": "2026-10-27 22:13",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 244,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "rb-feed-12",
+        "title": "看书累了做什么",
+        "body": "起身走两步、喝点水，不要一直盯屏幕。",
+        "sender": "芝芝",
+        "time": "2026-10-27 22:20",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 267,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
       }
     ],
     "douyin": [
@@ -591,6 +921,240 @@
         "body": "整理绘本、贴标签、给新书架除尘。",
         "time": "2026-10-27 21:17",
         "sender": "徐言"
+      },
+      {
+        "id": "dy-feed-01",
+        "title": "下雨以后的小巷",
+        "body": "书屋隔壁的路面像镜子一样。你们下雨天最喜欢去哪里？",
+        "sender": "巷口散步人",
+        "time": "2026-10-27 21:03",
+        "kind": "post",
+        "folder": "同城",
+        "likes": 14,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "500"
+        }
+      },
+      {
+        "id": "dy-feed-02",
+        "title": "今晚的热可可",
+        "body": "一杯热可可救了加班的人。配方只有牛奶和一点点肉桂。",
+        "sender": "唐夏",
+        "time": "2026-10-27 21:10",
+        "kind": "post",
+        "folder": "关注",
+        "likes": 37,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "687"
+        }
+      },
+      {
+        "id": "dy-feed-03",
+        "title": "旧书交换会准备中",
+        "body": "为什么一本旧书里会有两张票根？志愿者现场发现了惊喜。",
+        "sender": "徐言",
+        "time": "2026-10-27 21:17",
+        "kind": "post",
+        "folder": "同城",
+        "likes": 60,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "874"
+        }
+      },
+      {
+        "id": "dy-feed-04",
+        "title": "路灯下的小猫",
+        "body": "它盯着售货机看了五分钟，可能在等猫条。",
+        "sender": "小半杯",
+        "time": "2026-10-27 21:24",
+        "kind": "post",
+        "folder": "推荐",
+        "likes": 83,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "1061"
+        }
+      },
+      {
+        "id": "dy-feed-05",
+        "title": "书屋布置挑战",
+        "body": "三个人，四十分钟，把整个阅读角整理得整整齐齐。",
+        "sender": "收纳研究社",
+        "time": "2026-10-27 21:31",
+        "kind": "post",
+        "folder": "关注",
+        "likes": 106,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "1248"
+        }
+      },
+      {
+        "id": "dy-feed-06",
+        "title": "我发现的城市声音",
+        "body": "雨声、轮胎划过积水，还有深夜便利店的提示音。",
+        "sender": "雨声收集员",
+        "time": "2026-10-27 21:38",
+        "kind": "post",
+        "folder": "同城",
+        "likes": 129,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "1435"
+        }
+      },
+      {
+        "id": "dy-feed-07",
+        "title": "今天不想早睡",
+        "body": "深夜路过的光像一张旧电影海报。",
+        "sender": "落日回信",
+        "time": "2026-10-27 21:45",
+        "kind": "post",
+        "folder": "推荐",
+        "likes": 152,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "1622"
+        }
+      },
+      {
+        "id": "dy-feed-08",
+        "title": "交换来的第一本书",
+        "body": "上个主人写了句：好故事不要急着翻最后一页。",
+        "sender": "书签小姐",
+        "time": "2026-10-27 21:52",
+        "kind": "post",
+        "folder": "推荐",
+        "likes": 175,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "1809"
+        }
+      },
+      {
+        "id": "dy-feed-09",
+        "title": "夜班记事簿",
+        "body": "值班室的灯还亮着，有人记得为最后一个人留门。",
+        "sender": "周末值日生",
+        "time": "2026-10-27 21:59",
+        "kind": "post",
+        "folder": "关注",
+        "likes": 198,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "1996"
+        }
+      },
+      {
+        "id": "dy-feed-10",
+        "title": "雨伞认领公告",
+        "body": "蓝色伞一把，在书屋门口拾到。请描述伞柄图案领取。",
+        "sender": "书屋小助理",
+        "time": "2026-10-27 22:06",
+        "kind": "post",
+        "folder": "同城",
+        "likes": 221,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "2183"
+        }
+      },
+      {
+        "id": "dy-feed-11",
+        "title": "画一张雨夜地图",
+        "body": "随手画出从地铁站到书屋的路线，竟然被收藏了好多次。",
+        "sender": "地图控阿璃",
+        "time": "2026-10-27 22:13",
+        "kind": "post",
+        "folder": "推荐",
+        "likes": 244,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "2370"
+        }
+      },
+      {
+        "id": "dy-feed-12",
+        "title": "下雨天的饭团",
+        "body": "便利店饭团配热茶，打工人也要好好吃饭。",
+        "sender": "芝麻盐",
+        "time": "2026-10-27 22:20",
+        "kind": "post",
+        "folder": "推荐",
+        "likes": 267,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "2557"
+        }
+      },
+      {
+        "id": "dy-feed-13",
+        "title": "相片背后的日期",
+        "body": "有些纪念品记载的日期，比我们记忆中的更准确。",
+        "sender": "沈之遥",
+        "time": "2026-10-27 22:27",
+        "kind": "post",
+        "folder": "关注",
+        "likes": 290,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "2744"
+        }
       }
     ],
     "instagram": [
@@ -601,6 +1165,126 @@
         "time": "2026-10-27 21:17",
         "sender": "江予晴",
         "folder": "动态"
+      },
+      {
+        "id": "ig-feed-01",
+        "title": "书屋深夜一角",
+        "body": "把灯调暗一点，窗外只剩雨。",
+        "sender": "江予晴",
+        "time": "2026-10-27 21:03",
+        "kind": "post",
+        "folder": "关注",
+        "likes": 14,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "ig-feed-02",
+        "title": "本周最喜欢的封面",
+        "body": "留白设计真的很耐看。",
+        "sender": "唐夏",
+        "time": "2026-10-27 21:10",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 37,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "ig-feed-03",
+        "title": "门口那把蓝伞",
+        "body": "放在失物招领处的伞。",
+        "sender": "拾光书屋",
+        "time": "2026-10-27 21:17",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 60,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "ig-feed-04",
+        "title": "交换会准备",
+        "body": "一本书和一个好故事。",
+        "sender": "徐言",
+        "time": "2026-10-27 21:24",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 83,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "ig-feed-05",
+        "title": "窗边咖啡",
+        "body": "今天也要好好休息。",
+        "sender": "Mika",
+        "time": "2026-10-27 21:31",
+        "kind": "post",
+        "folder": "关注",
+        "likes": 106,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "ig-feed-06",
+        "title": "书架整理完毕",
+        "body": "谢谢认真帮忙的每一个人。",
+        "sender": "书屋志愿者",
+        "time": "2026-10-27 21:38",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 129,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "ig-feed-07",
+        "title": "雨后小巷",
+        "body": "灯光落进水洼里。",
+        "sender": "Haru",
+        "time": "2026-10-27 21:45",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 152,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
+      },
+      {
+        "id": "ig-feed-08",
+        "title": "明信片",
+        "body": "写给下次遇到的朋友。",
+        "sender": "沈之遥",
+        "time": "2026-10-27 21:52",
+        "kind": "post",
+        "folder": "发现",
+        "likes": 175,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {}
       }
     ],
     "messages": [],
@@ -637,7 +1321,225 @@
         "time": "2026-10-27 21:17"
       }
     ],
-    "settings": []
+    "settings": [],
+    "tiktok": [
+      {
+        "id": "tt-feed-01",
+        "title": "After the Rain",
+        "body": "A rainy street becomes a sea of reflections.",
+        "sender": "Mika",
+        "time": "2026-10-27 21:03",
+        "kind": "post",
+        "folder": "For You",
+        "likes": 14,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "500"
+        }
+      },
+      {
+        "id": "tt-feed-02",
+        "title": "Quiet Bookshop Tour",
+        "body": "A tiny shelf with hundreds of stories.",
+        "sender": "Momo Reads",
+        "time": "2026-10-27 21:10",
+        "kind": "post",
+        "folder": "Following",
+        "likes": 37,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "687"
+        }
+      },
+      {
+        "id": "tt-feed-03",
+        "title": "Midnight City Lights",
+        "body": "Sometimes silence tells the whole story.",
+        "sender": "NightWalk",
+        "time": "2026-10-27 21:17",
+        "kind": "post",
+        "folder": "For You",
+        "likes": 60,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "874"
+        }
+      },
+      {
+        "id": "tt-feed-04",
+        "title": "Coffee Before Dawn",
+        "body": "Nothing dramatic, just a warm cup.",
+        "sender": "Rin",
+        "time": "2026-10-27 21:24",
+        "kind": "post",
+        "folder": "For You",
+        "likes": 83,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "1061"
+        }
+      },
+      {
+        "id": "tt-feed-05",
+        "title": "Street Cat Diary",
+        "body": "The neighborhood cat owns this bench.",
+        "sender": "CatSpotter",
+        "time": "2026-10-27 21:31",
+        "kind": "post",
+        "folder": "Following",
+        "likes": 106,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "1248"
+        }
+      },
+      {
+        "id": "tt-feed-06",
+        "title": "Umbrella Check",
+        "body": "Who left this blue umbrella by the door?",
+        "sender": "Echo",
+        "time": "2026-10-27 21:38",
+        "kind": "post",
+        "folder": "For You",
+        "likes": 129,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "1435"
+        }
+      },
+      {
+        "id": "tt-feed-07",
+        "title": "A Paper Ticket",
+        "body": "Found inside an old borrowed novel.",
+        "sender": "PaperTown",
+        "time": "2026-10-27 21:45",
+        "kind": "post",
+        "folder": "For You",
+        "likes": 152,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "1622"
+        }
+      },
+      {
+        "id": "tt-feed-08",
+        "title": "The Reading Room",
+        "body": "A cozy corner for a rainy day.",
+        "sender": "CozyCorner",
+        "time": "2026-10-27 21:52",
+        "kind": "post",
+        "folder": "Following",
+        "likes": 175,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "1809"
+        }
+      },
+      {
+        "id": "tt-feed-09",
+        "title": "Old Photo Frame",
+        "body": "How a faded picture gets a second life.",
+        "sender": "ArtDesk",
+        "time": "2026-10-27 21:59",
+        "kind": "post",
+        "folder": "For You",
+        "likes": 198,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "1996"
+        }
+      },
+      {
+        "id": "tt-feed-10",
+        "title": "City Window",
+        "body": "Raindrops make every light look beautiful.",
+        "sender": "Haru",
+        "time": "2026-10-27 22:06",
+        "kind": "post",
+        "folder": "For You",
+        "likes": 221,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "2183"
+        }
+      },
+      {
+        "id": "tt-feed-11",
+        "title": "Evening Snack",
+        "body": "Rice balls and hot tea.",
+        "sender": "HomeKitchen",
+        "time": "2026-10-27 22:13",
+        "kind": "post",
+        "folder": "Following",
+        "likes": 244,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "2370"
+        }
+      },
+      {
+        "id": "tt-feed-12",
+        "title": "Little Lanterns",
+        "body": "Paper lanterns for a neighborhood event.",
+        "sender": "JuneCraft",
+        "time": "2026-10-27 22:20",
+        "kind": "post",
+        "folder": "For You",
+        "likes": 267,
+        "comments": [
+          "这个内容太有意思了！",
+          "看完突然有点想出门逛逛。"
+        ],
+        "meta": {
+          "duration": "0:22",
+          "views": "2557"
+        }
+      }
+    ]
   },
   "variables": {},
   "events": [

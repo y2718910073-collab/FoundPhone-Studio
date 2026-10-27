@@ -4,6 +4,7 @@ export default defineConfig({
   testMatch: [
     "runtime.spec.ts",
     "rainy-phone.spec.ts",
+    "social-interactions.spec.ts",
     "save-backup.spec.ts",
     "release.spec.ts",
     "launcher.spec.ts",

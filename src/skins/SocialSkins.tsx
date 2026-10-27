@@ -1,4 +1,5 @@
 import { useSkinState } from "../skinState";
+import { CommentsSheet } from "./CommentsSheet";
 import {
   ArrowDown,
   ArrowUp,
@@ -65,17 +66,18 @@ function PostHeader({ item, p }: { item: Item; p: Props }) {
     </button>
   );
 }
-function WeiboActions({ p, item }: { p: Props; item: Item }) {
+function WeiboActions({ p, item, onComment }: { p: Props; item: Item; onComment: (i: Item) => void }) {
   const [liked, setLiked] = useSkinState<boolean>(p, `liked-${item.id}`, false);
+  const [comments] = useSkinState<string[]>(p, `comments-${item.id}`, []);
   return (
     <div className="social-actions weibo-actions">
       <button aria-label={`转发${item.title}`} onClick={() => p.onItem(item)}>
         <Share2 size={17} />
         {meta(item, "reposts", "转发")}
       </button>
-      <button aria-label={`评论${item.title}`} onClick={() => p.onItem(item)}>
+      <button aria-label={`评论${item.title}`} onClick={() => onComment(item)}>
         <MessageCircle size={17} />
-        {item.comments.length || "评论"}
+        {item.comments.length + comments.length || "评论"}
       </button>
       <button
         aria-label={`喜欢${item.title}`}
@@ -91,6 +93,7 @@ function WeiboActions({ p, item }: { p: Props; item: Item }) {
 export function WeiboSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "关注");
   const [feed, setFeed] = useState("全部");
+  const [selected, setSelected] = useState<Item | null>(null);
   const list = feed === "全部" ? items : items.filter((i) => i.folder === feed);
   return (
     <div className="catalog-skin weibo-ui">
@@ -134,11 +137,12 @@ export function WeiboSkin(p: Props) {
               <p>{i.body}</p>
               {i.media && <Media item={i} />}
             </button>
-            <WeiboActions p={p} item={i} />
+            <WeiboActions p={p} item={i} onComment={setSelected} />
           </article>
         ))}
         <Empty items={list} />
       </div>
+      {selected && <CommentsSheet p={p} item={selected} onClose={() => setSelected(null)} />}
     </div>
   );
 }
@@ -325,52 +329,56 @@ export function FacebookSkin(p: Props) {
     </div>
   );
 }
+function RedbookCard({ p, item, onComment }: { p: Props; item: Item; onComment: (i: Item) => void }) {
+  const [liked, setLiked] = useSkinState<boolean>(p, `liked-${item.id}`, false);
+  const [favorites, setFavorites] = useSkinState<string[]>(p, "redbook-favorites", []);
+  const saved = item.favorite || favorites.includes(item.id);
+  const [comments] = useSkinState<string[]>(p, `comments-${item.id}`, []);
+  return (
+    <article className="redbook-interactive-card">
+      <button onClick={() => onComment(item)}>
+        <Media item={item} />
+        <strong>{item.title}</strong>
+      </button>
+      <div className="social-card-controls">
+        <span className="redbook-author"><Avatar name={item.sender} /><small>{item.sender}</small></span>
+        <button aria-label={`点赞${item.title}`} aria-pressed={liked} onClick={() => setLiked(!liked)}>
+          <Heart size={13} fill={liked ? "currentColor" : "none"} />{item.likes + (liked ? 1 : 0)}
+        </button>
+      </div>
+      <div className="social-card-controls">
+        <button aria-label={`评论${item.title}`} onClick={() => onComment(item)}><MessageCircle size={14} />{item.comments.length + comments.length}</button>
+        <button aria-label={`收藏${item.title}`} aria-pressed={saved} onClick={() => setFavorites(saved ? favorites.filter((id) => id !== item.id) : [...favorites, item.id])}><Bookmark size={14} fill={saved ? "currentColor" : "none"} /></button>
+      </div>
+    </article>
+  );
+}
 export function RedbookSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "发现");
-  const list =
-    tab === "收藏"
-      ? items.filter((i) => i.favorite)
-      : tab === "关注"
-        ? items.filter((i) => i.folder === "关注")
-        : items;
+  const [selected, setSelected] = useState<Item | null>(null);
+  const [saved] = useSkinState<string[]>(p, "redbook-favorites", []);
+  const list = tab === "收藏"
+    ? items.filter((item) => item.favorite || saved.includes(item.id))
+    : tab === "关注"
+      ? items.filter((item) => item.folder === "关注")
+      : items;
   return (
     <div className="catalog-skin redbook-ui">
       <Header p={p} />
       <div className="redbook-top">
         {["关注", "发现", "收藏"].map((t) => (
-          <button
-            key={t}
-            className={tab === t ? "selected" : ""}
-            onClick={() => setTab(t)}
-          >
-            {t}
-          </button>
+          <button className={tab === t ? "selected" : ""} key={t} onClick={() => setTab(t)}>{t}</button>
         ))}
       </div>
       <div className="catalog-scroll">
         <SearchBox value={q} set={setQ} />
         <div className="redbook-masonry">
-          {list.map((i) => (
-            <button key={i.id} onClick={() => p.onItem(i)}>
-              <Media item={i} />
-              <strong>{i.title}</strong>
-              <div>
-                <Avatar name={i.sender} />
-                <small>{i.sender}</small>
-                <Heart size={12} />
-                <small>{i.likes}</small>
-              </div>
-            </button>
-          ))}
+          {list.map((item) => <RedbookCard key={item.id} p={p} item={item} onComment={setSelected} />)}
         </div>
         <Empty items={list} />
       </div>
-      <Tabs
-        tabs={["发现", "收藏"]}
-        value={tab}
-        set={setTab}
-        icons={[<Home />, <Bookmark />]}
-      />
+      <Tabs tabs={["发现", "收藏"]} value={tab} set={setTab} icons={[<Home />, <Bookmark />]} />
+      {selected && <CommentsSheet p={p} item={selected} onClose={() => setSelected(null)} />}
     </div>
   );
 }
