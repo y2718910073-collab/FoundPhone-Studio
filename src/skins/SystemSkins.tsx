@@ -95,6 +95,15 @@ export function PhoneSkin(p: Props) {
             <button onClick={() => setDigits((s) => s.slice(0, -1))}>
               删除
             </button>
+            {/^[+]?[0-9]{3,15}$/.test(digits) && (
+              <a className="dial-native-call" href={`tel:${digits}`} aria-label={`使用系统拨号器拨打${digits}`}>
+                <Phone size={18} /> 使用系统电话拨打 {digits}
+              </a>
+            )}
+            <p className="dial-native-info">
+              绿色电话按钮是剧情模拟；上方系统拨号链接会尝试打开你设备的真实电话功能，可能产生话费。
+              虚构联系人没有真实号码，网页不能代替 SIM 卡拨打电话。
+            </p>
           </div>
         ) : (
           <>
