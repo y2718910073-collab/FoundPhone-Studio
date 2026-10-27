@@ -81,3 +81,20 @@
     background: #000;
   }
 }
+
+/* Only render the performance diagnostic on explicit ?fps=1. */
+.runtime-fps-monitor {
+  position: fixed;
+  z-index: 110;
+  top: max(12px, env(safe-area-inset-top));
+  left: max(12px, env(safe-area-inset-left));
+  padding: 6px 10px;
+  border-radius: 9px;
+  color: #b1ffc0;
+  background: rgba(8, 16, 12, .82);
+  border: 1px solid rgba(177, 255, 192, .36);
+  font: 600 12px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  user-select: none;
+}

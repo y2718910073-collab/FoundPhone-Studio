@@ -76,6 +76,8 @@ export function AppWindow({
       aria-hidden={!present}
       style={{
         transformOrigin: "0 0",
+        willChange: "transform, opacity",
+        backfaceVisibility: "hidden",
         pointerEvents: present ? "auto" : "none",
       }}
       initial={launcherPose(origin)}

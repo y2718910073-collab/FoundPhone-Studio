@@ -3,6 +3,7 @@ export default defineConfig({
   testDir: "tests",
   testMatch: [
     "runtime.spec.ts",
+    "rainy-phone.spec.ts",
     "save-backup.spec.ts",
     "release.spec.ts",
     "launcher.spec.ts",

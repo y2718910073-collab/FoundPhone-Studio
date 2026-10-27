@@ -4,6 +4,7 @@ import { Phone } from "../Phone";
 import { db } from "../persistence";
 import { validateWork, type Work } from "../schema";
 import { MAX_BACKUP_BYTES, parseBackup, serializeBackup } from "./saveBackup";
+import { FrameRateMonitor } from "./FrameRateMonitor";
 import "../styles.css";
 import "./player.css";
 
@@ -93,6 +94,7 @@ function StoryPlayer() {
 
   return (
     <main className="story-runtime">
+      {new URLSearchParams(location.search).get("fps") === "1" && <FrameRateMonitor />}
       {work ? (
         <>
           <Phone work={work} />
