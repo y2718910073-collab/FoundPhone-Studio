@@ -16,7 +16,8 @@ import {
   Users,
   Video,
 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { CommentsSheet } from "./CommentsSheet";
 import { safeMedia, type Item } from "../schema";
 import {
   Avatar,
@@ -357,46 +358,63 @@ export function BilibiliSkin(p: Props) {
     </div>
   );
 }
-function VerticalVideo({ p, item }: { p: Props; item: Item }) {
-  const [liked, setLiked] = useSkinState<boolean>(p, `liked-${item.id}`, false),
-    [saved, setSaved] = useSkinState<boolean>(p, `saved-${item.id}`, false);
+function VerticalVideo({ p, item, onComment }: { p: Props; item: Item; onComment: (i: Item) => void }) {
+  const [liked, setLiked] = useSkinState<boolean>(p, `liked-${item.id}`, false);
+  const [saved, setSaved] = useSkinState<boolean>(p, `saved-${item.id}`, false);
+  const [replies] = useSkinState<string[]>(p, `comments-${item.id}`, []);
   return (
-    <article className="vertical-video">
+    <article className="vertical-video" data-video-id={item.id}>
       <Media item={item} />
       <div className="vertical-actions">
-        <button
-          aria-label={`作者${item.sender}`}
-          onClick={() => p.onItem(item)}
-        >
-          <Avatar name={item.sender} />
-        </button>
-        <button
-          aria-label={`喜欢${item.title}`}
-          onClick={() => setLiked(!liked)}
-        >
+        <button aria-label={`作者${item.sender}`} onClick={() => p.onItem(item)}><Avatar name={item.sender} /></button>
+        <button aria-label={`喜欢${item.title}`} aria-pressed={liked} onClick={() => setLiked(!liked)}>
           <Heart size={29} fill={liked ? "#f44368" : "white"} />
           <small>{item.likes + (liked ? 1 : 0)}</small>
         </button>
-        <button aria-label={`评论${item.title}`} onClick={() => p.onItem(item)}>
-          <MessageCircle size={29} />
-          <small>{item.comments.length}</small>
+        <button aria-label={`评论${item.title}`} onClick={() => onComment(item)}>
+          <MessageCircle size={29} /><small>{item.comments.length + replies.length}</small>
         </button>
-        <button
-          aria-label={`收藏${item.title}`}
-          onClick={() => setSaved(!saved)}
-        >
+        <button aria-label={`收藏${item.title}`} aria-pressed={saved} onClick={() => setSaved(!saved)}>
           <Bookmark size={27} fill={saved ? "#f8cc55" : "none"} />
         </button>
       </div>
-      <button className="vertical-caption" onClick={() => p.onItem(item)}>
-        <strong>@{item.sender}</strong>
-        <p>{item.body}</p>
-        <small>
-          <Music size={11} />
-          {item.title}
-        </small>
+      <button className="vertical-caption" onClick={() => onComment(item)}>
+        <strong>@{item.sender}</strong><p>{item.body}</p>
+        <small><Music size={11} />{item.title}</small>
       </button>
     </article>
+  );
+}
+function ShortFeed({ p, items }: { p: Props; items: Item[] }) {
+  const feed = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState(0);
+  const [selected, setSelected] = useState<Item | null>(null);
+  const scrollTo = (next: number) => {
+    const node = feed.current;
+    if (!node || !items.length) return;
+    const target = Math.max(0, Math.min(items.length - 1, next));
+    node.scrollTo({ top: target * node.clientHeight, behavior: "smooth" });
+    setIndex(target);
+  };
+  return (
+    <div className="short-feed-stage">
+      <div className="vertical-feed" ref={feed} aria-label="上下滑动浏览内容"
+        onScroll={(event) => {
+          const node = event.currentTarget;
+          setIndex(Math.min(items.length - 1, Math.max(0, Math.round(node.scrollTop / (node.clientHeight || 1)))));
+        }}
+      >
+        {items.map((item) => <VerticalVideo key={item.id} p={p} item={item} onComment={setSelected} />)}
+        <Empty items={items} label="这个频道还没有内容，请切换到推荐。" />
+      </div>
+      {items.length > 1 && (
+        <div className="short-feed-navigation">
+          <span aria-label="当前内容序号">{index + 1} / {items.length}</span>
+          <button type="button" onClick={() => scrollTo(index + 1)} disabled={index >= items.length - 1}>下一条 ↓</button>
+        </div>
+      )}
+      {selected && <CommentsSheet p={p} item={selected} onClose={() => setSelected(null)} />}
+    </div>
   );
 }
 export function DouyinSkin(p: Props) {
@@ -416,12 +434,7 @@ export function DouyinSkin(p: Props) {
           </button>
         ))}
       </div>
-      <div className="vertical-feed">
-        {list.map((i) => (
-          <VerticalVideo key={i.id} p={p} item={i} />
-        ))}
-        <Empty items={list} />
-      </div>
+      <ShortFeed key={tab} p={p} items={list} />
       <Tabs
         tabs={["推荐", "关注", "我"]}
         value={tab}
@@ -456,12 +469,7 @@ export function TikTokSkin(p: Props) {
           For You
         </button>
       </div>
-      <div className="vertical-feed">
-        {list.map((i) => (
-          <VerticalVideo key={i.id} p={p} item={i} />
-        ))}
-        <Empty items={list} />
-      </div>
+      <ShortFeed key={tab} p={p} items={list} />
       <Tabs
         tabs={["For You", "Following", "Profile"]}
         value={tab}
