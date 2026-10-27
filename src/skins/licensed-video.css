@@ -1,0 +1,13 @@
+.catalog-skin:is(.netflix-ui,.youtube-ui,.bilibili-ui){position:relative}
+.licensed-video-backdrop{position:absolute;z-index:60;inset:0;display:flex;align-items:center;justify-content:center;padding:12px;background:rgba(0,0,0,.89);color:white}
+.licensed-video-dialog{width:100%;max-height:100%;overflow:auto;border-radius:15px;background:#18191d;border:1px solid #ffffff25;box-shadow:0 16px 35px #0007;padding:10px}
+.licensed-video-dialog header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:5px 3px 10px}
+.licensed-video-dialog header strong{display:flex;align-items:center;gap:7px;font-size:12px;min-width:0}
+.licensed-video-dialog header button{padding:5px;color:white}
+.open-video-stream{display:flex;flex-direction:column;gap:7px;min-width:0}
+.open-video-stream video{width:100%;max-height:53vh;aspect-ratio:16 / 9;object-fit:contain;background:#050505;border-radius:8px;display:block}
+.open-video-stream p{margin:2px 0;color:#bbb;font-size:10px;line-height:1.5}
+.open-video-stream a{display:flex;align-items:center;gap:4px;font-size:11px;color:#aec7ff;text-decoration:underline}
+.licensed-video-about{font-size:11px;line-height:1.6;color:#ddd;margin:10px 3px}
+.licensed-video-dialog>small{display:block;font-size:10px;color:#bbb;line-height:1.5}
+.open-watch-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:35px;padding:7px 12px;border-radius:8px;background:#bd2027;color:white;font-size:11px}
