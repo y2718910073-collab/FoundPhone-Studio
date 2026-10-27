@@ -872,7 +872,11 @@ export function MapsSkin(p: Props) {
       <Header p={p} />
       <LocationMap items={items} onItem={p.onItem} />
       <div className="map-sheet">
-        <SearchBox value={q} set={setQ} placeholder="搜索虚构地点" />
+        <SearchBox value={q} set={setQ} placeholder="搜索虚构地点或真实地点" />
+        <a className="map-real-link"
+          href={"https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q || "咖啡店")}
+          target="_blank" rel="noopener noreferrer">在真实地图搜索 ↗</a>
+        <small className="map-disclaimer">上方是故事里的虚构地点，真实地图将打开外部网站。</small>
         <div className="map-places">
           {items.map((i) => (
             <Row key={i.id} item={i} onItem={p.onItem} leading={<MapPin />} />
