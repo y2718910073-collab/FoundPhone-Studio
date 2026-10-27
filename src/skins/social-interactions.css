@@ -41,3 +41,6 @@
 .redbook-interactive-card > button { display:block; width:100%; text-align:left; padding:0; }
 .redbook-interactive-card > button > strong { display:block; padding:8px; font-size:11px; line-height:1.55; }
 .redbook-interactive-card img, .redbook-interactive-card .catalog-art { width:100%; height:176px; object-fit:cover; }
+
+.instagram-ui { position: relative; }
+.redbook-interactive-card .redbook-author { display: flex; align-items: center; gap: 4px; min-width: 0; }
