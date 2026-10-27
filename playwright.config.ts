@@ -5,6 +5,7 @@ export default defineConfig({
     "runtime.spec.ts",
     "rainy-phone.spec.ts",
     "social-interactions.spec.ts",
+    "chat-music.spec.ts",
     "save-backup.spec.ts",
     "release.spec.ts",
     "launcher.spec.ts",
