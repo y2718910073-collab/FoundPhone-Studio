@@ -1,16 +1,19 @@
 {
   "scriptVersion": 1,
-  "id": "ui-test-phone-v2",
-  "title": "捡手机",
-  "description": "仅用于界面测试，不含剧情",
-  "revision": 2,
+  "id": "rainy-phone-b17",
+  "title": "雨夜捡手机：22:17",
+  "description": "你在雨夜的地铁出口拾到一部手机。机主的朋友留下最后一句话：不要把它交给第一个认领的人。探索聊天、隐藏相册、加密备忘录和一通深夜电话，决定手机与证据的去向。纯虚构故事。",
+  "revision": 1,
   "phone": {
-    "owner": "机主",
-    "date": "2026-10-25",
-    "time": "09:41",
-    "battery": 94,
+    "owner": "江予晴",
+    "date": "2026-10-27",
+    "time": "22:17",
+    "passcode": "",
+    "wallpaper": "apple-wwdc26",
+    "theme": "dark",
+    "battery": 42,
     "network": "5G",
-    "wallpaper": "apple-wwdc26"
+    "notifications": true
   },
   "installedApps": [
     "appstore",
@@ -89,611 +92,818 @@
   ],
   "contacts": [
     {
-      "id": "test-contact",
-      "name": "测试联系人",
+      "id": "tang",
+      "name": "唐夏",
       "phone": "",
-      "bio": "这是一条测试内容。"
+      "bio": "书屋志愿者，予晴的好友"
+    },
+    {
+      "id": "shen",
+      "name": "沈之遥",
+      "phone": "",
+      "bio": "负责资料复核的朋友"
+    },
+    {
+      "id": "xu",
+      "name": "徐言",
+      "phone": "",
+      "bio": "书屋志愿者"
+    },
+    {
+      "id": "he",
+      "name": "何主任",
+      "phone": "",
+      "bio": "书屋活动负责人"
     }
   ],
   "chats": [
     {
-      "id": "test-chat-messages",
-      "app": "messages",
-      "title": "测试会话",
-      "participants": [
-        "owner",
-        "test-contact"
-      ],
-      "messages": [
-        {
-          "id": "test-message-messages",
-          "body": "这是一条测试消息。",
-          "senderId": "test-contact"
-        }
-      ]
-    },
-    {
-      "id": "test-chat-wechat",
+      "id": "wechat-tang",
       "app": "wechat",
-      "title": "测试会话",
+      "title": "唐夏",
       "participants": [
         "owner",
-        "test-contact"
+        "tang"
       ],
       "messages": [
         {
-          "id": "test-message-wechat",
-          "body": "这是一条测试消息。",
-          "senderId": "test-contact"
-        }
-      ]
-    },
-    {
-      "id": "test-chat-qq",
-      "app": "qq",
-      "title": "测试会话",
-      "participants": [
-        "owner",
-        "test-contact"
-      ],
-      "messages": [
-        {
-          "id": "test-message-qq",
-          "body": "这是一条测试消息。",
-          "senderId": "test-contact"
-        }
-      ]
-    },
-    {
-      "id": "test-chat-whatsapp",
-      "app": "whatsapp",
-      "title": "测试会话",
-      "participants": [
-        "owner",
-        "test-contact"
-      ],
-      "messages": [
-        {
-          "id": "test-message-whatsapp",
-          "body": "这是一条测试消息。",
-          "senderId": "test-contact"
-        }
-      ]
-    },
-    {
-      "id": "test-chat-telegram",
-      "app": "telegram",
-      "title": "测试会话",
-      "participants": [
-        "owner",
-        "test-contact"
-      ],
-      "messages": [
-        {
-          "id": "test-message-telegram",
-          "body": "这是一条测试消息。",
-          "senderId": "test-contact"
-        }
-      ]
-    },
-    {
-      "id": "test-chat-discord",
-      "app": "discord",
-      "title": "测试会话",
-      "participants": [
-        "owner",
-        "test-contact"
-      ],
-      "messages": [
-        {
-          "id": "test-message-discord",
-          "body": "这是一条测试消息。",
-          "senderId": "test-contact"
-        }
-      ]
-    },
-    {
-      "id": "test-chat-line",
-      "app": "line",
-      "title": "测试会话",
-      "participants": [
-        "owner",
-        "test-contact"
-      ],
-      "messages": [
-        {
-          "id": "test-message-line",
-          "body": "这是一条测试消息。",
-          "senderId": "test-contact"
-        }
-      ]
-    },
-    {
-      "id": "test-chat-messenger",
-      "app": "messenger",
-      "title": "测试会话",
-      "participants": [
-        "owner",
-        "test-contact"
-      ],
-      "messages": [
-        {
-          "id": "test-message-messenger",
-          "body": "这是一条测试消息。",
-          "senderId": "test-contact"
-        }
-      ]
-    },
-    {
-      "id": "test-chat-kakao",
-      "app": "kakao",
-      "title": "测试会话",
-      "participants": [
-        "owner",
-        "test-contact"
-      ],
-      "messages": [
-        {
-          "id": "test-message-kakao",
-          "body": "这是一条测试消息。",
-          "senderId": "test-contact"
+          "id": "tang-01",
+          "body": "予晴，看到消息回我一下。书屋那边已经关灯了。",
+          "senderId": "tang",
+          "time": "2026-10-27 21:46"
         },
         {
-          "id": "test-reply-kakao",
-          "body": "这是一条测试回复。",
-          "senderId": "owner"
+          "id": "tang-02",
+          "body": "你说有人改了周五的捐赠清单，我开始还以为是记错了。",
+          "senderId": "tang",
+          "time": "2026-10-27 21:49"
+        },
+        {
+          "id": "tang-03",
+          "body": "后来我翻了两遍明细，确实少了一整箱书。",
+          "senderId": "tang",
+          "time": "2026-10-27 21:52"
+        },
+        {
+          "id": "tang-04",
+          "body": "我把那张蓝色取件单拍下来了。票根在你的相册，别删。",
+          "senderId": "tang",
+          "time": "2026-10-27 21:55"
+        },
+        {
+          "id": "tang-05",
+          "body": "你现在去哪里？别一个人和何主任谈。",
+          "senderId": "tang",
+          "time": "2026-10-27 22:07"
+        },
+        {
+          "id": "tang-06",
+          "body": "如果捡到这部手机的人看见这些字：先看看那张蓝色票根。不要急着交给第一个来认领的人。",
+          "senderId": "tang",
+          "time": "2026-10-27 22:16"
+        },
+        {
+          "id": "tang-07",
+          "body": "我会一直在旧书屋的玻璃门外等她。",
+          "senderId": "tang",
+          "time": "2026-10-27 22:17"
+        }
+      ]
+    },
+    {
+      "id": "wechat-shen",
+      "app": "wechat",
+      "title": "沈之遥",
+      "participants": [
+        "owner",
+        "shen"
+      ],
+      "messages": [
+        {
+          "id": "shen-01",
+          "body": "你又打算把事情自己扛下来？",
+          "senderId": "shen",
+          "time": "2026-10-27 20:36"
+        },
+        {
+          "id": "shen-02",
+          "body": "何主任说清单错误是系统重复入库，让你明早签字作废。",
+          "senderId": "shen",
+          "time": "2026-10-27 20:38"
+        },
+        {
+          "id": "shen-03",
+          "body": "你不签也没事，我已经把收货时间抄在纸上了。",
+          "senderId": "shen",
+          "time": "2026-10-27 20:40"
+        },
+        {
+          "id": "shen-04",
+          "body": "记住，修订时间写的是21:17，但那时书屋网络已经断了。",
+          "senderId": "shen",
+          "time": "2026-10-27 21:04"
+        },
+        {
+          "id": "shen-05",
+          "body": "你的私人备忘录密码还是旧仓库启用那天：0917。别把密码发到群里。",
+          "senderId": "shen",
+          "time": "2026-10-27 21:08"
+        },
+        {
+          "id": "shen-06",
+          "body": "我晚上去找值班志愿者，把原始领用表调出来。",
+          "senderId": "shen",
+          "time": "2026-10-27 21:13"
+        },
+        {
+          "id": "shen-07",
+          "body": "我不确定今晚还能不能联系上你。如果能，电话里说。",
+          "senderId": "shen",
+          "time": "2026-10-27 22:12"
+        }
+      ]
+    },
+    {
+      "id": "wechat-xu",
+      "app": "wechat",
+      "title": "徐言",
+      "participants": [
+        "owner",
+        "xu"
+      ],
+      "messages": [
+        {
+          "id": "xu-01",
+          "body": "上次你说不想再被大家当成爱较真的人。",
+          "senderId": "xu",
+          "time": "2026-10-27 18:31"
+        },
+        {
+          "id": "xu-02",
+          "body": "但要是那箱书真的没到，孩子们周末的活动就要取消。",
+          "senderId": "xu",
+          "time": "2026-10-27 18:34"
+        },
+        {
+          "id": "xu-03",
+          "body": "何主任说他可以自己处理，让你别问了。",
+          "senderId": "xu",
+          "time": "2026-10-27 19:14"
+        },
+        {
+          "id": "xu-04",
+          "body": "我看见一辆车九点以前停在后门，车上贴的却是隔壁维修队的标。",
+          "senderId": "xu",
+          "time": "2026-10-27 21:19"
+        },
+        {
+          "id": "xu-05",
+          "body": "我不知道是不是巧合。对不起，刚才没有第一时间告诉你。",
+          "senderId": "xu",
+          "time": "2026-10-27 21:21"
+        },
+        {
+          "id": "xu-06",
+          "body": "你别怪唐夏，她一直在帮你。",
+          "senderId": "xu",
+          "time": "2026-10-27 21:24"
+        }
+      ]
+    },
+    {
+      "id": "wechat-group",
+      "app": "wechat",
+      "title": "拾光书屋·志愿者（5）",
+      "participants": [
+        "owner",
+        "tang",
+        "shen",
+        "xu",
+        "he"
+      ],
+      "messages": [
+        {
+          "id": "group-01",
+          "body": "大家好，明天十点的旧书交换会照常举行。",
+          "senderId": "he",
+          "time": "2026-10-27 17:12"
+        },
+        {
+          "id": "group-02",
+          "body": "本周捐赠清单我已经放到群文件，今晚不再做调整。",
+          "senderId": "he",
+          "time": "2026-10-27 17:15"
+        },
+        {
+          "id": "group-03",
+          "body": "收到，我负责亲子区和摆架。",
+          "senderId": "tang",
+          "time": "2026-10-27 17:17"
+        },
+        {
+          "id": "group-04",
+          "body": "蓝色取件单有没有人看到？收货单上少了编号B-17。",
+          "senderId": "owner",
+          "time": "2026-10-27 20:33"
+        },
+        {
+          "id": "group-05",
+          "body": "办公室的钥匙我会明天带过去。今天谁都别再进档案室了。",
+          "senderId": "he",
+          "time": "2026-10-27 20:37"
+        },
+        {
+          "id": "group-06",
+          "body": "那能先说一下21:17是谁登录系统改的数据吗？",
+          "senderId": "owner",
+          "time": "2026-10-27 21:28"
+        },
+        {
+          "id": "group-07",
+          "body": "这个问题明早当面解释。大家早点休息。",
+          "senderId": "he",
+          "time": "2026-10-27 21:29"
+        },
+        {
+          "id": "group-08",
+          "body": "原来21:17那个数字还在啊。",
+          "senderId": "shen",
+          "time": "2026-10-27 21:31"
+        },
+        {
+          "id": "group-09",
+          "body": "我先不在群里说了。",
+          "senderId": "owner",
+          "time": "2026-10-27 21:33"
+        }
+      ]
+    },
+    {
+      "id": "wechat-he",
+      "app": "wechat",
+      "title": "何主任",
+      "participants": [
+        "owner",
+        "he"
+      ],
+      "messages": [
+        {
+          "id": "he-01",
+          "body": "予晴，我知道你做事认真，但项目不是靠质疑同事推进的。",
+          "senderId": "he",
+          "time": "2026-10-27 21:35"
+        },
+        {
+          "id": "he-02",
+          "body": "只要把手机交给我，明天我会给所有人解释。",
+          "senderId": "he",
+          "time": "2026-10-27 21:43"
+        },
+        {
+          "id": "he-03",
+          "body": "别人看见这些聊天，容易误会。你先别转发。",
+          "senderId": "he",
+          "time": "2026-10-27 21:48"
+        },
+        {
+          "id": "he-04",
+          "body": "我现在就在地铁口附近。",
+          "senderId": "he",
+          "time": "2026-10-27 22:11"
+        }
+      ]
+    },
+    {
+      "id": "sms-night",
+      "app": "messages",
+      "title": "夜间提醒",
+      "participants": [
+        "owner",
+        "tang"
+      ],
+      "messages": [
+        {
+          "id": "sms-night-01",
+          "body": "【模拟提醒】拾光书屋捐赠资料已于21:17发生修改。",
+          "senderId": "tang",
+          "time": "2026-10-27 21:20"
+        },
+        {
+          "id": "sms-night-02",
+          "body": "是我在整理时手动抄下的消息，不是什么系统自动短信。别被措辞骗了。",
+          "senderId": "tang",
+          "time": "2026-10-27 21:23"
+        }
+      ]
+    },
+    {
+      "id": "qq-old",
+      "app": "qq",
+      "title": "周末摆书小分队",
+      "participants": [
+        "owner",
+        "xu",
+        "tang"
+      ],
+      "messages": [
+        {
+          "id": "qq-01",
+          "body": "明天旧书交换会，谁记得那箱绘本的数量？",
+          "senderId": "xu",
+          "time": "2026-10-27 18:01"
+        },
+        {
+          "id": "qq-02",
+          "body": "清单是36本，现场只有12本。我重新数过。",
+          "senderId": "tang",
+          "time": "2026-10-27 18:02"
+        },
+        {
+          "id": "qq-03",
+          "body": "先把照片和原始单据留下，不要在网上吵。",
+          "senderId": "owner",
+          "time": "2026-10-27 18:04"
         }
       ]
     }
   ],
   "content": {
-    "phone": [
-      {
-        "id": "test-item-phone",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "contacts": [
-      {
-        "id": "test-item-contacts",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
     "photos": [
       {
-        "id": "test-item-photos",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "camera": [
+        "id": "photo-cover",
+        "title": "雨后书屋",
+        "body": "玻璃门上还贴着明天的旧书交换会海报。角落里放着三只空纸箱。",
+        "time": "2026-10-27 21:17",
+        "kind": "image"
+      },
       {
-        "id": "test-item-camera",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "safari": [
+        "id": "photo-ticket",
+        "title": "蓝色取件单 · B-17",
+        "body": "照片里的票根写着：B-17，绘本36本，实收12本，运送时间20:42。背面有人用铅笔写了四个字：后门监控。",
+        "time": "2026-10-27 21:17",
+        "kind": "image",
+        "hidden": true,
+        "folder": "隐藏相册"
+      },
       {
-        "id": "test-item-safari",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "photo-shadow",
+        "title": "夜色里的后门",
+        "body": "雨水冲淡了白线，后门旁有一道没有擦干的车轮印。拍摄时间20:58。",
+        "time": "2026-10-27 21:17",
+        "kind": "image"
       }
     ],
     "notes": [
       {
-        "id": "test-item-notes",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "calendar": [
+        "id": "note-pocket",
+        "title": "如果你捡到了它",
+        "body": "请不要根据单条聊天判断谁是坏人。先从相册里的蓝色票根查起，再找那份被锁住的备忘录。——予晴",
+        "time": "2026-10-27 21:17",
+        "kind": "note"
+      },
       {
-        "id": "test-item-calendar",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "mail": [
+        "id": "note-safe",
+        "title": "九点十七分之后",
+        "body": "我查了两份登记表：20:42有B-17入库签收，21:17系统记录却被改成了“未收到”。后门网络20:50就断了，不可能在办公室现场完成修改。纸质收据藏在“文件”里。请把线索交给可以公开核查的人，不要交给一个人私下处理。",
+        "time": "2026-10-27 21:17",
+        "kind": "note",
+        "hidden": true,
+        "password": "0917",
+        "folder": "私人"
+      },
       {
-        "id": "test-item-mail",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "clock": [
-      {
-        "id": "test-item-clock",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "reminders": [
-      {
-        "id": "test-item-reminders",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "note-self",
+        "title": "给明天的我",
+        "body": "别怕，认真不是错误。但如果事情真是误会，我也会当面道歉。",
+        "time": "2026-10-27 21:17",
+        "kind": "note"
       }
     ],
     "files": [
       {
-        "id": "test-item-files",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "files-record",
+        "title": "B-17 纸质交接单",
+        "body": "【虚构文件·纸质扫描记录】20:42签收：绘本36本；20:50断网；21:17线上记录改为“未收货”。落款处有两人签名，一人是徐言，另一人看不清。两份记录互相矛盾，需要第三方核查。",
+        "time": "2026-10-27 21:17",
+        "kind": "file",
+        "hidden": true
+      },
+      {
+        "id": "files-volunteer",
+        "title": "交换会值班表",
+        "body": "明早09:30 志愿者值班；10:00 旧书交换会。公共窗口可登记失物和材料，不接受口头取走原始凭证。",
+        "time": "2026-10-27 21:17",
+        "kind": "file"
       }
     ],
-    "music": [
+    "calendar": [
       {
-        "id": "test-item-music",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "calendar-book",
+        "title": "旧书交换会",
+        "body": "2026-10-28 10:00 · 拾光书屋。儿童阅读活动，原定现场领取B-17绘本。",
+        "time": "2026-10-27 21:17",
+        "kind": "event"
+      },
+      {
+        "id": "calendar-check",
+        "title": "重新核对捐赠清单",
+        "body": "2026-10-28 09:00 · 当面核对物资数量与修改日志。",
+        "time": "2026-10-27 21:17",
+        "kind": "event"
+      }
+    ],
+    "phone": [
+      {
+        "id": "call-shen-log",
+        "title": "沈之遥",
+        "body": "21:59 未接来电 · 备注：别交给自称负责人者",
+        "time": "2026-10-27 21:17",
+        "kind": "call"
+      },
+      {
+        "id": "call-tang-log",
+        "title": "唐夏",
+        "body": "22:06 未接来电 · 备注：书屋门口",
+        "time": "2026-10-27 21:17",
+        "kind": "call"
+      }
+    ],
+    "mail": [
+      {
+        "id": "mail-receipt",
+        "title": "旧书接收流程（内部讨论）",
+        "body": "所有异常物资必须经至少两名值班志愿者共同复核。请保留原始清单。",
+        "time": "2026-10-27 21:17",
+        "sender": "拾光书屋"
+      },
+      {
+        "id": "mail-invite",
+        "title": "明天还有交换会吗？",
+        "body": "孩子们已经准备好了旧书，希望活动能如期举行。",
+        "time": "2026-10-27 21:17",
+        "sender": "社区家长"
+      }
+    ],
+    "reminders": [
+      {
+        "id": "remind-1",
+        "title": "不要忘了",
+        "body": "带上B-17的纸质记录。",
+        "time": "2026-10-27 21:17"
+      },
+      {
+        "id": "remind-2",
+        "title": "先联系唐夏",
+        "body": "她在书屋门口等。",
+        "time": "2026-10-27 21:17"
       }
     ],
     "maps": [
       {
-        "id": "test-item-maps",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "weather": [
-      {
-        "id": "test-item-weather",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "wallet": [
-      {
-        "id": "test-item-wallet",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "health": [
-      {
-        "id": "test-item-health",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "find": [
-      {
-        "id": "test-item-find",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "calculator": [
-      {
-        "id": "test-item-calculator",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "settings": [
-      {
-        "id": "test-item-settings",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "maps-book",
+        "title": "拾光书屋（虚构场景）",
+        "body": "距地铁出口两条街。晚上22:00以后侧门关闭。",
+        "time": "2026-10-27 21:17"
       }
     ],
     "weibo": [
       {
-        "id": "test-item-weibo",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "weibo-event",
+        "title": "拾光书屋周末活动",
+        "body": "明天照常开放旧书交换，欢迎读者来玩。",
+        "time": "2026-10-27 21:17",
+        "sender": "拾光志愿者"
       }
     ],
     "redbook": [
       {
-        "id": "test-item-redbook",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "redbook-event",
+        "title": "周末旧书交换会",
+        "body": "随手交换一本书，也许就能认识一个新朋友。",
+        "time": "2026-10-27 21:17",
+        "sender": "唐夏"
       }
     ],
     "douyin": [
       {
-        "id": "test-item-douyin",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "bilibili": [
-      {
-        "id": "test-item-bilibili",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "alipay": [
-      {
-        "id": "test-item-alipay",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "taobao": [
-      {
-        "id": "test-item-taobao",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "netease": [
-      {
-        "id": "test-item-netease",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "delivery": [
-      {
-        "id": "test-item-delivery",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "forum": [
-      {
-        "id": "test-item-forum",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "douyin-promo",
+        "title": "志愿者的一天",
+        "body": "整理绘本、贴标签、给新书架除尘。",
+        "time": "2026-10-27 21:17",
+        "sender": "徐言"
       }
     ],
     "instagram": [
       {
-        "id": "test-item-instagram",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "ig-morning",
+        "title": "书屋窗边",
+        "body": "明天见。",
+        "time": "2026-10-27 21:17",
+        "sender": "江予晴",
+        "folder": "动态"
       }
     ],
-    "tiktok": [
+    "messages": [],
+    "safari": [
       {
-        "id": "test-item-tiktok",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "safari-check",
+        "title": "查询记录",
+        "body": "最近浏览：旧书捐赠登记规范、电子记录修改时间、如何申请共同核查。",
+        "time": "2026-10-27 21:17"
       }
     ],
-    "twitter": [
+    "camera": [
       {
-        "id": "test-item-twitter",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "camera-last",
+        "title": "最后一张照片",
+        "body": "雨滴落在玻璃上，画面没有拍清那个人的脸。",
+        "time": "2026-10-27 21:17"
       }
     ],
-    "youtube": [
+    "contacts": [],
+    "clock": [
       {
-        "id": "test-item-youtube",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "alarm-meeting",
+        "title": "明早09:00",
+        "body": "提醒：去书屋核对清单。",
+        "time": "2026-10-27 21:17"
       }
     ],
-    "snapchat": [
+    "weather": [
       {
-        "id": "test-item-snapchat",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "weather-rain",
+        "title": "晚间雨天",
+        "body": "持续小雨。出门记得带伞。",
+        "time": "2026-10-27 21:17"
       }
     ],
-    "facebook": [
-      {
-        "id": "test-item-facebook",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "reddit": [
-      {
-        "id": "test-item-reddit",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "spotify": [
-      {
-        "id": "test-item-spotify",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "netflix": [
-      {
-        "id": "test-item-netflix",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "pinterest": [
-      {
-        "id": "test-item-pinterest",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "threads": [
-      {
-        "id": "test-item-threads",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      },
-      {
-        "id": "test-threads-message-1",
-        "title": "测试会话1",
-        "body": "这是一条测试消息。",
-        "sender": "测试联系人1",
-        "folder": "私信"
-      },
-      {
-        "id": "test-threads-activity-1",
-        "title": "测试动态1",
-        "body": "这是一条测试回复动态。",
-        "sender": "测试用户1",
-        "meta": {
-          "activityType": "reply"
-        }
-      },
-      {
-        "id": "test-threads-message-2",
-        "title": "测试会话2",
-        "body": "这是一条测试消息。",
-        "sender": "测试联系人2",
-        "folder": "私信"
-      },
-      {
-        "id": "test-threads-activity-2",
-        "title": "测试动态2",
-        "body": "这是一条测试回复动态。",
-        "sender": "测试用户2",
-        "meta": {
-          "activityType": "reply"
-        }
-      },
-      {
-        "id": "test-threads-message-3",
-        "title": "测试会话3",
-        "body": "这是一条测试消息。",
-        "sender": "测试联系人3",
-        "folder": "私信"
-      },
-      {
-        "id": "test-threads-activity-3",
-        "title": "测试动态3",
-        "body": "这是一条测试回复动态。",
-        "sender": "测试用户3",
-        "meta": {
-          "activityType": "reply"
-        }
-      }
-    ],
-    "appstore": [
-      {
-        "id": "test-appstore",
-        "title": "测试内容",
-        "body": "这是一条测试内容。"
-      }
-    ]
+    "settings": []
   },
   "variables": {},
-  "events": [],
-  "tests": []
+  "events": [
+    {
+      "id": "start-alert",
+      "type": "start",
+      "label": "雨夜里的手机亮起",
+      "actions": [
+        {
+          "type": "notification",
+          "key": "",
+          "value": "微信：唐夏 · 如果有人捡到她的手机，请先看蓝色票根"
+        }
+      ]
+    },
+    {
+      "id": "clue-first",
+      "type": "event",
+      "label": "发现蓝色票根",
+      "event": "read",
+      "target": "tang-06",
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "photo-ticket",
+          "value": true
+        },
+        {
+          "type": "notification",
+          "key": "",
+          "value": "相册：一张隐藏的票根照片已解锁"
+        }
+      ]
+    },
+    {
+      "id": "clue-second",
+      "type": "event",
+      "label": "票根背面的提示",
+      "event": "read",
+      "target": "photo-ticket",
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "note-safe",
+          "value": true
+        },
+        {
+          "type": "notification",
+          "key": "",
+          "value": "备忘录：一条受密码保护的笔记已解锁"
+        }
+      ]
+    },
+    {
+      "id": "clue-third",
+      "type": "event",
+      "label": "发现改写的清单",
+      "event": "read",
+      "target": "note-safe",
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "files-record",
+          "value": true
+        },
+        {
+          "type": "notification",
+          "key": "",
+          "value": "文件：B-17 纸质交接单可查看"
+        }
+      ]
+    },
+    {
+      "id": "read-record",
+      "type": "event",
+      "label": "读到两份矛盾的记录",
+      "event": "read",
+      "target": "files-record",
+      "next": [
+        "wait-for-call"
+      ]
+    },
+    {
+      "id": "wait-for-call",
+      "type": "delay",
+      "label": "电话即将响起",
+      "delayMs": 1200,
+      "actions": [
+        {
+          "type": "call",
+          "key": "call-shen",
+          "value": "沈之遥"
+        }
+      ]
+    },
+    {
+      "id": "answer-shen",
+      "type": "event",
+      "label": "沈之遥打来电话",
+      "event": "callAnswered",
+      "target": "call-shen",
+      "next": [
+        "decision"
+      ]
+    },
+    {
+      "id": "decision",
+      "type": "choice",
+      "label": "该把手机交给谁",
+      "next": [
+        "trust-tang",
+        "trust-he",
+        "leave-phone"
+      ]
+    },
+    {
+      "id": "trust-tang",
+      "type": "ending",
+      "label": "联系唐夏，把线索交给共同值班组",
+      "actions": [
+        {
+          "type": "ending",
+          "key": "",
+          "value": "结局·雨停之前：你把手机和证据交给公开登记的志愿者值班组。予晴平安出现，三人一起等待核查结果。真相还没全部浮出水面，但没有人再独自承担。"
+        }
+      ]
+    },
+    {
+      "id": "trust-he",
+      "type": "ending",
+      "label": "相信何主任，私下把手机交给他",
+      "actions": [
+        {
+          "type": "ending",
+          "key": "",
+          "value": "结局·被擦掉的晚上：第二天，系统里只剩下“记录异常已处理”。手机的主人没有指责你，但那张原始交接单再也没出现在核查桌上。"
+        }
+      ]
+    },
+    {
+      "id": "leave-phone",
+      "type": "ending",
+      "label": "把手机锁进失物柜，暂不介入",
+      "actions": [
+        {
+          "type": "ending",
+          "key": "",
+          "value": "结局·未读消息：失物柜的登记没有出错。交换会却延期了。手机在抽屉里安静了一整夜，你始终不知道少掉的那箱书去了哪里。"
+        }
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "name": "path-trust-tang",
+      "steps": [
+        {
+          "event": "read",
+          "target": "tang-06"
+        },
+        {
+          "event": "read",
+          "target": "photo-ticket"
+        },
+        {
+          "event": "read",
+          "target": "note-safe",
+          "password": "0917"
+        },
+        {
+          "event": "read",
+          "target": "files-record"
+        },
+        {
+          "advanceMs": 1500
+        },
+        {
+          "event": "callAnswered",
+          "target": "call-shen"
+        },
+        {
+          "choose": "trust-tang"
+        }
+      ],
+      "ending": "结局·雨停之前：你把手机和证据交给公开登记的志愿者值班组。予晴平安出现，三人一起等待核查结果。真相还没全部浮出水面，但没有人再独自承担。",
+      "expectUnlocked": [
+        "photo-ticket",
+        "note-safe",
+        "files-record"
+      ]
+    },
+    {
+      "name": "path-trust-he",
+      "steps": [
+        {
+          "event": "read",
+          "target": "tang-06"
+        },
+        {
+          "event": "read",
+          "target": "photo-ticket"
+        },
+        {
+          "event": "read",
+          "target": "note-safe",
+          "password": "0917"
+        },
+        {
+          "event": "read",
+          "target": "files-record"
+        },
+        {
+          "advanceMs": 1500
+        },
+        {
+          "event": "callAnswered",
+          "target": "call-shen"
+        },
+        {
+          "choose": "trust-he"
+        }
+      ],
+      "ending": "结局·被擦掉的晚上：第二天，系统里只剩下“记录异常已处理”。手机的主人没有指责你，但那张原始交接单再也没出现在核查桌上。",
+      "expectUnlocked": [
+        "photo-ticket",
+        "note-safe",
+        "files-record"
+      ]
+    },
+    {
+      "name": "path-leave-phone",
+      "steps": [
+        {
+          "event": "read",
+          "target": "tang-06"
+        },
+        {
+          "event": "read",
+          "target": "photo-ticket"
+        },
+        {
+          "event": "read",
+          "target": "note-safe",
+          "password": "0917"
+        },
+        {
+          "event": "read",
+          "target": "files-record"
+        },
+        {
+          "advanceMs": 1500
+        },
+        {
+          "event": "callAnswered",
+          "target": "call-shen"
+        },
+        {
+          "choose": "leave-phone"
+        }
+      ],
+      "ending": "结局·未读消息：失物柜的登记没有出错。交换会却延期了。手机在抽屉里安静了一整夜，你始终不知道少掉的那箱书去了哪里。",
+      "expectUnlocked": [
+        "photo-ticket",
+        "note-safe",
+        "files-record"
+      ]
+    }
+  ]
 }
