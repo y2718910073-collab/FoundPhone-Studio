@@ -32,7 +32,7 @@ import {
   Layers,
   ShoppingBag,
 } from "lucide-react";
-import { safeMedia, type Item, type UiValue } from "./schema";
+import { makeItem, safeMedia, type Item, type UiValue } from "./schema";
 export type SkinProps = {
   ui?: Record<string, UiValue>;
   onUi?: (key: string, value: UiValue) => void;
@@ -152,6 +152,36 @@ function Compose({
     </div>
   );
 }
+function LocalChatComposer({ onSend }: { onSend: (body: string) => void }) {
+  const [draft, setDraft] = useState("");
+  return (
+    <form className="skin-compose local-chat-compose" onSubmit={(event) => {
+      event.preventDefault();
+      const value = draft.trim();
+      if (!value) return;
+      onSend(value);
+      setDraft("");
+    }}>
+      <input aria-label="输入聊天消息" placeholder="发送一条本机消息…" maxLength={250} value={draft}
+        onChange={(event) => setDraft(event.target.value)} />
+      <button type="submit" aria-label="发送聊天消息" disabled={!draft.trim()}>发送</button>
+    </form>
+  );
+}
+function localChatItems(p: SkinProps, sent: string[], appId: string): Item[] {
+  return sent.flatMap((entry, index) => {
+    const sep = entry.indexOf("\t");
+    if (sep < 0 || entry.slice(0, sep) !== p.thread) return [];
+    return [makeItem({
+      id: `local-chat-${appId}-${index}`,
+      title: p.thread,
+      sender: p.owner || "我",
+      body: entry.slice(sep + 1),
+      time: "2026-10-27 " + (p.virtualTime || "22:17"),
+      outgoing: true,
+    })];
+  });
+}
 export function WeChatSkin(p: SkinProps) {
   const [tab, setTab] = useState("微信"),
     [query, setQuery] = useState(""),
@@ -164,6 +194,7 @@ export function WeChatSkin(p: SkinProps) {
     "readThreads",
     [],
   );
+  const [sentMessages, setSentMessages] = useSkinState<string[]>(p, "local-chat-messages", []);
   const conversations = [
     ...new Set(
       p.items
@@ -279,12 +310,12 @@ export function WeChatSkin(p: SkinProps) {
       ) : p.thread ? (
         <>
           <MessageList
-            items={p.items.filter((i) => i.title === p.thread)}
+            items={[...p.items.filter((i) => i.title === p.thread), ...localChatItems(p, sentMessages, "wechat")]}
             creator={p.creator}
             onItem={p.onItem}
             onRead={p.onRead}
           />
-          <Compose creator={p.creator} onAdd={p.onAdd} />
+          {p.creator ? <Compose creator onAdd={p.onAdd} /> : <LocalChatComposer onSend={(body) => setSentMessages([...sentMessages.slice(-99), p.thread + "\t" + body])} />}
         </>
       ) : moments ? (
         <div className="wx-moments">
@@ -508,6 +539,7 @@ export function WhatsAppSkin(p: SkinProps) {
   const [tab, setTab] = useState("聊天"),
     [query, setQuery] = useState(""),
     [filter, setFilter] = useState("全部");
+  const [sentMessages, setSentMessages] = useSkinState<string[]>(p, "local-chat-messages", []);
   const tabs = [
     { label: "动态", icon: Compass },
     { label: "通话", icon: Phone },
@@ -567,13 +599,13 @@ export function WhatsAppSkin(p: SkinProps) {
             <Phone size={17} />
           </div>
           <MessageList
-            items={p.items.filter((i) => i.title === p.thread)}
+            items={[...p.items.filter((i) => i.title === p.thread), ...localChatItems(p, sentMessages, "whatsapp")]}
             creator={p.creator}
             onItem={p.onItem}
             onRead={p.onRead}
             whatsapp
           />
-          <Compose creator={p.creator} onAdd={p.onAdd} wa />
+          {p.creator ? <Compose creator onAdd={p.onAdd} wa /> : <LocalChatComposer onSend={(body) => setSentMessages([...sentMessages.slice(-99), p.thread + "\t" + body])} />}
         </>
       ) : (
         <div className="skin-scroll">
