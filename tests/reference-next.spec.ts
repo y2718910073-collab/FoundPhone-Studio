@@ -131,6 +131,25 @@ test("Threads reference messages activity menu and composer persist local posts"
     .screenshot({ path: "outputs/reference-next/threads-compose.png" });
   await page.getByRole("button", { name: "发布", exact: true }).click();
   await expect(page.locator(".tr-scroll")).toContainText("本地串文测试");
+  // Confirm the asynchronous IndexedDB write has completed before reloading.
+  // Otherwise the reload can race the player's autosave effect.
+  await page.waitForFunction(async () =>
+    new Promise<boolean>((resolve) => {
+      const open = indexedDB.open("foundphone-studio");
+      open.onerror = () => resolve(false);
+      open.onsuccess = () => {
+        const transaction = open.result.transaction("saves", "readonly");
+        const read = transaction.objectStore("saves").get("reference-social-ui");
+        read.onerror = () => resolve(false);
+        read.onsuccess = () =>
+          resolve(
+            (read.result?.state?.ui?.threads?.["threads-posts"] ?? []).includes(
+              "本地串文测试",
+            ),
+          );
+      };
+    }),
+  );
   await page.reload();
   await page.getByRole("button", { name: "轻触解锁" }).click();
   await open(page, "Threads");
