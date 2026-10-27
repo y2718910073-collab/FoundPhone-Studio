@@ -1,4 +1,5 @@
 import { NativeComposer } from "./DeviceSystem";
+import { buildChatExchange, decodeChatEntry } from "./fictionChat";
 import { useSkinState } from "./skinState";
 import { CommentsSheet } from "./skins/CommentsSheet";
 import { useState } from "react";
@@ -168,17 +169,20 @@ function LocalChatComposer({ onSend }: { onSend: (body: string) => void }) {
     </form>
   );
 }
-function localChatItems(p: SkinProps, sent: string[], appId: string): Item[] {
-  return sent.flatMap((entry, index) => {
-    const sep = entry.indexOf("\t");
-    if (sep < 0 || entry.slice(0, sep) !== p.thread) return [];
+function localChatItems(p: SkinProps, entries: string[], appId: string): Item[] {
+  return entries.flatMap((entry, index) => {
+    const decoded = decodeChatEntry(entry);
+    if (!decoded || decoded.thread !== p.thread) return [];
+    const groupReply = decoded.incoming && /（\d+）|小分队/.test(p.thread)
+      ? decoded.text.match(/^([^：]{1,12})：(.*)$/)
+      : null;
     return [makeItem({
       id: `local-chat-${appId}-${index}`,
       title: p.thread,
-      sender: p.owner || "我",
-      body: entry.slice(sep + 1),
+      sender: decoded.incoming ? (groupReply?.[1] || p.thread) : (p.owner || "我"),
+      body: groupReply?.[2] || decoded.text,
       time: "2026-10-27 " + (p.virtualTime || "22:17"),
-      outgoing: true,
+      outgoing: !decoded.incoming,
     })];
   });
 }
@@ -315,7 +319,7 @@ export function WeChatSkin(p: SkinProps) {
             onItem={p.onItem}
             onRead={p.onRead}
           />
-          {p.creator ? <Compose creator onAdd={p.onAdd} /> : <LocalChatComposer onSend={(body) => setSentMessages([...sentMessages.slice(-99), p.thread + "\t" + body])} />}
+          {p.creator ? <Compose creator onAdd={p.onAdd} /> : <LocalChatComposer onSend={(body) => setSentMessages(buildChatExchange(p.thread, body, sentMessages))} />}
         </>
       ) : moments ? (
         <div className="wx-moments">
@@ -605,7 +609,7 @@ export function WhatsAppSkin(p: SkinProps) {
             onRead={p.onRead}
             whatsapp
           />
-          {p.creator ? <Compose creator onAdd={p.onAdd} wa /> : <LocalChatComposer onSend={(body) => setSentMessages([...sentMessages.slice(-99), p.thread + "\t" + body])} />}
+          {p.creator ? <Compose creator onAdd={p.onAdd} wa /> : <LocalChatComposer onSend={(body) => setSentMessages(buildChatExchange(p.thread, body, sentMessages))} />}
         </>
       ) : (
         <div className="skin-scroll">
