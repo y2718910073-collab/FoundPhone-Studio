@@ -1,5 +1,6 @@
 import { NativeComposer } from "./DeviceSystem";
 import { useSkinState } from "./skinState";
+import { CommentsSheet } from "./skins/CommentsSheet";
 import { useState } from "react";
 import {
   ChevronLeft,
@@ -722,7 +723,8 @@ export function InstagramSkin(p: SkinProps) {
     [query, setQuery] = useState(""),
     [likes, setLikes] = useSkinState<string[]>(p, "likes", []),
     [saved, setSaved] = useSkinState<string[]>(p, "saved", []),
-    [showSaved, setShowSaved] = useState(false);
+    [showSaved, setShowSaved] = useState(false),
+    [commentItem, setCommentItem] = useState<Item | null>(null);
   const posts = p.items.filter(
       (i) =>
         i.kind === "post" ||
@@ -850,7 +852,7 @@ export function InstagramSkin(p: SkinProps) {
                   </button>
                   <button
                     aria-label={`评论${i.title}`}
-                    onClick={() => p.onItem(i)}
+                    onClick={() => setCommentItem(i)}
                   >
                     <MessageCircle size={22} />
                   </button>
@@ -883,8 +885,8 @@ export function InstagramSkin(p: SkinProps) {
                   <p>
                     <b>{i.sender}</b> {i.body}
                   </p>
-                  <button onClick={() => p.onItem(i)}>
-                    查看全部 {i.comments.length} 条评论
+                  <button onClick={() => setCommentItem(i)}>
+                    查看全部 {i.comments.length + ((p.ui?.[`comments-${i.id}`] as string[] | undefined)?.length ?? 0)} 条评论
                   </button>
                   <time>{i.time}</time>
                 </div>
@@ -986,6 +988,7 @@ export function InstagramSkin(p: SkinProps) {
           </button>
         ))}
       </nav>
+      {commentItem && <CommentsSheet p={p} item={commentItem} onClose={() => setCommentItem(null)} />}
     </div>
   );
 }
