@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Send, X } from "lucide-react";
 import { useSkinState } from "../skinState";
+import "./social-interactions.css";
 import type { Item } from "../schema";
 import { Avatar, type Props } from "./shared";
 
