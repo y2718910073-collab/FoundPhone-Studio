@@ -1,0 +1,9 @@
+/* Offline music widgets; keep the native browser audio timeline touch-friendly. */
+.original-audio-player { order: 4; flex: 0 0 100%; min-width: 0; padding: 1px 0 4px; }
+.original-audio-player audio { display: block; width: 100%; max-width: 100%; height: 34px; color-scheme: dark; }
+.original-audio-player small { display: block; margin-top: 3px; font-size: 9px; line-height: 1.4; opacity: .75; }
+.music-library-disclaimer { font-size: 10px; line-height: 1.5; opacity: .7; margin: 12px 15px 18px; }
+.spotify-ui .track-player, .netease-ui .track-player { align-items: center; }
+.spotify-ui .track-player > button[aria-label], .netease-ui .track-player > button[aria-label] { padding: 4px; touch-action: manipulation; }
+.spotify-ui .spotify-tracks > button { min-height: 53px; }
+.netease-ui .original-audio-player audio { color-scheme: light; }
