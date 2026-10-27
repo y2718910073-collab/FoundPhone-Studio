@@ -359,6 +359,10 @@ export function SafariSkin(p: Props) {
         />
         <Search size={16} />
       </label>
+      <div className="native-web-shortcut">
+        <a href={target} target="_blank" rel="noopener noreferrer" aria-label="在真实浏览器打开网址或搜索">在真实浏览器打开 ↗</a>
+        <small>将打开真实外部网站，不影响游戏中的虚构网页。</small>
+      </div>
       <Tabs
         tabs={["书签", "历史记录"]}
         value={tab}
