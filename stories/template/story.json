@@ -1539,6 +1539,1934 @@
           "views": "2557"
         }
       }
+    ],
+    "spotify": [
+      {
+        "id": "spotify-demo-01",
+        "title": "雨后的车站",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "青柠气泡",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "雨夜歌单",
+        "favorite": true,
+        "meta": {
+          "album": "雨夜歌单",
+          "duration": "0:24",
+          "genre": "Chill • 76 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-02",
+        "title": "书页和风",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "小川灯",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "午后轻听",
+        "favorite": true,
+        "meta": {
+          "album": "午后轻听",
+          "duration": "0:24",
+          "genre": "Lo-fi • 92 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-03",
+        "title": "十一点的灯",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晚风拾光",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "雨夜歌单",
+        "favorite": true,
+        "meta": {
+          "album": "雨夜歌单",
+          "duration": "0:24",
+          "genre": "Ambient • 76 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-04",
+        "title": "路灯下面",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "橘子邮差",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "城市漫游",
+        "favorite": false,
+        "meta": {
+          "album": "城市漫游",
+          "duration": "0:24",
+          "genre": "Synth • 106 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-05",
+        "title": "热可可",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "纸杯电台",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "午后轻听",
+        "favorite": false,
+        "meta": {
+          "album": "午后轻听",
+          "duration": "0:24",
+          "genre": "Acoustic synth • 83 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-06",
+        "title": "蓝色票根",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晨雾工作室",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "故事线索",
+        "favorite": false,
+        "meta": {
+          "album": "故事线索",
+          "duration": "0:24",
+          "genre": "Mystery • 83 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-07",
+        "title": "回家的最后一班车",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晚风拾光",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "雨夜歌单",
+        "favorite": false,
+        "meta": {
+          "album": "雨夜歌单",
+          "duration": "0:24",
+          "genre": "Lo-fi • 92 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-08",
+        "title": "没有寄出的信",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "青柠气泡",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "故事线索",
+        "favorite": false,
+        "meta": {
+          "album": "故事线索",
+          "duration": "0:24",
+          "genre": "Ambient • 76 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-09",
+        "title": "拾光书屋",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "纸杯电台",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "午后轻听",
+        "favorite": false,
+        "meta": {
+          "album": "午后轻听",
+          "duration": "0:24",
+          "genre": "Chill • 92 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-10",
+        "title": "雨的频率",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晨雾工作室",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "城市漫游",
+        "favorite": false,
+        "meta": {
+          "album": "城市漫游",
+          "duration": "0:24",
+          "genre": "Synth • 106 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-11",
+        "title": "昨天的明信片",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "小川灯",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "午后轻听",
+        "favorite": false,
+        "meta": {
+          "album": "午后轻听",
+          "duration": "0:24",
+          "genre": "Acoustic synth • 83 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-12",
+        "title": "夏日窗台",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "橘子邮差",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "城市漫游",
+        "favorite": false,
+        "meta": {
+          "album": "城市漫游",
+          "duration": "0:24",
+          "genre": "Chill • 106 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-13",
+        "title": "和你等雨停",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "青柠气泡",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "雨夜歌单",
+        "favorite": false,
+        "meta": {
+          "album": "雨夜歌单",
+          "duration": "0:24",
+          "genre": "Lo-fi • 92 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-14",
+        "title": "九月十七日",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晨雾工作室",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "故事线索",
+        "favorite": false,
+        "meta": {
+          "album": "故事线索",
+          "duration": "0:24",
+          "genre": "Mystery • 76 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-15",
+        "title": "小路尽头",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "小川灯",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "城市漫游",
+        "favorite": false,
+        "meta": {
+          "album": "城市漫游",
+          "duration": "0:24",
+          "genre": "Ambient • 83 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "spotify-demo-16",
+        "title": "晚安，城市",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晚风拾光",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "雨夜歌单",
+        "favorite": false,
+        "meta": {
+          "album": "雨夜歌单",
+          "duration": "0:24",
+          "genre": "Piano synth • 76 BPM",
+          "synth": "original"
+        }
+      }
+    ],
+    "netease": [
+      {
+        "id": "netease-demo-01",
+        "title": "雨后的车站",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "青柠气泡",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "雨夜歌单",
+        "favorite": true,
+        "meta": {
+          "album": "雨夜歌单",
+          "duration": "0:24",
+          "genre": "Chill • 76 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "netease-demo-02",
+        "title": "书页和风",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "小川灯",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "午后轻听",
+        "favorite": true,
+        "meta": {
+          "album": "午后轻听",
+          "duration": "0:24",
+          "genre": "Lo-fi • 92 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "netease-demo-03",
+        "title": "十一点的灯",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晚风拾光",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "雨夜歌单",
+        "favorite": true,
+        "meta": {
+          "album": "雨夜歌单",
+          "duration": "0:24",
+          "genre": "Ambient • 76 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "netease-demo-04",
+        "title": "路灯下面",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "橘子邮差",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "城市漫游",
+        "favorite": false,
+        "meta": {
+          "album": "城市漫游",
+          "duration": "0:24",
+          "genre": "Synth • 106 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "netease-demo-05",
+        "title": "热可可",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "纸杯电台",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "午后轻听",
+        "favorite": false,
+        "meta": {
+          "album": "午后轻听",
+          "duration": "0:24",
+          "genre": "Acoustic synth • 83 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "netease-demo-06",
+        "title": "蓝色票根",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晨雾工作室",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "故事线索",
+        "favorite": false,
+        "meta": {
+          "album": "故事线索",
+          "duration": "0:24",
+          "genre": "Mystery • 83 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "netease-demo-07",
+        "title": "回家的最后一班车",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晚风拾光",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "雨夜歌单",
+        "favorite": false,
+        "meta": {
+          "album": "雨夜歌单",
+          "duration": "0:24",
+          "genre": "Lo-fi • 92 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "netease-demo-08",
+        "title": "没有寄出的信",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "青柠气泡",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "故事线索",
+        "favorite": false,
+        "meta": {
+          "album": "故事线索",
+          "duration": "0:24",
+          "genre": "Ambient • 76 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "netease-demo-09",
+        "title": "拾光书屋",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "纸杯电台",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "午后轻听",
+        "favorite": false,
+        "meta": {
+          "album": "午后轻听",
+          "duration": "0:24",
+          "genre": "Chill • 92 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "netease-demo-10",
+        "title": "雨的频率",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晨雾工作室",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "城市漫游",
+        "favorite": false,
+        "meta": {
+          "album": "城市漫游",
+          "duration": "0:24",
+          "genre": "Synth • 106 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "netease-demo-11",
+        "title": "昨天的明信片",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "小川灯",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "午后轻听",
+        "favorite": false,
+        "meta": {
+          "album": "午后轻听",
+          "duration": "0:24",
+          "genre": "Acoustic synth • 83 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "netease-demo-12",
+        "title": "夏日窗台",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "橘子邮差",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "城市漫游",
+        "favorite": false,
+        "meta": {
+          "album": "城市漫游",
+          "duration": "0:24",
+          "genre": "Chill • 106 BPM",
+          "synth": "original"
+        }
+      }
+    ],
+    "music": [
+      {
+        "id": "music-demo-01",
+        "title": "雨后的车站",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "青柠气泡",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "雨夜歌单",
+        "favorite": true,
+        "meta": {
+          "album": "雨夜歌单",
+          "duration": "0:24",
+          "genre": "Chill • 76 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "music-demo-02",
+        "title": "书页和风",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "小川灯",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "午后轻听",
+        "favorite": true,
+        "meta": {
+          "album": "午后轻听",
+          "duration": "0:24",
+          "genre": "Lo-fi • 92 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "music-demo-03",
+        "title": "十一点的灯",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晚风拾光",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "雨夜歌单",
+        "favorite": true,
+        "meta": {
+          "album": "雨夜歌单",
+          "duration": "0:24",
+          "genre": "Ambient • 76 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "music-demo-04",
+        "title": "路灯下面",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "橘子邮差",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "城市漫游",
+        "favorite": false,
+        "meta": {
+          "album": "城市漫游",
+          "duration": "0:24",
+          "genre": "Synth • 106 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "music-demo-05",
+        "title": "热可可",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "纸杯电台",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "午后轻听",
+        "favorite": false,
+        "meta": {
+          "album": "午后轻听",
+          "duration": "0:24",
+          "genre": "Acoustic synth • 83 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "music-demo-06",
+        "title": "蓝色票根",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晨雾工作室",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "故事线索",
+        "favorite": false,
+        "meta": {
+          "album": "故事线索",
+          "duration": "0:24",
+          "genre": "Mystery • 83 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "music-demo-07",
+        "title": "回家的最后一班车",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晚风拾光",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "雨夜歌单",
+        "favorite": false,
+        "meta": {
+          "album": "雨夜歌单",
+          "duration": "0:24",
+          "genre": "Lo-fi • 92 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "music-demo-08",
+        "title": "没有寄出的信",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "青柠气泡",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "故事线索",
+        "favorite": false,
+        "meta": {
+          "album": "故事线索",
+          "duration": "0:24",
+          "genre": "Ambient • 76 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "music-demo-09",
+        "title": "拾光书屋",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "纸杯电台",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "午后轻听",
+        "favorite": false,
+        "meta": {
+          "album": "午后轻听",
+          "duration": "0:24",
+          "genre": "Chill • 92 BPM",
+          "synth": "original"
+        }
+      },
+      {
+        "id": "music-demo-10",
+        "title": "雨的频率",
+        "body": "原创合成器旋律，离线试听，不包含任何商业录音。",
+        "sender": "晨雾工作室",
+        "time": "2026-10-27 22:17",
+        "kind": "audio",
+        "folder": "城市漫游",
+        "favorite": false,
+        "meta": {
+          "album": "城市漫游",
+          "duration": "0:24",
+          "genre": "Synth • 106 BPM",
+          "synth": "original"
+        }
+      }
+    ],
+    "youtube": [
+      {
+        "id": "yt-01",
+        "title": "旧书屋直播预告",
+        "body": "今晚我们把装满回忆的旧书放回书架。虚构视频频道内容。",
+        "sender": "书屋里的唐夏",
+        "time": "2026-10-27 21:07",
+        "kind": "post",
+        "folder": "Shorts",
+        "likes": 51,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "1250",
+          "duration": "2:14"
+        }
+      },
+      {
+        "id": "yt-02",
+        "title": "二十分钟整理房间",
+        "body": "像给大脑按下整理按钮，单看清单也很治愈。",
+        "sender": "收纳研究社",
+        "time": "2026-10-27 21:11",
+        "kind": "post",
+        "folder": "生活",
+        "likes": 148,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "2143",
+          "duration": "3:21"
+        }
+      },
+      {
+        "id": "yt-03",
+        "title": "治愈系游戏音乐制作",
+        "body": "尝试用合成器写一首雨夜散步的背景曲。",
+        "sender": "月光作曲室",
+        "time": "2026-10-27 21:15",
+        "kind": "post",
+        "folder": "音乐",
+        "likes": 245,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3036",
+          "duration": "2:28"
+        }
+      },
+      {
+        "id": "yt-04",
+        "title": "独立游戏漫谈",
+        "body": "探索游戏里什么样的线索算公平？",
+        "sender": "剧情研究所",
+        "time": "2026-10-27 21:19",
+        "kind": "post",
+        "folder": "Shorts",
+        "likes": 342,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3929",
+          "duration": "3:35"
+        }
+      },
+      {
+        "id": "yt-05",
+        "title": "三个人在夜里开书屋",
+        "body": "有热可可，有雨声，也有一点小误会。",
+        "sender": "纸灯工作室",
+        "time": "2026-10-27 21:23",
+        "kind": "post",
+        "folder": "生活",
+        "likes": 439,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "4822",
+          "duration": "2:42"
+        }
+      },
+      {
+        "id": "yt-06",
+        "title": "旅行VLOG：一场大雨",
+        "body": "走进没有人的小巷，找一家营业到很晚的甜品店。",
+        "sender": "散步的橘子",
+        "time": "2026-10-27 21:27",
+        "kind": "post",
+        "folder": "旅行",
+        "likes": 536,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "5715",
+          "duration": "3:49"
+        }
+      },
+      {
+        "id": "yt-07",
+        "title": "小小的咖啡店",
+        "body": "店员教我打奶泡，第一次失败得很彻底。",
+        "sender": "麦芽牛奶",
+        "time": "2026-10-27 21:31",
+        "kind": "post",
+        "folder": "Shorts",
+        "likes": 633,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "6608",
+          "duration": "2:56"
+        }
+      },
+      {
+        "id": "yt-08",
+        "title": "换书活动实况",
+        "body": "一本旧书找到了喜欢它的新主人。",
+        "sender": "拾光书屋",
+        "time": "2026-10-27 21:35",
+        "kind": "post",
+        "folder": "读书",
+        "likes": 730,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "7501",
+          "duration": "3:03"
+        }
+      },
+      {
+        "id": "yt-09",
+        "title": "如果手机里藏着秘密",
+        "body": "真实和误会有什么不同？我们做了个互动小故事。",
+        "sender": "雨夜小说家",
+        "time": "2026-10-27 21:39",
+        "kind": "post",
+        "folder": "游戏",
+        "likes": 827,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "8394",
+          "duration": "2:10"
+        }
+      },
+      {
+        "id": "yt-10",
+        "title": "游戏配乐制作日常",
+        "body": "用三种简单波形做出复古的合成器音色。",
+        "sender": "晨雾工作室",
+        "time": "2026-10-27 21:43",
+        "kind": "post",
+        "folder": "Shorts",
+        "likes": 924,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "9287",
+          "duration": "3:17"
+        }
+      },
+      {
+        "id": "yt-11",
+        "title": "用照片讲故事",
+        "body": "一个路牌、一片雨水和不在场的人。",
+        "sender": "慢镜头",
+        "time": "2026-10-27 21:47",
+        "kind": "post",
+        "folder": "生活",
+        "likes": 1021,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "10180",
+          "duration": "2:24"
+        }
+      },
+      {
+        "id": "yt-12",
+        "title": "饭团制作入门",
+        "body": "深夜回家也能吃上热腾腾的饭。",
+        "sender": "饭团实验室",
+        "time": "2026-10-27 21:51",
+        "kind": "post",
+        "folder": "生活",
+        "likes": 1118,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "11073",
+          "duration": "3:31"
+        }
+      }
+    ],
+    "bilibili": [
+      {
+        "id": "bili-01",
+        "title": "旧书屋直播预告",
+        "body": "今晚我们把装满回忆的旧书放回书架。虚构视频频道内容。",
+        "sender": "书屋里的唐夏",
+        "time": "2026-10-27 21:07",
+        "kind": "post",
+        "folder": "动态",
+        "likes": 51,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "1250",
+          "duration": "2:14"
+        }
+      },
+      {
+        "id": "bili-02",
+        "title": "二十分钟整理房间",
+        "body": "像给大脑按下整理按钮，单看清单也很治愈。",
+        "sender": "收纳研究社",
+        "time": "2026-10-27 21:11",
+        "kind": "post",
+        "folder": "生活",
+        "likes": 148,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "2143",
+          "duration": "3:21"
+        }
+      },
+      {
+        "id": "bili-03",
+        "title": "治愈系游戏音乐制作",
+        "body": "尝试用合成器写一首雨夜散步的背景曲。",
+        "sender": "月光作曲室",
+        "time": "2026-10-27 21:15",
+        "kind": "post",
+        "folder": "音乐",
+        "likes": 245,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3036",
+          "duration": "2:28"
+        }
+      },
+      {
+        "id": "bili-04",
+        "title": "独立游戏漫谈",
+        "body": "探索游戏里什么样的线索算公平？",
+        "sender": "剧情研究所",
+        "time": "2026-10-27 21:19",
+        "kind": "post",
+        "folder": "动画",
+        "likes": 342,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3929",
+          "duration": "3:35"
+        }
+      },
+      {
+        "id": "bili-05",
+        "title": "三个人在夜里开书屋",
+        "body": "有热可可，有雨声，也有一点小误会。",
+        "sender": "纸灯工作室",
+        "time": "2026-10-27 21:23",
+        "kind": "post",
+        "folder": "动态",
+        "likes": 439,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "4822",
+          "duration": "2:42"
+        }
+      },
+      {
+        "id": "bili-06",
+        "title": "旅行VLOG：一场大雨",
+        "body": "走进没有人的小巷，找一家营业到很晚的甜品店。",
+        "sender": "散步的橘子",
+        "time": "2026-10-27 21:27",
+        "kind": "post",
+        "folder": "旅行",
+        "likes": 536,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "5715",
+          "duration": "3:49"
+        }
+      },
+      {
+        "id": "bili-07",
+        "title": "小小的咖啡店",
+        "body": "店员教我打奶泡，第一次失败得很彻底。",
+        "sender": "麦芽牛奶",
+        "time": "2026-10-27 21:31",
+        "kind": "post",
+        "folder": "生活",
+        "likes": 633,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "6608",
+          "duration": "2:56"
+        }
+      },
+      {
+        "id": "bili-08",
+        "title": "换书活动实况",
+        "body": "一本旧书找到了喜欢它的新主人。",
+        "sender": "拾光书屋",
+        "time": "2026-10-27 21:35",
+        "kind": "post",
+        "folder": "读书",
+        "likes": 730,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "7501",
+          "duration": "3:03"
+        }
+      },
+      {
+        "id": "bili-09",
+        "title": "如果手机里藏着秘密",
+        "body": "真实和误会有什么不同？我们做了个互动小故事。",
+        "sender": "雨夜小说家",
+        "time": "2026-10-27 21:39",
+        "kind": "post",
+        "folder": "动态",
+        "likes": 827,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "8394",
+          "duration": "2:10"
+        }
+      },
+      {
+        "id": "bili-10",
+        "title": "游戏配乐制作日常",
+        "body": "用三种简单波形做出复古的合成器音色。",
+        "sender": "晨雾工作室",
+        "time": "2026-10-27 21:43",
+        "kind": "post",
+        "folder": "音乐",
+        "likes": 924,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "9287",
+          "duration": "3:17"
+        }
+      },
+      {
+        "id": "bili-11",
+        "title": "用照片讲故事",
+        "body": "一个路牌、一片雨水和不在场的人。",
+        "sender": "慢镜头",
+        "time": "2026-10-27 21:47",
+        "kind": "post",
+        "folder": "生活",
+        "likes": 1021,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "10180",
+          "duration": "2:24"
+        }
+      },
+      {
+        "id": "bili-12",
+        "title": "饭团制作入门",
+        "body": "深夜回家也能吃上热腾腾的饭。",
+        "sender": "饭团实验室",
+        "time": "2026-10-27 21:51",
+        "kind": "post",
+        "folder": "生活",
+        "likes": 1118,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "11073",
+          "duration": "3:31"
+        }
+      }
+    ],
+    "threads": [
+      {
+        "id": "threads-01",
+        "title": "凌晨的书屋",
+        "body": "谁会在书页上留下日期？",
+        "sender": "小山",
+        "time": "2026-10-27 21:07",
+        "kind": "post",
+        "folder": "为你推荐",
+        "likes": 51,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "1250",
+          "duration": "2:14"
+        }
+      },
+      {
+        "id": "threads-02",
+        "title": "等雨停",
+        "body": "我觉得热可可应该加棉花糖。",
+        "sender": "唐夏",
+        "time": "2026-10-27 21:11",
+        "kind": "post",
+        "folder": "为你推荐",
+        "likes": 148,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "2143",
+          "duration": "3:21"
+        }
+      },
+      {
+        "id": "threads-03",
+        "title": "本地活动",
+        "body": "明天交换活动照常准备。",
+        "sender": "志愿者联盟",
+        "time": "2026-10-27 21:15",
+        "kind": "post",
+        "folder": "为你推荐",
+        "likes": 245,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3036",
+          "duration": "2:28"
+        }
+      },
+      {
+        "id": "threads-04",
+        "title": "关于失物",
+        "body": "如果捡到手机，先交给登记处。",
+        "sender": "城市提醒",
+        "time": "2026-10-27 21:19",
+        "kind": "post",
+        "folder": "为你推荐",
+        "likes": 342,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3929",
+          "duration": "3:35"
+        }
+      },
+      {
+        "id": "threads-05",
+        "title": "加班日记",
+        "body": "夜间值班有点累，但伙伴很好。",
+        "sender": "徐言",
+        "time": "2026-10-27 21:23",
+        "kind": "post",
+        "folder": "为你推荐",
+        "likes": 439,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "4822",
+          "duration": "2:42"
+        }
+      },
+      {
+        "id": "threads-06",
+        "title": "雨天的书",
+        "body": "每一本都有独特的故事。",
+        "sender": "读书角",
+        "time": "2026-10-27 21:27",
+        "kind": "post",
+        "folder": "为你推荐",
+        "likes": 536,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "5715",
+          "duration": "3:49"
+        }
+      }
+    ],
+    "reddit": [
+      {
+        "id": "reddit-01",
+        "title": "Rainy night stories",
+        "body": "What is your favorite cozy mystery setup?",
+        "sender": "booklover",
+        "time": "2026-10-27 21:07",
+        "kind": "post",
+        "folder": "Home",
+        "likes": 51,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "1250",
+          "duration": "2:14"
+        }
+      },
+      {
+        "id": "reddit-02",
+        "title": "Old books",
+        "body": "Found a note from ten years ago in a used novel.",
+        "sender": "rainshelf",
+        "time": "2026-10-27 21:11",
+        "kind": "post",
+        "folder": "Home",
+        "likes": 148,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "2143",
+          "duration": "3:21"
+        }
+      },
+      {
+        "id": "reddit-03",
+        "title": "Indie music",
+        "body": "Experimenting with homemade synth melodies tonight.",
+        "sender": "tinyloop",
+        "time": "2026-10-27 21:15",
+        "kind": "post",
+        "folder": "Home",
+        "likes": 245,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3036",
+          "duration": "2:28"
+        }
+      },
+      {
+        "id": "reddit-04",
+        "title": "Keeping records",
+        "body": "Original documents matter when memories disagree.",
+        "sender": "archivebuddy",
+        "time": "2026-10-27 21:19",
+        "kind": "post",
+        "folder": "Home",
+        "likes": 342,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3929",
+          "duration": "3:35"
+        }
+      },
+      {
+        "id": "reddit-05",
+        "title": "Phone puzzles",
+        "body": "Would you solve a mystery found on a stranger's phone?",
+        "sender": "player42",
+        "time": "2026-10-27 21:23",
+        "kind": "post",
+        "folder": "Home",
+        "likes": 439,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "4822",
+          "duration": "2:42"
+        }
+      },
+      {
+        "id": "reddit-06",
+        "title": "Book exchange",
+        "body": "Ideas for a small community book swap?",
+        "sender": "bookroom",
+        "time": "2026-10-27 21:27",
+        "kind": "post",
+        "folder": "Home",
+        "likes": 536,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "5715",
+          "duration": "3:49"
+        }
+      }
+    ],
+    "netflix": [
+      {
+        "id": "netflix-01",
+        "title": "雨夜书屋",
+        "body": "一家小书屋里几位朋友共同寻找失踪的账本。虚构剧集，非可在线播放资源。",
+        "sender": "拾光影像",
+        "time": "2026-10-27 21:07",
+        "kind": "post",
+        "folder": "原创虚构故事",
+        "likes": 51,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "1250",
+          "duration": "2:14"
+        }
+      },
+      {
+        "id": "netflix-02",
+        "title": "午夜来信",
+        "body": "一封没有寄出的信引出十年前的往事。虚构剧集。",
+        "sender": "纸灯影像",
+        "time": "2026-10-27 21:11",
+        "kind": "post",
+        "folder": "原创虚构故事",
+        "likes": 148,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "2143",
+          "duration": "3:21"
+        }
+      },
+      {
+        "id": "netflix-03",
+        "title": "春日列车",
+        "body": "赶在夏天之前再见一次远方的朋友。虚构剧集。",
+        "sender": "小城制作组",
+        "time": "2026-10-27 21:15",
+        "kind": "post",
+        "folder": "原创虚构故事",
+        "likes": 245,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3036",
+          "duration": "2:28"
+        }
+      },
+      {
+        "id": "netflix-04",
+        "title": "你在的星期天",
+        "body": "朋友们忙着准备一场旧书交换会。虚构综艺。",
+        "sender": "星桥影像",
+        "time": "2026-10-27 21:19",
+        "kind": "post",
+        "folder": "原创虚构故事",
+        "likes": 342,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3929",
+          "duration": "3:35"
+        }
+      }
+    ],
+    "forum": [
+      {
+        "id": "forum-01",
+        "title": "旧书屋直播预告",
+        "body": "今晚我们把装满回忆的旧书放回书架。虚构视频频道内容。",
+        "sender": "书屋里的唐夏",
+        "time": "2026-10-27 21:07",
+        "kind": "post",
+        "folder": "社区",
+        "likes": 51,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "1250",
+          "duration": "2:14"
+        }
+      },
+      {
+        "id": "forum-02",
+        "title": "二十分钟整理房间",
+        "body": "像给大脑按下整理按钮，单看清单也很治愈。",
+        "sender": "收纳研究社",
+        "time": "2026-10-27 21:11",
+        "kind": "post",
+        "folder": "社区",
+        "likes": 148,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "2143",
+          "duration": "3:21"
+        }
+      },
+      {
+        "id": "forum-03",
+        "title": "治愈系游戏音乐制作",
+        "body": "尝试用合成器写一首雨夜散步的背景曲。",
+        "sender": "月光作曲室",
+        "time": "2026-10-27 21:15",
+        "kind": "post",
+        "folder": "社区",
+        "likes": 245,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3036",
+          "duration": "2:28"
+        }
+      },
+      {
+        "id": "forum-04",
+        "title": "独立游戏漫谈",
+        "body": "探索游戏里什么样的线索算公平？",
+        "sender": "剧情研究所",
+        "time": "2026-10-27 21:19",
+        "kind": "post",
+        "folder": "社区",
+        "likes": 342,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3929",
+          "duration": "3:35"
+        }
+      },
+      {
+        "id": "forum-05",
+        "title": "三个人在夜里开书屋",
+        "body": "有热可可，有雨声，也有一点小误会。",
+        "sender": "纸灯工作室",
+        "time": "2026-10-27 21:23",
+        "kind": "post",
+        "folder": "社区",
+        "likes": 439,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "4822",
+          "duration": "2:42"
+        }
+      },
+      {
+        "id": "forum-06",
+        "title": "旅行VLOG：一场大雨",
+        "body": "走进没有人的小巷，找一家营业到很晚的甜品店。",
+        "sender": "散步的橘子",
+        "time": "2026-10-27 21:27",
+        "kind": "post",
+        "folder": "社区",
+        "likes": 536,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "5715",
+          "duration": "3:49"
+        }
+      },
+      {
+        "id": "forum-07",
+        "title": "小小的咖啡店",
+        "body": "店员教我打奶泡，第一次失败得很彻底。",
+        "sender": "麦芽牛奶",
+        "time": "2026-10-27 21:31",
+        "kind": "post",
+        "folder": "社区",
+        "likes": 633,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "6608",
+          "duration": "2:56"
+        }
+      },
+      {
+        "id": "forum-08",
+        "title": "换书活动实况",
+        "body": "一本旧书找到了喜欢它的新主人。",
+        "sender": "拾光书屋",
+        "time": "2026-10-27 21:35",
+        "kind": "post",
+        "folder": "社区",
+        "likes": 730,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "7501",
+          "duration": "3:03"
+        }
+      }
+    ],
+    "twitter": [
+      {
+        "id": "twitter-01",
+        "title": "旧书屋直播预告",
+        "body": "今晚我们把装满回忆的旧书放回书架。虚构视频频道内容。",
+        "sender": "书屋里的唐夏",
+        "time": "2026-10-27 21:07",
+        "kind": "post",
+        "folder": "正在关注",
+        "likes": 51,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "1250",
+          "duration": "2:14"
+        }
+      },
+      {
+        "id": "twitter-02",
+        "title": "二十分钟整理房间",
+        "body": "像给大脑按下整理按钮，单看清单也很治愈。",
+        "sender": "收纳研究社",
+        "time": "2026-10-27 21:11",
+        "kind": "post",
+        "folder": "正在关注",
+        "likes": 148,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "2143",
+          "duration": "3:21"
+        }
+      },
+      {
+        "id": "twitter-03",
+        "title": "治愈系游戏音乐制作",
+        "body": "尝试用合成器写一首雨夜散步的背景曲。",
+        "sender": "月光作曲室",
+        "time": "2026-10-27 21:15",
+        "kind": "post",
+        "folder": "正在关注",
+        "likes": 245,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3036",
+          "duration": "2:28"
+        }
+      },
+      {
+        "id": "twitter-04",
+        "title": "独立游戏漫谈",
+        "body": "探索游戏里什么样的线索算公平？",
+        "sender": "剧情研究所",
+        "time": "2026-10-27 21:19",
+        "kind": "post",
+        "folder": "正在关注",
+        "likes": 342,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3929",
+          "duration": "3:35"
+        }
+      },
+      {
+        "id": "twitter-05",
+        "title": "三个人在夜里开书屋",
+        "body": "有热可可，有雨声，也有一点小误会。",
+        "sender": "纸灯工作室",
+        "time": "2026-10-27 21:23",
+        "kind": "post",
+        "folder": "正在关注",
+        "likes": 439,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "4822",
+          "duration": "2:42"
+        }
+      },
+      {
+        "id": "twitter-06",
+        "title": "旅行VLOG：一场大雨",
+        "body": "走进没有人的小巷，找一家营业到很晚的甜品店。",
+        "sender": "散步的橘子",
+        "time": "2026-10-27 21:27",
+        "kind": "post",
+        "folder": "正在关注",
+        "likes": 536,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "5715",
+          "duration": "3:49"
+        }
+      },
+      {
+        "id": "twitter-07",
+        "title": "小小的咖啡店",
+        "body": "店员教我打奶泡，第一次失败得很彻底。",
+        "sender": "麦芽牛奶",
+        "time": "2026-10-27 21:31",
+        "kind": "post",
+        "folder": "正在关注",
+        "likes": 633,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "6608",
+          "duration": "2:56"
+        }
+      },
+      {
+        "id": "twitter-08",
+        "title": "换书活动实况",
+        "body": "一本旧书找到了喜欢它的新主人。",
+        "sender": "拾光书屋",
+        "time": "2026-10-27 21:35",
+        "kind": "post",
+        "folder": "正在关注",
+        "likes": 730,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "7501",
+          "duration": "3:03"
+        }
+      }
+    ],
+    "facebook": [
+      {
+        "id": "facebook-01",
+        "title": "旧书屋直播预告",
+        "body": "今晚我们把装满回忆的旧书放回书架。虚构视频频道内容。",
+        "sender": "书屋里的唐夏",
+        "time": "2026-10-27 21:07",
+        "kind": "post",
+        "folder": "动态",
+        "likes": 51,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "1250",
+          "duration": "2:14"
+        }
+      },
+      {
+        "id": "facebook-02",
+        "title": "二十分钟整理房间",
+        "body": "像给大脑按下整理按钮，单看清单也很治愈。",
+        "sender": "收纳研究社",
+        "time": "2026-10-27 21:11",
+        "kind": "post",
+        "folder": "动态",
+        "likes": 148,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "2143",
+          "duration": "3:21"
+        }
+      },
+      {
+        "id": "facebook-03",
+        "title": "治愈系游戏音乐制作",
+        "body": "尝试用合成器写一首雨夜散步的背景曲。",
+        "sender": "月光作曲室",
+        "time": "2026-10-27 21:15",
+        "kind": "post",
+        "folder": "动态",
+        "likes": 245,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3036",
+          "duration": "2:28"
+        }
+      },
+      {
+        "id": "facebook-04",
+        "title": "独立游戏漫谈",
+        "body": "探索游戏里什么样的线索算公平？",
+        "sender": "剧情研究所",
+        "time": "2026-10-27 21:19",
+        "kind": "post",
+        "folder": "动态",
+        "likes": 342,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3929",
+          "duration": "3:35"
+        }
+      },
+      {
+        "id": "facebook-05",
+        "title": "三个人在夜里开书屋",
+        "body": "有热可可，有雨声，也有一点小误会。",
+        "sender": "纸灯工作室",
+        "time": "2026-10-27 21:23",
+        "kind": "post",
+        "folder": "动态",
+        "likes": 439,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "4822",
+          "duration": "2:42"
+        }
+      },
+      {
+        "id": "facebook-06",
+        "title": "旅行VLOG：一场大雨",
+        "body": "走进没有人的小巷，找一家营业到很晚的甜品店。",
+        "sender": "散步的橘子",
+        "time": "2026-10-27 21:27",
+        "kind": "post",
+        "folder": "动态",
+        "likes": 536,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "5715",
+          "duration": "3:49"
+        }
+      },
+      {
+        "id": "facebook-07",
+        "title": "小小的咖啡店",
+        "body": "店员教我打奶泡，第一次失败得很彻底。",
+        "sender": "麦芽牛奶",
+        "time": "2026-10-27 21:31",
+        "kind": "post",
+        "folder": "动态",
+        "likes": 633,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "6608",
+          "duration": "2:56"
+        }
+      },
+      {
+        "id": "facebook-08",
+        "title": "换书活动实况",
+        "body": "一本旧书找到了喜欢它的新主人。",
+        "sender": "拾光书屋",
+        "time": "2026-10-27 21:35",
+        "kind": "post",
+        "folder": "动态",
+        "likes": 730,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "7501",
+          "duration": "3:03"
+        }
+      }
+    ],
+    "pinterest": [
+      {
+        "id": "pinterest-01",
+        "title": "旧书屋直播预告",
+        "body": "今晚我们把装满回忆的旧书放回书架。虚构视频频道内容。",
+        "sender": "书屋里的唐夏",
+        "time": "2026-10-27 21:07",
+        "kind": "post",
+        "folder": "手作",
+        "likes": 51,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "1250",
+          "duration": "2:14"
+        }
+      },
+      {
+        "id": "pinterest-02",
+        "title": "二十分钟整理房间",
+        "body": "像给大脑按下整理按钮，单看清单也很治愈。",
+        "sender": "收纳研究社",
+        "time": "2026-10-27 21:11",
+        "kind": "post",
+        "folder": "手作",
+        "likes": 148,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "2143",
+          "duration": "3:21"
+        }
+      },
+      {
+        "id": "pinterest-03",
+        "title": "治愈系游戏音乐制作",
+        "body": "尝试用合成器写一首雨夜散步的背景曲。",
+        "sender": "月光作曲室",
+        "time": "2026-10-27 21:15",
+        "kind": "post",
+        "folder": "手作",
+        "likes": 245,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3036",
+          "duration": "2:28"
+        }
+      },
+      {
+        "id": "pinterest-04",
+        "title": "独立游戏漫谈",
+        "body": "探索游戏里什么样的线索算公平？",
+        "sender": "剧情研究所",
+        "time": "2026-10-27 21:19",
+        "kind": "post",
+        "folder": "手作",
+        "likes": 342,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "3929",
+          "duration": "3:35"
+        }
+      },
+      {
+        "id": "pinterest-05",
+        "title": "三个人在夜里开书屋",
+        "body": "有热可可，有雨声，也有一点小误会。",
+        "sender": "纸灯工作室",
+        "time": "2026-10-27 21:23",
+        "kind": "post",
+        "folder": "手作",
+        "likes": 439,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "4822",
+          "duration": "2:42"
+        }
+      },
+      {
+        "id": "pinterest-06",
+        "title": "旅行VLOG：一场大雨",
+        "body": "走进没有人的小巷，找一家营业到很晚的甜品店。",
+        "sender": "散步的橘子",
+        "time": "2026-10-27 21:27",
+        "kind": "post",
+        "folder": "手作",
+        "likes": 536,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "5715",
+          "duration": "3:49"
+        }
+      },
+      {
+        "id": "pinterest-07",
+        "title": "小小的咖啡店",
+        "body": "店员教我打奶泡，第一次失败得很彻底。",
+        "sender": "麦芽牛奶",
+        "time": "2026-10-27 21:31",
+        "kind": "post",
+        "folder": "手作",
+        "likes": 633,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "6608",
+          "duration": "2:56"
+        }
+      },
+      {
+        "id": "pinterest-08",
+        "title": "换书活动实况",
+        "body": "一本旧书找到了喜欢它的新主人。",
+        "sender": "拾光书屋",
+        "time": "2026-10-27 21:35",
+        "kind": "post",
+        "folder": "手作",
+        "likes": 730,
+        "comments": [
+          "听起来很有意思！",
+          "想知道下一集会讲什么。"
+        ],
+        "meta": {
+          "views": "7501",
+          "duration": "3:03"
+        }
+      }
     ]
   },
   "variables": {},
