@@ -1015,6 +1015,7 @@ function AppContent({
               virtualTime={state.time}
               kpopMode={isKpopWork(state.workId)}
               kpopSync={state.variables["kpop-sync"] === true}
+              kpopTurns={Number(state.variables["kpop-turn"] || 0)}
               ui={state.ui?.[app.id]}
               onUi={creator ? undefined : onUi}
               name={name}
