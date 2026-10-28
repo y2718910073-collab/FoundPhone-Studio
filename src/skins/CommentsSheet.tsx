@@ -37,6 +37,7 @@ export function CommentsSheet({
     const message = replyTo ? `回复 @${replyTo}：${body}` : body;
     // Individual comments are bounded to keep IndexedDB saves small and safe.
     setReplies([...replies.slice(-99), `${p.owner || "我"}\t${message}`]);
+    if (p.kpopMode) p.onKpopAction?.("public-comment",item.id);
     setDraft("");
     setReplyTo("");
   };
