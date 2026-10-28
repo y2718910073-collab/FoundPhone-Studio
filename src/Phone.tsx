@@ -474,6 +474,7 @@ function PhoneRuntime({
                   creator={creator}
                   state={s}
                   onRead={(id) => event("read", id)}
+                  onBrowse={() => event("kpopBrowse", "thread")}
                   onEdit={(item) => onEdit?.(app, item)}
                   onAdd={() => onAdd?.(app)}
                   onBack={() => setApp("")}
@@ -1012,6 +1013,8 @@ function AppContent({
               appId={app.id}
               owner={work.phone.owner}
               virtualTime={state.time}
+              kpopMode={isKpopWork(state.workId)}
+              kpopSync={state.variables["kpop-sync"] === true}
               ui={state.ui?.[app.id]}
               onUi={creator ? undefined : onUi}
               name={name}
@@ -1022,7 +1025,7 @@ function AppContent({
               onAdd={onAdd}
               onBack={onBack}
               thread={thread}
-              onThread={setThread}
+              onThread={(name: string) => { if (name && isKpopWork(state.workId)) onBrowse?.(); setThread(name); }}
             />
           </Suspense>
         </div>
