@@ -42,7 +42,7 @@ export async function requestPuterReply(
   history:ChatTurn[],
   profile:KpopProfile,
   persona:string,
-  model="gpt-5.6-luna",
+  model="gpt-5.4-nano",
   signal?:AbortSignal,
 ):Promise<CharacterReply>{
   const puter=await loadPuter();
