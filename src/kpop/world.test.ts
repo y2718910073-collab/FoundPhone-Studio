@@ -74,6 +74,18 @@ describe("K-pop reading phase, clues and natural historical archives",()=>{
     expect(s.variables["kpop-style-errors"]).toBe(1);
     expect(s.variables["kpop-risk"]).toBe(0);
   });
+  it("can reach every risk tier without skipping any tier or inventing real reports",()=>{
+    let state=start();
+    const reached=[Number(state.variables["kpop-risk"]||0)];
+    for(let i=0;i<40;i++){
+      state=kpopWorldStep(work,state,"screenshot-leak","player",state.read);
+      const tier=Number(state.variables["kpop-risk"]||0);
+      const last=reached.at(-1)||0;
+      expect(tier).toBeLessThanOrEqual(last+1);
+      if(tier!==last)reached.push(tier);
+    }
+    expect(reached).toEqual([0,1,2,3,4,5,6]);
+  });
   it("avoids unearned publicity: suspicion is separate from fictional public actions",()=>{
     let s=start();
     for(let i=0;i<5;i++)s=kpopWorldStep(work,s,"impersonate","朴雅凛",s.read);
