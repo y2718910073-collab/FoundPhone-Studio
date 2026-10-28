@@ -63,7 +63,7 @@ export function useLocalShop(p: Props, key: string) {
     saveCart({});
     return true;
   };
-  const advance = (id: string) => saveOrders(orders.map(o => o.id === id ? ({
+  const advance = (id: string) => saveOrders(orders.map((o): LocalOrder => o.id === id ? ({
     ...o, status: o.status === "已下单" ? "已发货" : "已送达",
   }) : o));
   return { cart, orders, address, setAddress, add, remove, checkout, advance };
