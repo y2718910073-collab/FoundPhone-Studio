@@ -68,7 +68,8 @@ export function MymyKakao(p: SkinProps) {
     [sent, setSent] = useSkinState<string[]>(p, "mymyKktSent", []),
     [draft, setDraft] = useState(""),
     [query, setQuery] = useState(""),
-    [menu, setMenu] = useState(false);
+    [menu, setMenu] = useState(false),
+    [historyLimit, setHistoryLimit] = useState(240);
   const list = grouped(p.items),
     messages = [
       ...p.items.filter((i) => i.title === p.thread).map(i => p.kpopMode && i.meta.ko && i.meta.zh ? {...i,body:displayKpopMessage(i.meta.ko,i.meta.zh,kpop.mode)} : i),
@@ -99,6 +100,7 @@ export function MymyKakao(p: SkinProps) {
       })),
     ],
     scroll = useRef<HTMLDivElement>(null);
+  const displayed=messages.slice(-historyLimit);
   useEffect(() => {
     const node = scroll.current;
     if (node) node.scrollTop = node.scrollHeight;
@@ -117,8 +119,9 @@ export function MymyKakao(p: SkinProps) {
             </span>
           </header>
           <div className="msgs kk" ref={scroll}>
-            {messages.map((m, i) => {
-              const run = messageRun(messages, i);
+            {p.kpopMode && messages.length > historyLimit && <button type="button" className="kpop-history-older" onClick={()=>setHistoryLimit(historyLimit+120)}>查看更多较早聊天 · {messages.length-historyLimit} 条</button>}
+            {displayed.map((m, i) => {
+              const run = messageRun(displayed, i);
               return (
                 <div
                   key={m.id}
@@ -138,7 +141,7 @@ export function MymyKakao(p: SkinProps) {
                   )}
                   {m.outgoing && run.last && (
                     <span className="kzt">
-                      {m.meta.unread || ""}
+                      {m.meta.kpopStatus==="未读" ? "1" : m.meta.unread || ""}
                       <br />
                       {m.time.slice(-5)}
                     </span>
@@ -149,6 +152,8 @@ export function MymyKakao(p: SkinProps) {
                   >
                     {m.media ? <Media item={m} /> : m.body}
                   </button>
+                  {p.kpopMode && m.meta.cross==="true" && <small className="kpop-cross-tag">交叉场景</small>}
+                  {p.kpopMode && m.outgoing && m.meta.local==="true" && m.meta.kpopStatus!=="已撤回" && <button className="kpop-message-retract" aria-label="撤回刚发送的消息" onClick={()=>kpop.retract(m.id)}>撤回</button>}
                   {!m.outgoing && run.last && (
                     <span className="kzt">{m.time.slice(-5)}</span>
                   )}
