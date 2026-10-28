@@ -57,5 +57,5 @@ test("fifteen phone views enable fictional sync and newly received messages",asy
   }
   await chat.getByRole("button",{name:/朴雅凛/}).first().click();
   await expect(chat.getByRole("status")).toContainText("新机同步开启");
-  await expect(chat).toContainText("今天练习会晚一点");
+  await expect(chat).toContainText("姐，宿舍冰箱还有豆腐吗");
 });
