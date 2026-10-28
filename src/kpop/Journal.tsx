@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { BookOpen, Camera, ChevronRight, ShieldAlert, X } from "lucide-react";
-import type { Runtime } from "../schema";
+import type { Runtime, Work, Item } from "../schema";
+import { traceFor } from "./world";
+import { readKpopProfile } from "./profile";
+import { renderKpopItem } from "./language";
 import { RISK_LEVELS, TRACE_NAMES, kpopSuggestions, storyPhase } from "./world";
 import type { KpopAction } from "./world";
 import { KpopAiSettingsPanel } from "./AiSettingsPanel";
 import "./journal.css";
 
-export function KpopJournal({runtime,openApp,onAction}:{
+export function KpopJournal({runtime,work,openApp,onAction}:{
   runtime:Runtime;
+  work:Work;
   openApp:(id:string)=>void;
   onAction:(kind:KpopAction,target:string)=>void;
 }) {
@@ -19,6 +23,17 @@ export function KpopJournal({runtime,openApp,onAction}:{
   const risk=Number(runtime.variables["kpop-risk"]||0);
   const sync=runtime.variables["kpop-sync"]===true;
   const suggestions=kpopSuggestions(runtime);
+  const rawEvidence=runtime.ui?.["kpop-world"]?.["seen-evidence"];
+  const evidenceIds=Array.isArray(rawEvidence)&&rawEvidence.every(x=>typeof x==="string") ? rawEvidence:[];
+  const archive=Object.entries(work.data).flatMap(([app,items])=>items.map(i=>({app,item:i})))
+    .concat(Object.entries(runtime.messages).flatMap(([app,items])=>items.map(i=>({app,item:i}))));
+  const evidence=archive.filter(x=>evidenceIds.includes(x.item.id)&&!!traceFor(x.item))
+    .sort((a,b)=>a.item.time.localeCompare(b.item.time));
+  const language=readKpopProfile()?.language||"dual";
+  const visibleEvidence=(trace:string)=>evidence.filter(x=>traceFor(x.item)===trace);
+  const excerpt=(i:Item)=>renderKpopItem(i,language).body.slice(0,190);
+  const appNames:Record<string,string>={kakao:"KakaoTalk",instagram:"Instagram",photos:"相册",spotify:"Spotify",notes:"备忘录",files:"文件",calendar:"日历",contacts:"通讯录",twitter:"X",taobao:"购物",health:"健康"};
+
   const go=(app:string)=>{
     setVisible(false);
     openApp(app);
@@ -64,7 +79,12 @@ export function KpopJournal({runtime,openApp,onAction}:{
               ? <p className="kpop-quiet">目前还没有记录到可以互相对照的细节。去看几段聊天、照片或备忘录吧。</p>
               :runtime.clues.filter(x=>TRACE_NAMES[x]).map(x=><div className="kpop-clue" key={x}>
                 <b>{TRACE_NAMES[x]}</b>
-                <span>这是你记下的观察，不是实锤。</span>
+                <span>这是你记下的观察，不是实锤。已读来源 {visibleEvidence(x).length} 条。</span>
+                {visibleEvidence(x).map(({app,item})=><button type="button" className="kpop-evidence-record" key={item.id} onClick={()=>go(app)}>
+                  <strong>{appNames[app]||app} · {item.time}</strong>
+                  <span>{excerpt(item)}</span>
+                  <small>重新打开此 App 核对 <ChevronRight size={12}/></small>
+                </button>)}
               </div>)}
             <small>已阅内容：{runtime.read.length} 条 · 浏览的 App：{runtime.visited.length} 个</small>
           </>}
