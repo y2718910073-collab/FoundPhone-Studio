@@ -139,7 +139,8 @@ export function useKpopChat(p: SkinProps) {
   useEffect(()=>{
     const listener=()=>setRevision(n=>n+1);
     subscribers.add(listener);
-    return ()=>{subscribers.delete(listener);};
+    window.addEventListener("foundphone:kpop-ai-changed",listener);
+    return ()=>{subscribers.delete(listener);window.removeEventListener("foundphone:kpop-ai-changed",listener);};
   },[]);
   void revision;
   const delivery=deliveries.get(key);
