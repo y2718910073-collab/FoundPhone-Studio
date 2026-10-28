@@ -5,11 +5,17 @@ import { db } from "../persistence";
 import { validateWork, type Work } from "../schema";
 import { MAX_BACKUP_BYTES, parseBackup, serializeBackup } from "./saveBackup";
 import { FrameRateMonitor } from "./FrameRateMonitor";
+import { KpopSetup } from "../kpop/Setup";
+import { createKpopWork } from "../kpop/content";
+import type { KpopProfile } from "../kpop/profile";
 import "../styles.css";
 import "./player.css";
 
 function StoryPlayer() {
   const [work, setWork] = useState<Work | null>(null);
+  const [kpopBase, setKpopBase] = useState<Work | null>(null);
+  const isKpop = new URLSearchParams(location.search).get("mode") === "kpop";
+  const [initialized, setInitialized] = useState(!isKpop);
   const [error, setError] = useState("");
   const [backupStatus, setBackupStatus] = useState("");
   const [busy, setBusy] = useState(false);
@@ -32,13 +38,21 @@ function StoryPlayer() {
         const w = validateWork(x);
         document.title =
           w.title === "捡手机" ? "捡手机" : w.title + " · 捡手机";
-        setWork(w);
+        if (isKpop) { setKpopBase(w); } else { setWork(w); }
       })
       .catch((e) => {
         if (e.name !== "AbortError") setError(String(e));
       });
     return () => abort.abort();
   }, []);
+
+  function startKpop(profile: KpopProfile) {
+    if (!kpopBase) return;
+    const w = createKpopWork(kpopBase, profile);
+    document.title = w.title + " · 捡手机";
+    setWork(w);
+    setInitialized(true);
+  }
 
   async function exportBackup() {
     if (!work || busy) return;
@@ -95,13 +109,16 @@ function StoryPlayer() {
   return (
     <main className="story-runtime">
       {new URLSearchParams(location.search).get("fps") === "1" && <FrameRateMonitor />}
-      {work ? (
+      {isKpop && !initialized && kpopBase ? (
+        <KpopSetup onStart={startKpop} />
+      ) : work ? (
         <>
           <Phone work={work} />
           <aside className="runtime-save-manager" aria-label="管理游玩存档">
             <details>
               <summary>存档</summary>
               <div className="runtime-save-panel">
+                <p><a href={isKpop ? "./" : "./?mode=kpop"}>{isKpop ? "返回雨夜捡手机" : "体验韩娱平行世界新模式"}</a></p>
                 <strong>本机游玩进度</strong>
                 <p>可以导出备份，或在另一台设备导入同版本故事的存档。</p>
                 <button type="button" disabled={busy} onClick={() => void exportBackup()}>
