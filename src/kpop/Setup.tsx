@@ -17,7 +17,7 @@ export function KpopSetup({ onStart }: { onStart: (p: KpopProfile) => void }) {
   const enter = () => {
     if (aiMode==="puter") {
       if(!agree){setError("请先同意第三方 Puter AI 处理虚构聊天；Puter 账户有使用额度，超额可能产生费用。");return;}
-      setAiSession({provider:"puter",model:"gpt-5.6-luna"});
+      setAiSession({provider:"puter",model:"gpt-5.4-nano"});
     } else if (aiMode==="custom") {
       if (!endpoint || !apiKey || !model || !agree) {
         setError("若使用在线 AI，请完整填写服务地址、模型、凭证，并同意向该服务发送虚构聊天文本；否则清空这些字段使用离线预设回复。");
