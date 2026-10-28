@@ -10,6 +10,7 @@ import { extraScenesTwo } from "./extraScenesTwo";
 import { dormScenes } from "./dormScenes";
 import { familyScenes } from "./familyScenes";
 import { sceneMessages } from "./scenes";
+import { styleMismatch } from "./chat";
 
 const work = createKpopWork(compileStory(example).work,defaultKpopProfile);
 const start = () => initialRuntime(work);
@@ -64,6 +65,14 @@ describe("K-pop reading phase, clues and natural historical archives",()=>{
     expect(second.variables["kpop-turn"]).toBe(1);
     expect(second.clues).toEqual(first.clues);
     expect(Object.keys(TRACE_NAMES)).toContain("song");
+  });
+  it("reacts to pronounced typing-style mismatch without claiming automatic discovery",()=>{
+    expect(styleMismatch("柳时恩","尊敬的柳先生，谨此致函。","金智秀 실장님","柳时恩")).toBe(true);
+    expect(styleMismatch("柳时恩","오늘 뭐해? ㅋㅋ","金智秀 실장님","柳时恩")).toBe(false);
+    expect(styleMismatch("金智秀 실장님","야 뭐해","金智秀 실장님","柳时恩")).toBe(true);
+    const s=kpopWorldStep(work,start(),"impersonate","柳时恩::style-anomaly",[]);
+    expect(s.variables["kpop-style-errors"]).toBe(1);
+    expect(s.variables["kpop-risk"]).toBe(0);
   });
   it("avoids unearned publicity: suspicion is separate from fictional public actions",()=>{
     let s=start();
