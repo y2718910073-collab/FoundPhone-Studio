@@ -112,8 +112,8 @@ export function TaobaoSkin(p: Props) {
         {tab === "商品" ? (
           <div className="taobao-products">
             {list.map((i) => (
-              <button key={i.id} onClick={() => p.onItem(i)}>
-                <Media item={i} />
+              <article key={i.id} className="shop-product-card">
+              <button onClick={() => p.onItem(i)}><Media item={i} />
                 <strong>{i.title}</strong>
                 <p>
                   ¥ <b>{meta(i, "price", "—")}</b>
@@ -163,7 +163,7 @@ export function TaobaoSkin(p: Props) {
         )}
         <Empty items={list} />
       </div>
-      <CartPanel p={p} shop={shop} items={p.items.filter(i=>i.folder !== "订单" && i.folder !== "物流")} />
+      <CartPanel shop={shop} items={p.items.filter(i=>i.folder !== "订单" && i.folder !== "物流")} />
       <OrderPanel shop={shop} />
       <Tabs
         tabs={["商品", "订单", "物流"]}
@@ -179,6 +179,7 @@ export function TaobaoSkin(p: Props) {
 }
 export function DeliverySkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "商家");
+  const shop = useLocalShop(p, "delivery");
   const list = items.filter((i) =>
     tab === "订单" ? i.folder === "订单" : i.folder !== "订单",
   );
@@ -193,11 +194,8 @@ export function DeliverySkin(p: Props) {
       <div className="catalog-scroll">
         {tab === "商家"
           ? list.map((i) => (
-              <button
-                className="delivery-merchant"
-                key={i.id}
-                onClick={() => p.onItem(i)}
-              >
+              <article className="delivery-merchant" key={i.id}>
+                <button className="delivery-shop-detail" onClick={() => p.onItem(i)}>
                 <Media item={i} />
                 <div>
                   <h3>{i.title}</h3>
@@ -208,9 +206,10 @@ export function DeliverySkin(p: Props) {
                   </p>
                   <small>{i.body.split("\n")[0]}</small>
                   <strong>¥ {meta(i, "price", "—")}</strong>
-                  <span className="local-shop-add" onClick={e=>{e.stopPropagation();shop.add(i);}}>加入餐车 +</span>
                 </div>
-              </button>
+                </button>
+                <button className="local-shop-add" aria-label={`加入餐车${i.title}`} onClick={() => shop.add(i)}>加入餐车 +</button>
+              </article>
             ))
           : list.map((i) => (
               <button
@@ -240,7 +239,7 @@ export function DeliverySkin(p: Props) {
             ))}
         <Empty items={list} />
       </div>
-      <CartPanel p={p} shop={shop} items={p.items.filter(i=>i.folder !== "订单")} title="模拟餐车" />
+      <CartPanel shop={shop} items={p.items.filter(i=>i.folder !== "订单")} title="模拟餐车" />
       <OrderPanel shop={shop} />
       <Tabs
         tabs={["商家", "订单"]}
