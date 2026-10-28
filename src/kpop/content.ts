@@ -12,7 +12,7 @@ function item(id: string, title: string, body: string, date: string, sender: str
 }
 type Speaker = { name: string; code: string };
 function timeline(name: string, owner: string, scenes: string[], date: string, speaker: Speaker, folder = ""): Item[] {
-  let all: Item[] = [];
+  const all: Item[] = [];
   scenes.forEach((scene, sceneIndex) => {
     const lines = sceneMessages(scene);
     const stamp = dateOffset(date, -4 + Math.floor(sceneIndex / 6));
