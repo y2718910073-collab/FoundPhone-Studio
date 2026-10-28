@@ -17,6 +17,7 @@ describe("player-side observation fidelity",()=>{
     expect(text).not.toContain("钢琴");
     expect(text).not.toContain("天空");
     expect(text).not.toContain("那首歌");
+    expect(observationFromRead("柳时恩",3,"柳时恩","显微镜粉",[{...seen,read:false}],[seen.id])).toContain("那首歌");
   });
   it("connects a clue only to a message that the player actually opened",()=>{
     const text=observationFromRead("柳时恩",3,"柳时恩","显微镜粉",[seen]);
