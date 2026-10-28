@@ -28,7 +28,7 @@ test("K-pop setup launches its own virtual phone and 150+ bilingual messages",as
   await chat.getByRole("textbox",{name:"KKT消息"}).fill("你好，在吗");
   await chat.getByRole("button",{name:"发送KKT消息"}).click();
   await expect(chat.locator(".kzm")).toHaveCount(202,{timeout:15000});
-  await expect(chat.locator(".kzbub").last()).toContainText("现在");
+  await expect(chat.locator(".kzbub").last()).toContainText("刚看到");
 });
 test("K-pop scene preserves source language mode and original rainy story",async ({page})=>{
   await page.goto("/?mode=kpop");
