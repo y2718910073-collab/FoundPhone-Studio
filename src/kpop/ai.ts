@@ -1,5 +1,5 @@
 import type { KpopProfile } from "./profile";
-import { defaultKpopProfile, normalizeKpopProfile } from "./profile";
+import { defaultKpopProfile } from "./profile";
 
 export type AiSessionConfig = { endpoint: string; model: string; apiKey: string };
 let aiSession: AiSessionConfig | null = null;
