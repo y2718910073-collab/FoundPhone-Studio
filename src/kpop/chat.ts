@@ -76,6 +76,30 @@ function offlineKpopReply(thread: string, text: string, count: number, crush: st
   ][count%4];
 }
 
+/** Subjective observations, never authoritative claims about a relationship. */
+export function kpopObservation(thread:string, turn:number, ownerCrush:string, fan:string) {
+  const curious = fan === "显微镜粉";
+  const scenes = thread===ownerCrush ? [
+    "你注意到：对方记得歌单的第三首，而且机主没问他是怎么记住的。这可能只是记性好吧……也许。",
+    "你注意到：两个人聊舞蹈细节比聊自己还认真。你忍不住想，谁会把对方的转身动作反复看那么多遍啊。",
+    "你注意到：窗外的云色被提了两次。同城看见同一片天很正常，可你偏偏记住了这个巧合。",
+    "你注意到：他发来“回家后好好睡”，没有追问任何私事。你猜不透这份关心究竟停在哪条线上。",
+  ] : /실장|经纪|智秀/.test(thread) ? [
+    "你注意到：经纪人的每条消息都明确时间和职责。电话里客气，文字里也维持敬语。",
+    "你注意到：文件里对外公开内容和私密行程被分开处理。你没有看到任何关于私人感情的肯定说法。",
+    "你注意到：经纪人没有追问机主和谁联系，只关心录制与交通。至少眼下如此。",
+  ] : /雅凛|宿舍|小群/.test(thread) ? [
+    "你注意到：宿舍里最严肃的危机竟然是一盒过期牛奶。偶像的手机也有这种鸡毛蒜皮。",
+    "你注意到：朋友会连发好几条短消息，机主却经常只回一个“嗯”。两人的习惯完全不同。",
+    "你注意到：几乎整串聊天都在聊便当、游戏和练习。你开始对这个人的平凡日常感到好奇。",
+  ] : [
+    "你注意到：屏幕里留下的只是零碎生活。没有证据能证明你刚才的猜测。",
+    "你注意到：已读和未读之间有许多空白。仅凭时间差很难判断一个人真正的心情。",
+  ];
+  const index=Math.max(0,turn-1)%scenes.length;
+  return curious ? scenes[index] + "（你下意识记下了这条时间线。）" : scenes[index];
+}
+
 export function useKpopChat(p: SkinProps) {
   const [raw, setRaw] = useSkinState<string[]>(p, "kpop-conversations", []);
   const [pending, setPending] = useState(false);
@@ -137,5 +161,5 @@ export function useKpopChat(p: SkinProps) {
       if(!ac.signal.aborted){setTyping(false);setPending(false);}
     }
   };
-  return {local,mode,pending,typing,error,send,cancel,isAi:!!getAiSession()};
+  return {local,mode,pending,typing,error,send,cancel,isAi:!!getAiSession(),observation:kpopObservation(thread,p.kpopTurns||1,profile?.crush||"柳时恩",profile?.fan||"路人粉")};
 }
