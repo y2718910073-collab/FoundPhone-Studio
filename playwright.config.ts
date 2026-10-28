@@ -12,6 +12,7 @@ export default defineConfig({
     "social-authoring.spec.ts",
     "mail-and-personal.spec.ts",
     "kpop-mode.spec.ts",
+    "kpop-continuity.spec.ts",
     "save-backup.spec.ts",
     "release.spec.ts",
     "launcher.spec.ts",
