@@ -1007,6 +1007,7 @@ function AppContent({
           <Suspense fallback={<div className="catalog-loading">正在打开…</div>}>
             <Skin
               appId={app.id}
+              workId={state.workId}
               owner={work.phone.owner}
               virtualTime={state.time}
               kpopMode={isKpopWork(state.workId)}
@@ -1015,6 +1016,7 @@ function AppContent({
               kpopRisk={Number(state.variables["kpop-risk"] || 0)}
               onKpopAction={onKpopAction}
               ui={state.ui?.[app.id]}
+              getUi={(key:string)=>state.ui?.[app.id]?.[key]}
               onUi={creator ? undefined : onUi}
               name={name}
               items={shown}
