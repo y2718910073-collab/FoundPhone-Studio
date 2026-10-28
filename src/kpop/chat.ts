@@ -4,6 +4,7 @@ import { makeItem, type Item } from "../schema";
 import type { SkinProps } from "../AppSkins";
 import { useSkinState } from "../skinState";
 import { getAiSession, requestAiReply, type CharacterReply, type ChatTurn } from "./ai";
+import { requestPuterReply } from "./puter";
 import { readKpopProfile, type LanguageMode } from "./profile";
 import { parseCastNames, parseExtraCouples } from "./content";
 
@@ -160,7 +161,10 @@ export function useKpopChat(p: SkinProps) {
           role:x.direction==="out"?"user":"assistant",
           content:x.ko,
         })),{role:"user",content:body}];
-        answer=await requestAiReply(config,thread,messages,profile,"这次发言人："+speakerForThread(thread,forThread.length)+"。团体聊天只能让这位发言人回复。",ac.signal);
+        const persona="这次发言人："+speakerForThread(thread,forThread.length)+"。团体聊天只能让这位发言人回复。";
+        answer=config.provider==="puter"
+          ? await requestPuterReply(thread,messages,profile,persona,config.model,ac.signal)
+          : await requestAiReply(config,thread,messages,profile,persona,ac.signal);
       } else answer=offlineKpopReply(thread,body,forThread.length,profile?.crush||"柳时恩");
       const updated=next.map(raw=>{
         const m=parseKpopMessage(raw);
