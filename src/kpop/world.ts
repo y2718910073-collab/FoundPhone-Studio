@@ -154,7 +154,16 @@ export function kpopWorldStep(work:Work, current:Runtime,kind:KpopAction,target:
   if(isRead&&isNewRead){
     const it=targetItem(work,s.messages,target);
     const clue=it && traceFor(it);
-    if(clue&&!s.clues.includes(clue))s.clues.push(clue);
+    if(clue && !s.clues.includes(clue)) s.clues.push(clue);
+    if(clue && it) {
+      const previous=s.ui?.["kpop-world"]?.["seen-evidence"];
+      const ids=Array.isArray(previous)&&previous.every(x=>typeof x==="string")?previous:[];
+      if(!ids.includes(it.id)){
+        s.ui={...s.ui,"kpop-world":{
+          ...(s.ui?.["kpop-world"]||{}),"seen-evidence":[...ids,it.id].slice(-120),
+        }};
+      }
+    }
   }
   if(PUBLIC_ACTIONS.has(kind)){
     const actions=Number(v["kpop-public-actions"]||0)+1;
