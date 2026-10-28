@@ -1,5 +1,6 @@
 import { QQThread } from "./QQThread";
 import { NativeComposer } from "../DeviceSystem";
+import { SavedChatComposer, useSavedChat } from "./SavedChat";
 import {
   CheckCheck,
   Compass,
@@ -36,10 +37,11 @@ function Bubbles({
   items: Item[];
   className?: string;
 }) {
+  const {local} = useSavedChat(p);
   return (
     <div className={`catalog-bubbles ${className}`}>
       <time className="bubble-date">{items[0]?.time.slice(0, 10)}</time>
-      {items.map((i) => (
+      {[...items, ...local].map((i) => (
         <div
           className={`catalog-message ${i.outgoing ? "outgoing" : ""}`}
           key={i.id}
@@ -61,15 +63,12 @@ function Bubbles({
   );
 }
 function Composer({ p }: { p: Props }) {
-  return (
-    <div className="catalog-composer">
-      <Plus size={19} />
-      <NativeComposer creator={p.creator} onAdd={p.onAdd} />
-
-      <Smile size={20} />
-      <Mic size={18} />
-    </div>
-  );
+  return p.creator ? <div className="catalog-composer">
+    <Plus size={19}/>
+    <NativeComposer creator onAdd={p.onAdd}/>
+    <Smile size={20}/>
+    <Mic size={18}/>
+  </div> : <SavedChatComposer p={p}/>;
 }
 function ChatRows({
   p,
