@@ -123,13 +123,13 @@ function growMessages(current:Record<string,Item[]>, work:Work, turn:number, sta
   });
   return out;
 }
-export function kpopWorldStep(work:Work, current:Runtime,kind:KpopAction,target:string,app=""):Runtime {
+export function kpopWorldStep(work:Work, current:Runtime,kind:KpopAction,target:string,previousRead:string[]=[]):Runtime {
   const s:Runtime={...current,variables:{...current.variables},clues:[...current.clues],notifications:[...current.notifications]};
   const v=s.variables;
   const was=Number(v["kpop-turn"]||0);
   const isRead=kind==="read";
   const pageEvent=kind==="kpopBrowse"||kind==="openApp" && !!target && target!=="appstore"||kind==="read";
-  const isNewRead=isRead&&!s.read.includes(target);
+  const isNewRead=isRead&&!previousRead.includes(target);
   if(pageEvent && (!isRead||isNewRead)) v["kpop-turn"]=was+1;
   const turn=Number(v["kpop-turn"]||0);
   v["kpop-phase"]=storyPhase(turn);
