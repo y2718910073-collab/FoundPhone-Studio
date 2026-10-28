@@ -1036,6 +1036,7 @@ function AppContent({
               owner={work.phone.owner}
               ui={state.ui?.[app.id]}
               onUi={onUi}
+              onKpopAction={isKpopWork(state.workId)?onKpopAction:undefined}
             />
           ) : nativeDetailApps.has(app.id) &&
             (!detail.password || unlocks.includes(detail.id)) ? (
