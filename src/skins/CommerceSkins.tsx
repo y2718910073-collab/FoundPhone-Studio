@@ -163,6 +163,8 @@ export function TaobaoSkin(p: Props) {
         )}
         <Empty items={list} />
       </div>
+      <CartPanel p={p} shop={shop} items={p.items.filter(i=>i.folder !== "订单" && i.folder !== "物流")} />
+      <OrderPanel shop={shop} />
       <Tabs
         tabs={["商品", "订单", "物流"]}
         value={tab}
@@ -238,6 +240,8 @@ export function DeliverySkin(p: Props) {
             ))}
         <Empty items={list} />
       </div>
+      <CartPanel p={p} shop={shop} items={p.items.filter(i=>i.folder !== "订单")} title="模拟餐车" />
+      <OrderPanel shop={shop} />
       <Tabs
         tabs={["商家", "订单"]}
         value={tab}
