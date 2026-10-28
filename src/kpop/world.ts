@@ -161,8 +161,13 @@ export function kpopWorldStep(work:Work, current:Runtime,kind:KpopAction,target:
   if(kind==="impersonate"){
     const count=Number(v["kpop-impersonations"]||0)+1;
     v["kpop-impersonations"]=count;
-    // A change of style is a suspicion signal, not automatic detection or external publicity.
-    v["kpop-suspicion"]=Math.min(5,Math.floor(count/4));
+    // An obvious honorific mismatch is suspicious, but it is never absolute proof.
+    const previous=Number(v["kpop-style-errors"]||0);
+    const next=previous+(target.includes("::style-anomaly")?1:0);
+    v["kpop-style-errors"]=next;
+    v["kpop-suspicion"]=Math.min(5,Math.floor(count/4)+next);
+    if(target.includes("::style-anomaly"))
+      s.notifications.push("KakaoTalk · 对方可能注意到了说话习惯的变化（虚构）");
   }
   if(isRead&&isNewRead){
     const it=targetItem(work,target);
