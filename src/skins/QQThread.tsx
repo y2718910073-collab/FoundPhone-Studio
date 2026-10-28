@@ -11,13 +11,16 @@ import {
   Video,
 } from "lucide-react";
 import { NativeComposer } from "../DeviceSystem";
+import { SavedChatComposer, useSavedChat } from "./SavedChat";
 import { Avatar, Media, meta, type Props } from "./shared";
 import "./qq-detail.css";
 export function QQThread(p: Props) {
   const [panel, setPanel] = useState("");
-  const messages = p.items.filter(
-    (i) => i.title === p.thread && i.folder !== "空间" && i.kind !== "post",
-  );
+  const {local} = useSavedChat(p);
+  const messages = [
+    ...p.items.filter((i) => i.title === p.thread && i.folder !== "空间" && i.kind !== "post"),
+    ...local,
+  ];
   const read = (i: (typeof messages)[number]) =>
     p.creator || i.password ? p.onItem(i) : p.onRead(i.id);
   return (
@@ -111,7 +114,7 @@ export function QQThread(p: Props) {
         {!messages.length && <p className="qq-thread-empty">暂无消息</p>}
       </div>
       <div className="qq-native-composer">
-        <NativeComposer creator={p.creator} onAdd={p.onAdd} />
+        {p.creator ? <NativeComposer creator onAdd={p.onAdd} /> : <SavedChatComposer p={p} />}
         <div>
           {[
             [Mic, "语音"],
