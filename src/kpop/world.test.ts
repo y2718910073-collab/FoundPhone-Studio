@@ -86,4 +86,18 @@ describe("K-pop reading phase, clues and natural historical archives",()=>{
     expect(s.messages.forum?.[0].comments.some(x=>x.startsWith("理智分析"))).toBe(true);
     expect(RISK_LEVELS).toHaveLength(7);
   });
+  it("can reach all six rumor stages only through ordered explicit actions with discovered traces",()=>{
+    let s=start();
+    s.clues=["song","sky","concern","routine","address","object","nickname","daily"];
+    let last=0;
+    for(let i=0;i<11;i++){
+      s=kpopWorldStep(work,s,"screenshot-leak","fictional-"+i,s.read);
+      const level=Number(s.variables["kpop-risk"]||0);
+      expect(level-last).toBeLessThanOrEqual(1);
+      expect(level).toBeGreaterThanOrEqual(last);
+      last=level;
+    }
+    expect(last).toBe(6);
+    expect(s.messages.forum?.some(x=>x.title.includes("公司"))||s.messages.kakao?.some(x=>x.id.startsWith("kpop-world"))).toBe(true);
+  });
 });
