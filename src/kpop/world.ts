@@ -178,7 +178,8 @@ export function kpopWorldStep(work:Work, current:Runtime,kind:KpopAction,target:
     const actions=Number(v["kpop-public-actions"]||0)+1;
     v["kpop-public-actions"]=actions;
     const previous=Number(v["kpop-risk"]||0);
-    const targetRisk=Math.min(6,Math.floor((actions+1)/2),1+Math.floor(s.clues.length/2));
+    const evidenceCap=s.clues.length===0 ? 1 : Math.min(6,3+Math.floor(s.clues.length/2));
+    const targetRisk=Math.min(6,Math.floor((actions+1)/2),evidenceCap,previous+1);
     if(targetRisk>previous){
       v["kpop-risk"]=targetRisk;
       s.notifications.push(`公开评论出现新讨论 · ${RISK_LEVELS[targetRisk]}（虚构舆情）`);
