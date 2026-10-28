@@ -5,8 +5,10 @@ import type { SkinProps } from "../AppSkins";
 import { useSkinState } from "../skinState";
 import { getAiSession, requestAiReply, type CharacterReply, type ChatTurn } from "./ai";
 import { requestPuterReply } from "./puter";
-import { readKpopProfile, type LanguageMode } from "./profile";
+import { readKpopProfile, defaultKpopProfile, type KpopProfile, type LanguageMode } from "./profile";
+import { fictionCharacter, buildCharacterRules } from "./persona";
 import { parseCastNames, parseExtraCouples } from "./content";
+import { observationFromRead } from "./observations";
 
 export type LocalKpopMessage = {
   thread: string;
@@ -43,11 +45,22 @@ export function styleMismatch(thread:string, message:string, managerName:string,
   }
   return false;
 }
-function offlineKpopReply(thread: string, text: string, count: number, crush: string): CharacterReply {
+export function offlineKpopReply(thread: string, text: string, count: number, profile: KpopProfile = defaultKpopProfile, speaker = thread): CharacterReply {
   const norm = text.toLowerCase();
-  const closeness = thread === crush;
-  const isManager = /실장|经纪|智秀/.test(thread);
-  const isFriend = /雅凛/.test(thread);
+  const person = fictionCharacter(profile,thread,speaker);
+  const closeness = person.name === profile.crush;
+  const isManager = person.relationship.includes("经纪人") || person.relationship.includes("专业工作");
+  const isFriend = person.relationship.includes("亲近") || person.relationship.includes("团员");
+  const isFamily = person.relationship.includes("母亲");
+  if(isFamily) {
+    if(/饭|吃|배고|먹|음식/.test(norm)) return {ko:"밥은 꼭 챙겨 먹어. 엄마는 오늘 반찬 만들었어.",zh:"一定记得好好吃饭。妈妈今天做了几样小菜。"};
+    if(/晚安|睡|피곤|잘 자/.test(norm)) return {ko:"응, 오늘도 고생 많았지. 푹 자고 내일 연락해.",zh:"嗯，今天也辛苦了。好好睡，明天再联系。"};
+    return [
+      {ko:"엄마는 잘 지내. 너도 오늘 너무 무리하지 마.",zh:"妈妈挺好的，你今天也别太累。"},
+      {ko:"우리 동네 빵집이 새로 열었어. 다음에 같이 가자.",zh:"我们这儿新开了家面包店，下次一起去吧。"},
+      {ko:"그랬구나. 네 얘기 좀 더 해 줘. 천천히 답해도 돼.",zh:"原来如此，再跟妈妈讲讲。不用急着回复。"},
+    ][count%3];
+  }
   if (/练习|舞蹈|무대|연습|彩排|工作|录制/.test(norm)) return isManager ?
     {ko:"네. 일정표에서 확인 후 알려드리겠습니다.",zh:"好的，我确认行程表后再通知您。"} :
     closeness ? {ko:"오늘도 늦게 끝나? 끝나면 쉬어. 답장은 천천히 해도 돼.",zh:"今天也会很晚结束吗？结束就休息吧，不用急着回复。"} :
@@ -86,30 +99,6 @@ function offlineKpopReply(thread: string, text: string, count: number, crush: st
     {ko:"그 말은 좀 의외다 ㅋㅋ 근데 무슨 뜻인지 궁금해.",zh:"这话有点出乎意料ㅋㅋ不过我挺想知道你什么意思。"},
     {ko:"지금 잠깐 쉬는 중이야. 그 얘기, 나중에 이어서 할래?",zh:"我现在在休息间隙。这个话题等会儿继续聊好吗？"},
   ][count%4];
-}
-
-/** Subjective observations, never authoritative claims about a relationship. */
-export function kpopObservation(thread:string, turn:number, ownerCrush:string, fan:string) {
-  const curious = fan === "显微镜粉";
-  const scenes = thread===ownerCrush ? [
-    "你注意到：对方记得歌单的第三首，而且机主没问他是怎么记住的。这可能只是记性好吧……也许。",
-    "你注意到：两个人聊舞蹈细节比聊自己还认真。你忍不住想，谁会把对方的转身动作反复看那么多遍啊。",
-    "你注意到：窗外的云色被提了两次。同城看见同一片天很正常，可你偏偏记住了这个巧合。",
-    "你注意到：他发来“回家后好好睡”，没有追问任何私事。你猜不透这份关心究竟停在哪条线上。",
-  ] : /실장|经纪|智秀/.test(thread) ? [
-    "你注意到：经纪人的每条消息都明确时间和职责。电话里客气，文字里也维持敬语。",
-    "你注意到：文件里对外公开内容和私密行程被分开处理。你没有看到任何关于私人感情的肯定说法。",
-    "你注意到：经纪人没有追问机主和谁联系，只关心录制与交通。至少眼下如此。",
-  ] : /雅凛|宿舍|小群/.test(thread) ? [
-    "你注意到：宿舍里最严肃的危机竟然是一盒过期牛奶。偶像的手机也有这种鸡毛蒜皮。",
-    "你注意到：朋友会连发好几条短消息，机主却经常只回一个“嗯”。两人的习惯完全不同。",
-    "你注意到：几乎整串聊天都在聊便当、游戏和练习。你开始对这个人的平凡日常感到好奇。",
-  ] : [
-    "你注意到：屏幕里留下的只是零碎生活。没有证据能证明你刚才的猜测。",
-    "你注意到：已读和未读之间有许多空白。仅凭时间差很难判断一个人真正的心情。",
-  ];
-  const index=Math.max(0,turn-1)%scenes.length;
-  return curious ? scenes[index] + "（你下意识记下了这条时间线。）" : scenes[index];
 }
 
 /** A shared session-owned queue keeps a response alive when the player navigates
@@ -208,7 +197,7 @@ export function useKpopChat(p: SkinProps) {
           ...history.map(x=>({role:x.direction==="out"?"user":"assistant",content:x.ko} as ChatTurn)),
           {role:"user",content:body},
         ];
-        const persona="这次发言人："+otherSpeaker+"。群聊只能让这位角色回复，不能同时扮演整个群。"+
+        const persona=buildCharacterRules(profile,thread,otherSpeaker)+"\n这次发言人："+otherSpeaker+"。群聊只能让这位角色回复，不能同时扮演整个群。"+
           (unusual?"这条消息敬语或说话习惯异常，可以自然感到疑惑，但不能直接认定账户被盗。":"");
         answer=config.provider==="puter"
           ? await requestPuterReply(thread,turns,profile,persona,config.model,ac.signal)
@@ -217,7 +206,7 @@ export function useKpopChat(p: SkinProps) {
         answer=unusual ? thread===profile?.managerName
           ? {ko:"말씀하신 표현이 평소와 조금 다른데, 확인이 필요하실까요?",zh:"您的措辞和平常有些不同，需要我再确认一下吗？"}
           : {ko:"잠깐, 너 오늘 왜 그렇게 딱딱하게 말해? ㅋㅋ 무슨 일 있어?",zh:"等一下，你今天说话怎么这么正式ㅋㅋ发生什么了？"}
-          : offlineKpopReply(thread,body,history.length,profile?.crush||"柳时恩");
+          : offlineKpopReply(thread,body,history.length,profile||defaultKpopProfile,otherSpeaker);
       }
       if(ac.signal.aborted)throw new Error("等待回复已取消或超时。");
       // An acknowledged message can stay unanswered. Do not reveal any unseen motive.
@@ -273,6 +262,6 @@ export function useKpopChat(p: SkinProps) {
   };
   return {
     local,mode,pending:!!pending,typing:!!typing,error,send,cancel,retract,isAi:!!getAiSession(),
-    observation:kpopObservation(thread,p.kpopTurns||1,profile?.crush||"柳时恩",profile?.fan||"路人粉"),
+    observation:observationFromRead(thread,p.kpopTurns||1,profile?.crush||"柳时恩",profile?.fan||"路人粉",p.items,p.kpopReadIds),
   };
 }

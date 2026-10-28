@@ -1,5 +1,6 @@
 import type { KpopProfile } from "./profile";
 import { defaultKpopProfile } from "./profile";
+import { buildCharacterRules } from "./persona";
 
 export type AiSessionConfig = { provider?: "custom"; endpoint: string; model: string; apiKey: string } | { provider: "puter"; model: string };
 let aiSession: AiSessionConfig | null = null;
@@ -28,19 +29,7 @@ function validEndpoint(raw: string): string {
 export type ChatTurn = { role: "user" | "assistant"; content: string };
 export type CharacterReply = { ko: string; zh: string };
 export function characterGuide(thread: string, profile: KpopProfile = defaultKpopProfile, persona = "") {
-  const isCrush = thread.includes(profile.crush);
-  const isManager = /经理|经纪|실장|매니저|智秀/.test(thread);
-  const isMom = /妈妈|엄마/.test(thread);
-  const isGroup = /宿舍|line|小群|团|그룹|단톡/.test(thread);
-  const temperament = isCrush
-    ? "你是对方的亲密圈内朋友，表达克制但会开细微玩笑，习惯半语，偶尔ㅋㅋ；不会一上来就确认关系。"
-    : isManager
-      ? "你是工作专业、句式精炼的经纪人，只谈行程与日常工作，使用符合情境的敬语，不透露未经核实的公司机密。"
-      : isMom
-        ? "你是关心孩子作息的母亲，口吻自然、生活化，不反复谈娱乐圈八卦。"
-        : isGroup
-          ? "你是宿舍或同期好友群中的一位同龄朋友，擅长琐碎玩笑、练习吐槽与团体生活，句式不拘谨。"
-          : "你是有自己生活安排和情绪起伏的朋友，回应自然，有时会拒绝回答不方便的问题。";
+  const temperament = buildCharacterRules(profile,thread);
   return [
     "你在扮演一部虚构手机里的聊天人物。所有内容都是平行世界创作，不是任何现实艺人的私生活事实。",
     `机主：${profile.owner}；意中人：${profile.crush}；团体：${profile.group}；公司：${profile.agency}。`,
@@ -51,8 +40,8 @@ export function characterGuide(thread: string, profile: KpopProfile = defaultKpo
     `当前会话：${thread}。`,
     persona ? `该角色的既定特征：${persona.slice(0,500)}。` : "",
     temperament,
-    "注意：玩家是一名捡到手机的路人，所发的消息实际上冒充了机主。可察觉口吻异常，但不能一条消息就识破或制造确定爆料。",
-    "结合会话中最近40轮的实际上下文回应最新一条话。只回复人物此刻会打出的自然短信，不要旁白，不要把任何猜测当作事实；不必每条都提CP、票根或剧情。可以已读后暂不回复，不要固定每句秒回。",
+    "这是一段虚构角色之间的私人聊天。接收端应自然地把发言者看作机主，不知道幕后玩家正在翻看手机。若出现非常明显的称呼或敬语异常，可以疑惑，但不能凭空识破。",
+    "结合会话中最近40轮的上下文回应最后一条消息；认真理解玩家说的内容，不机械重复固定词。只输出此时该角色会发的短信，不写旁白、不剧透、不宣布关系；可以转移话题、回答不知道或礼貌拒绝。保持 1—3 句自然聊天，不要反复强调 CP。",
     "要保留韩语长幼敬语／半语习惯、亲疏距离；如果玩家问到不存在的事实，不要捏造现实细节。",
     "严格输出 JSON 对象：{\"ko\":\"自然韩文聊天回复\",\"zh\":\"准确的简体中文翻译\"}。不得有Markdown代码块。每项1至3短句，总长度不超过200字。",
   ].filter(Boolean).join("\n");

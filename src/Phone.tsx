@@ -1016,6 +1016,7 @@ function AppContent({
               kpopMode={isKpopWork(state.workId)}
               kpopSync={state.variables["kpop-sync"] === true}
               kpopTurns={Number(state.variables["kpop-turn"] || 0)}
+              kpopReadIds={state.read}
               kpopRisk={Number(state.variables["kpop-risk"] || 0)}
               onKpopAction={onKpopAction}
               ui={state.ui?.[app.id]}

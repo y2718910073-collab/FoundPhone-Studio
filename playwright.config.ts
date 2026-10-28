@@ -13,6 +13,7 @@ export default defineConfig({
     "mail-and-personal.spec.ts",
     "kpop-mode.spec.ts",
     "kpop-continuity.spec.ts",
+    "kpop-unified-chat.spec.ts",
     "save-backup.spec.ts",
     "release.spec.ts",
     "launcher.spec.ts",
