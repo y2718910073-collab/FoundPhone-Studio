@@ -740,7 +740,7 @@ export function MymyX(p: SkinProps) {
                     <button
                       aria-label={"转发" + i.title}
                       aria-pressed={reposts.includes(i.id)}
-                      onClick={() => toggle(i.id, reposts, setReposts)}
+                      onClick={() => { toggle(i.id, reposts, setReposts); if (p.kpopMode&&!reposts.includes(i.id)) p.onKpopAction?.("public-repost",i.id); }}
                     >
                       <Repeat2 />
                       {reposts.includes(i.id) ? 1 : 0}
