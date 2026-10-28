@@ -1,0 +1,15 @@
+.chat-ai-bar{flex-shrink:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:5px;padding:7px 11px;background:#f3f7fd;color:#334155;border-top:1px solid #dbe5f4;font-size:10px;line-height:1.45;max-height:125px;overflow:auto}
+.chat-ai-bar>span{font-size:10px;font-weight:600}
+.chat-ai-bar>small{flex-basis:100%;font-size:9px;line-height:1.45;color:#59687b}
+.chat-ai-bar>button,.chat-ai-error button{background:#235fca;color:#fff;border:0;border-radius:14px;padding:6px 9px;font-size:10px;line-height:1.3}
+.chat-ai-bar button:disabled{opacity:.5}
+.chat-ai-online{color:#0d7b4e}
+.chat-ai-thinking{color:#0c7d61!important}
+.chat-ai-error{flex-basis:100%;display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:4px 0;font-size:10px;color:#bc3535}
+.chat-ai-error span{flex:1}
+.chat-ai-error button{background:#9a4040}
+.saved-chat-compose{flex-wrap:wrap}
+.saved-chat-compose>.chat-ai-bar{order:-1;flex-basis:100%;width:100%;margin:-8px -10px 2px;padding:7px 10px}
+.local-chat-compose+.chat-ai-bar{border-bottom:1px solid #dfdfdf}
+.wechat-ui .chat-ai-bar,.whatsapp-ui .chat-ai-bar{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}
+.qq-native-composer .chat-ai-bar{width:100%}
