@@ -157,6 +157,7 @@ export function MymyKakao(p: SkinProps) {
             })}
             {!messages.length && <Blank />}
           </div>
+          {p.kpopMode && <div className="kpop-observation" aria-label="你注意到">{kpop.observation}</div>}
           {p.kpopMode && <div className="kpop-chat-status" role="status">{kpop.typing ? "对方正在输入…" : kpop.pending ? "已送达 · 等待对方查看" : kpop.isAi ? "AI 对话 · 平行世界虚构" : "离线剧情回复 · 并非自由 AI"}{kpop.error && <span className="kpop-chat-error"> · {kpop.error}</span>}{p.kpopSync && <span> · 新机同步开启</span>}</div>}
           <form
             className="kzinp"
