@@ -12,7 +12,7 @@ export function setAiSession(config: AiSessionConfig | null) {
 }
 export function getAiSession() {
   if(aiSession)return aiSession;
-  try {return localStorage.getItem("foundphone-kpop-ai-choice")==="puter" ? {provider:"puter" as const,model:"gpt-5.4-nano"} : null;}
+  try {return localStorage.getItem("foundphone-kpop-ai-choice")==="puter" ? {provider:"puter" as const,model:"gpt-5.6-luna"} : null;}
   catch{return null;}
 }
 function validEndpoint(raw: string): string {
