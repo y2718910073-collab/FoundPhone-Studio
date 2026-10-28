@@ -28,6 +28,7 @@ import {
 import type { SkinProps } from "../../AppSkins";
 import { Avatar, Media } from "../../skins/shared";
 import { useSkinState } from "../../skinState";
+import { displayKpopMessage, useKpopChat } from "../../kpop/chat";
 import { makeItem, type Item } from "../../schema";
 import "./ui.css";
 import "./adapter.css";
@@ -62,6 +63,7 @@ function Back({ onClick }: { onClick: () => void }) {
   );
 }
 export function MymyKakao(p: SkinProps) {
+  const kpop = useKpopChat(p);
   const [tab, setTab] = useSkinState<string>(p, "mymyTab", "聊天"),
     [sent, setSent] = useSkinState<string[]>(p, "mymyKktSent", []),
     [draft, setDraft] = useState(""),
@@ -69,8 +71,8 @@ export function MymyKakao(p: SkinProps) {
     [menu, setMenu] = useState(false);
   const list = grouped(p.items),
     messages = [
-      ...p.items.filter((i) => i.title === p.thread),
-      ...sent.flatMap((raw, index) => {
+      ...p.items.filter((i) => i.title === p.thread).map(i => p.kpopMode && i.meta.ko && i.meta.zh ? {...i,body:displayKpopMessage(i.meta.ko,i.meta.zh,kpop.mode)} : i),
+      ...(p.kpopMode ? kpop.local : sent.flatMap((raw, index) => {
         try {
           const entry: unknown = JSON.parse(raw);
           if (
@@ -94,7 +96,7 @@ export function MymyKakao(p: SkinProps) {
         } catch {
           return [];
         }
-      }),
+      })),
     ],
     scroll = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -102,7 +104,7 @@ export function MymyKakao(p: SkinProps) {
     if (node) node.scrollTop = node.scrollHeight;
   }, [p.thread, messages.length]);
   return (
-    <div className="mymy-ui mymy-kakao" data-mymy="kakao">
+    <div className="mymy-ui mymy-kakao" data-mymy="kakao" data-kpop={p.kpopMode || false}>
       {p.thread ? (
         <>
           <header className="kzth">
@@ -155,11 +157,14 @@ export function MymyKakao(p: SkinProps) {
             })}
             {!messages.length && <Blank />}
           </div>
+          {p.kpopMode && <div className="kpop-observation" aria-label="你注意到">{kpop.observation}</div>}
+          {p.kpopMode && <div className="kpop-chat-status" role="status">{kpop.typing ? "对方正在输入…" : kpop.pending ? "已送达 · 等待对方查看" : kpop.isAi ? "AI 对话 · 平行世界虚构" : "离线剧情回复 · 并非自由 AI"}{kpop.error && <span className="kpop-chat-error"> · {kpop.error}</span>}{p.kpopSync && <span> · 新机同步开启</span>}</div>}
           <form
             className="kzinp"
             onSubmit={(e) => {
               e.preventDefault();
               if (draft.trim()) {
+                if (p.kpopMode) { void kpop.send(draft); setDraft(""); return; }
                 setSent([
                   ...sent,
                   JSON.stringify([
@@ -183,14 +188,15 @@ export function MymyKakao(p: SkinProps) {
               aria-label="KKT消息"
               placeholder="输入消息"
               value={draft}
-              maxLength={2000}
+              maxLength={p.kpopMode?300:2000}
+              disabled={p.kpopMode && kpop.pending}
               onChange={(e) => setDraft(e.target.value)}
             />
             <Smile size={22} />
             <button
               className={draft.trim() ? "go" : ""}
               aria-label="发送KKT消息"
-              disabled={!draft.trim()}
+              disabled={!draft.trim() || (p.kpopMode && kpop.pending)}
             >
               ↑
             </button>
@@ -272,7 +278,7 @@ export function MymyKakao(p: SkinProps) {
                     <Avatar name={last.sender || g.title} src={last.avatar} />
                     <span className="kzkn">
                       <b>{g.title}</b>
-                      <small>{tab === "好友" ? last.sender : last.body}</small>
+                      <small>{tab === "好友" ? last.sender : p.kpopMode && last.meta.zh ? last.meta.zh : last.body}</small>
                     </span>
                     <span className="kzkmt">
                       {last.time.slice(-5)}

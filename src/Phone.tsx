@@ -64,6 +64,8 @@ import {
 } from "./schema";
 import { dispatch, choose, visible, advance } from "./engine";
 import { db } from "./persistence";
+import { isKpopWork } from "./kpop/profile";
+import { syncKpopContent } from "./kpop/content";
 export function AppIcon({
   id,
   name,
@@ -243,8 +245,27 @@ function PhoneRuntime({
     }, 1000);
     return () => clearInterval(interval);
   }, [creator, ready, work.id, work.updatedAt]);
-  const event = (event: string, target: string) => {
-    if (!creator) update(dispatch(work, runtimeRef.current, event, target));
+  const event = (kind: string, target: string) => {
+    if (creator) return;
+    const next = dispatch(work, runtimeRef.current, kind, target);
+    if (isKpopWork(work.id) && ["openApp","read","kpopBrowse"].includes(kind)) {
+      const turns = Number(next.variables["kpop-turn"] || 0) + 1;
+      const firstSync = turns >= 15 && next.variables["kpop-sync"] !== true;
+      const synced = syncKpopContent(work);
+      update({
+        ...next,
+        variables: { ...next.variables, "kpop-turn": turns, "kpop-sync": firstSync || next.variables["kpop-sync"] === true },
+        notifications: firstSync ? [
+          ...next.notifications,
+          "云同步 · 新手机继续使用，旧手机收到新的 KakaoTalk 和动态（虚构剧情）",
+        ] : next.notifications,
+        messages: firstSync ? {
+          ...next.messages,
+          ...Object.fromEntries(Object.entries(synced).map(([appId, entries]) =>
+            [appId, [...(next.messages[appId] || []), ...entries]])),
+        } : next.messages,
+      });
+    } else update(next);
   };
   const captureApp = () => {
     if (!app) return;
@@ -453,6 +474,7 @@ function PhoneRuntime({
                   creator={creator}
                   state={s}
                   onRead={(id) => event("read", id)}
+                  onBrowse={() => event("kpopBrowse", "thread")}
                   onEdit={(item) => onEdit?.(app, item)}
                   onAdd={() => onAdd?.(app)}
                   onBack={() => setApp("")}
@@ -861,6 +883,7 @@ function AppContent({
   creator,
   state,
   onRead,
+  onBrowse,
   onEdit,
   onAdd,
   onBack,
@@ -874,6 +897,7 @@ function AppContent({
   creator: boolean;
   state: Runtime;
   onRead: (id: string) => void;
+  onBrowse?: () => void;
   onEdit: (item: Item) => void;
   onAdd: () => void;
   onBack: () => void;
@@ -989,6 +1013,9 @@ function AppContent({
               appId={app.id}
               owner={work.phone.owner}
               virtualTime={state.time}
+              kpopMode={isKpopWork(state.workId)}
+              kpopSync={state.variables["kpop-sync"] === true}
+              kpopTurns={Number(state.variables["kpop-turn"] || 0)}
               ui={state.ui?.[app.id]}
               onUi={creator ? undefined : onUi}
               name={name}
@@ -999,7 +1026,7 @@ function AppContent({
               onAdd={onAdd}
               onBack={onBack}
               thread={thread}
-              onThread={setThread}
+              onThread={(name: string) => { if (name && isKpopWork(state.workId)) onBrowse?.(); setThread(name); }}
             />
           </Suspense>
         </div>
