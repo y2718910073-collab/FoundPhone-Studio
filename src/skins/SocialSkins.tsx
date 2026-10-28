@@ -1,5 +1,6 @@
 import { useSkinState } from "../skinState";
 import { CommentsSheet } from "./CommentsSheet";
+import { SocialPostComposer } from "./SocialPostComposer";
 import {
   ArrowDown,
   ArrowUp,
@@ -98,6 +99,7 @@ export function WeiboSkin(p: Props) {
   return (
     <div className="catalog-skin weibo-ui">
       <Header p={p} />
+      <SocialPostComposer p={p} />
       <div className="weibo-sections">
         {["关注", "发现", "我"].map((t) => (
           <button
@@ -151,6 +153,7 @@ export function XSkin(p: Props) {
   return (
     <div className="catalog-skin x-ui">
       <Header p={p} />
+      <SocialPostComposer p={p} />
       <div className="x-feed-tabs">
         <button
           className={tab === "为你推荐" ? "selected" : ""}
@@ -202,6 +205,7 @@ export function ThreadsSkin(p: Props) {
   return (
     <div className="catalog-skin threads-ui">
       <Header p={p} />
+      <SocialPostComposer p={p} />
       <div className="threads-title">
         <AtSign size={30} />
         <button
@@ -253,6 +257,7 @@ export function FacebookSkin(p: Props) {
   return (
     <div className="catalog-skin facebook-ui">
       <Header p={p} />
+      <SocialPostComposer p={p} />
       <Tabs
         tabs={["动态", "好友", "个人主页"]}
         value={tab}
@@ -365,6 +370,7 @@ export function RedbookSkin(p: Props) {
   return (
     <div className="catalog-skin redbook-ui">
       <Header p={p} />
+      <SocialPostComposer p={p} />
       <div className="redbook-top">
         {["关注", "发现", "收藏"].map((t) => (
           <button className={tab === t ? "selected" : ""} key={t} onClick={() => setTab(t)}>{t}</button>
@@ -391,6 +397,7 @@ export function PinterestSkin(p: Props) {
   return (
     <div className="catalog-skin pinterest-ui">
       <Header p={p} />
+      <SocialPostComposer p={p} />
       <div className="catalog-scroll">
         {tab === "收藏板" && !board ? (
           <>
@@ -450,6 +457,7 @@ export function RedditSkin(p: Props) {
   return (
     <div className="catalog-skin reddit-ui">
       <Header p={p} />
+      <SocialPostComposer p={p} />
       <div className="reddit-community">
         <Hash size={21} />
         <button onClick={() => setTab(tab === "首页" ? "社区" : "首页")}>
@@ -538,6 +546,7 @@ export function ForumSkin(p: Props) {
   return (
     <div className="catalog-skin forum-ui">
       <Header p={p} />
+      <SocialPostComposer p={p} />
       <div className="forum-banner">
         <Hash size={27} />
         <strong>{board || "论坛"}</strong>
@@ -617,6 +626,7 @@ export function SnapchatSkin(p: Props) {
   return (
     <div className="catalog-skin snapchat-ui">
       <Header p={p} />
+      <SocialPostComposer p={p} />
       <div className="snap-content">
         {tab === "聊天" ? (
           <div className="snap-chats">
