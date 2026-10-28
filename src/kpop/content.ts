@@ -39,8 +39,10 @@ export function parseCastNames(raw:string):string[] {
   return [...new Set(raw.split(/[、，,;；\n]/).map(x=>x.trim()).filter(Boolean))].slice(0,12);
 }
 export function parseExtraCouples(raw:string):[string,string][] {
-  return raw.split(/[;；\n]/).map(entry=>entry.split(/[×xX&／\\/]/).map(x=>x.trim()).filter(Boolean))
-    .filter(pair=>pair.length>=2 && pair[0]!==pair[1]).slice(0,2).map(pair=>[pair[0],pair[1]]);
+  return raw.replaceAll("/", "×").split(/[;；\n]/)
+    .map(entry=>entry.split(/[×xX&／]/).map(x=>x.trim()).filter(Boolean))
+    .filter(pair=>pair.length>=2 && pair[0]!==pair[1]).slice(0,2)
+    .map(pair=>[pair[0],pair[1]]);
 }
 export function createKpopWork(original: Work, profile: KpopProfile): Work {
   // Original player mechanics, 49 registered apps and data shape remain unchanged.
