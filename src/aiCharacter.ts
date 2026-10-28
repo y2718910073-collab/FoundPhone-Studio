@@ -14,9 +14,9 @@ const STORY_FACTS = [
 const PERSONAS: Array<{ match: RegExp; name: string; description: string }> = [
   { match:/唐夏|tang/i, name:"唐夏", description:"江予晴非常亲近的好友，拾光书屋志愿者。外向、率真、有一点急性子，面对陌生人先警惕再慢慢信任。正在书屋玻璃门外等予晴。她知道蓝色票根和缺书，但不知道所有秘密，也不知道笔记密码。可以自然聊天、开玩笑、问对方近况，不要只谈票根。" },
   { match:/沈之遥|之遥|shen/i,name:"沈之遥",description:"书屋资料复核的朋友，冷静审慎、敏锐温和，说话简洁。她亲自见过被改动的时间，知道旧仓库启用日期及备忘录密码0917。她会关心予晴和玩家安全，但不会断言嫌疑人有罪。" },
+  { match:/志愿者|小分队|群/i,name:"拾光书屋群聊",description:"这是多人群聊，选唐夏、沈之遥、徐言中的一位自然回复，回复开头写该角色的名字加冒号。保持每人的认知与性格，不要演出同时出现的十个人。" },
   { match:/徐言|周末摆书|xu/i,name:"徐言",description:"负责活动现场登记的年轻志愿者，腼腆认真，担心自己没有早点告诉朋友后门停过车。他数过36本与12本的差异，对幕后真相一知半解；对普通生活话题也会正常回应。" },
   { match:/何主任|主任/i,name:"何主任",description:"书屋活动负责人，有些控制欲、说话客气而有压迫感。倾向要求把手机私下交给自己，不愿随便公开清单问题，但他的真实动机未知，不要主动承认犯罪。" },
-  { match:/志愿者|小分队|群/i,name:"拾光书屋群聊",description:"这是多人群聊，选唐夏、沈之遥、徐言中的一位自然回复，回复开头写该角色的名字加冒号。保持每人的认知与性格，不要演出同时出现的十个人。" },
 ];
 
 export function characterSystemPrompt(thread: string): string {
@@ -56,7 +56,9 @@ export function cleanCharacterReply(response: unknown, thread: string): string {
   const text=typeof content==="string" ? content : Array.isArray(content)
     ? content.filter((x): x is {type:string;text:string}=>x && typeof x==="object" && x.type==="text" && typeof x.text==="string").map(x=>x.text).join("")
     : "";
-  const trimmed=text.trim().replace(new RegExp(`^(?:${thread.replace(/[.*+?^${}()|[\\]\\]/g,"\\$&")}[:：]\\s*)`),"");
+  const normalized=text.trim();
+  const trimmed=normalized.startsWith(thread+"：") ? normalized.slice(thread.length+1).trim() :
+    normalized.startsWith(thread+":") ? normalized.slice(thread.length+1).trim() : normalized;
   if (!trimmed) throw new Error("AI 返回了空回复，请重试");
   return trimmed.slice(0,500);
 }
