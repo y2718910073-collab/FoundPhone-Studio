@@ -116,12 +116,12 @@ export function useKpopChat(p: SkinProps) {
       setTyping(true);
       let answer:CharacterReply;
       if(config && profile) {
-        const old=p.items.filter(i=>i.title===thread).slice(-34).map(i=>({
-          role:i.outgoing?"user":"assistant" as const,
+        const old:ChatTurn[]=p.items.filter(i=>i.title===thread).slice(-34).map(i=>({
+          role:i.outgoing?"user":"assistant",
           content:i.meta.ko||i.body,
         }));
-        const messages:ChatTurn[]=[...old,...forThread.map(x=>({
-          role:x.direction==="out"?"user":"assistant" as const,
+        const messages:ChatTurn[]=[...old,...forThread.map((x):ChatTurn=>({
+          role:x.direction==="out"?"user":"assistant",
           content:x.ko,
         })),{role:"user",content:body}];
         answer=await requestAiReply(config,thread,messages,profile,"",ac.signal);
