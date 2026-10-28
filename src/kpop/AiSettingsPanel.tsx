@@ -1,4 +1,5 @@
 import {useState} from "react";
+import "./ai-settings.css";
 import {Bot,ShieldCheck,ShieldAlert} from "lucide-react";
 import {getAiSession,setAiSession} from "./ai";
 
