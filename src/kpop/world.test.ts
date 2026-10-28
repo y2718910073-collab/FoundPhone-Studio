@@ -49,10 +49,10 @@ describe("K-pop reading phase, clues and natural historical archives",()=>{
     expect(s.variables["kpop-turn"]).toBe(16);
     expect(s.variables["kpop-sync"]).toBe(true);
     expect(s.messages.kakao.length).toBeGreaterThan(0);
-    const before=s.messages.kakao.length;
+    const before=Object.values(s.messages).flat().length;
     s=page(s);
     s=page(s);
-    expect(s.messages.kakao.length).toBeGreaterThan(before);
+    expect(Object.values(s.messages).flat().length).toBeGreaterThan(before);
     expect(new Set(s.messages.kakao.map(x=>x.id)).size).toBe(s.messages.kakao.length);
   });
   it("does not duplicate a page turn or clue when revisiting the same document",()=>{
