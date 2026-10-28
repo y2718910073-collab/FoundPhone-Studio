@@ -103,7 +103,7 @@ function riskPosts(work:Work,turn:number,stage:number):Item[]{
       "没有确凿证据就不要扩散流言。","为你推荐")],
   };
   if(stage>=6){
-    items.kakao=[newItem("kakao",turn,2,date,"金智秀 실장님","金智秀 실장님",
+    items.kakao=[newItem("kakao",turn,2,date,String(work.variables["kpop-manager"]||"金智秀 실장님"),String(work.variables["kpop-manager"]||"金智秀 실장님"),
       "이번 주 공개 SNS 일정만 다시 확인 부탁드립니다.",
       "请重新确认本周公开 SNS 的活动安排。","工作")];
   }
@@ -122,10 +122,25 @@ function growMessages(current:Record<string,Item[]>, work:Work, turn:number, sta
     // Initial delta is small; subsequent updates are incremental. Never regenerate archives.
     const scenes=firstSync?[syncScenes[0],syncScenes[1],syncScenes[2],syncScenes[3]]:[syncScenes[(turn-16)%syncScenes.length]];
     scenes.forEach((scene,index)=>{
-      const sender=scene.sender==="机主"?work.phone.owner:scene.sender==="柳时恩" ? String(work.variables["kpop-crush"]||"柳时恩"):scene.sender;
-      const title=scene.thread==="柳时恩"?String(work.variables["kpop-crush"]||"柳时恩"):scene.thread;
+      const names:Record<string,string>={
+        "机主":work.phone.owner,
+        "柳时恩":String(work.variables["kpop-crush"]||"柳时恩"),
+        "朴雅凛":String(work.variables["kpop-friend"]||"朴雅凛"),
+        "金智秀 실장님":String(work.variables["kpop-manager"]||"金智秀 실장님"),
+        "엄마":String(work.variables["kpop-family"]||"엄마"),
+      };
+      const sender=names[scene.sender]||scene.sender;
+      const title=names[scene.thread]||scene.thread;
       push(scene.app,[newItem(scene.app,turn,index,work.phone.date||"2026-10-28",sender,title,scene.ko,scene.zh,"新同步")]);
     });
+  }
+  if(turn>16 && turn%5===0){
+    const groups=[...new Set((work.data.kakao||[]).map(x=>x.title).filter(x=>x.startsWith("跨团同期群 · ")))];
+    groups.forEach((thread,index)=>push("kakao",[
+      newItem("kakao",turn,10+index,work.phone.date||"2026-10-28",work.phone.owner,thread,
+        "오늘도 수고했어. 공연 끝나면 얘기하자.",
+        "今天也辛苦了，演出结束再聊。","新同步"),
+    ]));
   }
   if(stage>0) riskPosts(work,turn,stage).forEach(x=>{
     const app=x.id.includes("-twitter-")?"twitter":x.id.includes("-kakao-")?"kakao":"forum";
