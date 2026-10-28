@@ -8,6 +8,7 @@ export default defineConfig({
     "chat-music.spec.ts",
     "all-apps-foundation.spec.ts",
     "shop-and-records.spec.ts",
+    "saved-chat.spec.ts",
     "save-backup.spec.ts",
     "release.spec.ts",
     "launcher.spec.ts",
