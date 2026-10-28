@@ -11,6 +11,7 @@ export default defineConfig({
     "saved-chat.spec.ts",
     "social-authoring.spec.ts",
     "mail-and-personal.spec.ts",
+    "kpop-mode.spec.ts",
     "save-backup.spec.ts",
     "release.spec.ts",
     "launcher.spec.ts",
