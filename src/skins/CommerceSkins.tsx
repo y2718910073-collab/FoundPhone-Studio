@@ -94,159 +94,90 @@ export function AlipaySkin(p: Props) {
 export function TaobaoSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "商品");
   const [status, setStatus] = useState("全部");
+  const [shopPage, setShopPage] = useState<"browse" | "cart" | "orders">("browse");
   const shop = useLocalShop(p, "taobao");
+  const products = p.items.filter(i => !["订单", "物流"].includes(i.folder));
   const list = items
-    .filter((i) =>
-      tab === "商品"
-        ? i.folder !== "订单" && i.folder !== "物流"
-        : i.folder === tab,
-    )
-    .filter((i) => status === "全部" || meta(i, "status") === status);
-  return (
-    <div className="catalog-skin taobao-ui">
-      <Header p={p} />
-      <div className="taobao-search">
-        <SearchBox value={q} set={setQ} placeholder="搜索商品或订单" />
-      </div>
-      <div className="catalog-scroll">
-        {tab === "商品" ? (
+    .filter(i => tab === "商品" ? !["订单", "物流"].includes(i.folder) : i.folder === tab)
+    .filter(i => status === "全部" || meta(i, "status") === status);
+  const quantity = Object.values(shop.cart).reduce((sum, n) => sum + n, 0);
+  return <div className="catalog-skin taobao-ui">
+    <Header p={p}/>
+    <div className="local-shop-switch" aria-label="淘宝页面">
+      <button className={shopPage === "browse" ? "selected" : ""} onClick={() => setShopPage("browse")}>逛商品</button>
+      <button className={shopPage === "cart" ? "selected" : ""} onClick={() => setShopPage("cart")}>购物车 ({quantity})</button>
+      <button className={shopPage === "orders" ? "selected" : ""} onClick={() => setShopPage("orders")}>我的订单 ({shop.orders.length})</button>
+    </div>
+    {shopPage === "browse" && <div className="taobao-search"><SearchBox value={q} set={setQ} placeholder="搜索商品或订单" /></div>}
+    <div className="catalog-scroll">
+      {shopPage === "cart" ? <CartPanel shop={shop} items={products}/> :
+        shopPage === "orders" ? <OrderPanel shop={shop}/> :
+        tab === "商品" ? <>
           <div className="taobao-products">
-            {list.map((i) => (
-              <article key={i.id} className="shop-product-card">
-              <button onClick={() => p.onItem(i)}><Media item={i} />
+            {list.map(i => <article className="shop-product-card" key={i.id}>
+              <button className="shop-product-info" onClick={() => p.onItem(i)}>
+                <Media item={i} />
                 <strong>{i.title}</strong>
-                <p>
-                  ¥ <b>{meta(i, "price", "—")}</b>
-                </p>
+                <p>¥ <b>{meta(i, "price", "—")}</b></p>
                 <small>{i.sender}</small>
               </button>
-            ))}
+              <button className="local-shop-add" aria-label={`加入购物车${i.title}`} onClick={() => shop.add(i)}>加入购物车 +</button>
+            </article>)}
           </div>
-        ) : (
-          <>
-            <div className="taobao-status">
-              {["全部", "待付款", "待发货", "待收货", "已完成"].map((s) => (
-                <button
-                  className={s === status ? "selected" : ""}
-                  key={s}
-                  onClick={() => setStatus(s)}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-            {list.map((i) => (
-              <button
-                className="taobao-order"
-                key={i.id}
-                onClick={() => p.onItem(i)}
-              >
-                <div>
-                  <ShoppingBag size={16} />
-                  <strong>{i.sender}</strong>
-                  <small>{meta(i, "status", "订单记录")}</small>
-                </div>
-                <section>
-                  <Media item={i} />
-                  <span>
-                    <strong>{i.title}</strong>
-                    <p>
-                      {tab === "物流" ? meta(i, "tracking", i.body) : i.body}
-                    </p>
-                    <b>¥ {meta(i, "price", "—")}</b>
-                  </span>
-                </section>
-                <footer>{meta(i, "number", i.time)}</footer>
-              </button>
-            ))}
-          </>
-        )}
-        <Empty items={list} />
-      </div>
-      <CartPanel shop={shop} items={p.items.filter(i=>i.folder !== "订单" && i.folder !== "物流")} />
-      <OrderPanel shop={shop} />
-      <Tabs
-        tabs={["商品", "订单", "物流"]}
-        value={tab}
-        set={(t) => {
-          setTab(t);
-          setStatus("全部");
-        }}
-        icons={[<Home />, <ShoppingBag />, <Truck />]}
-      />
+          <Empty items={list}/>
+        </> : <>
+          <div className="taobao-status">
+            {["全部","待付款","待发货","待收货","已完成"].map(label => <button className={label === status ? "selected" : ""} key={label} onClick={() => setStatus(label)}>{label}</button>)}
+          </div>
+          {list.map(i => <button className="taobao-order" key={i.id} onClick={() => p.onItem(i)}>
+            <div><ShoppingBag size={16}/><strong>{i.sender}</strong><small>{meta(i,"status","订单记录")}</small></div>
+            <section><Media item={i}/><span><strong>{i.title}</strong><p>{tab === "物流" ? meta(i,"tracking",i.body) : i.body}</p><b>¥ {meta(i,"price","—")}</b></span></section>
+            <footer>{meta(i,"number",i.time)}</footer>
+          </button>)}
+          <Empty items={list}/>
+        </>}
     </div>
-  );
+    <Tabs tabs={["商品","订单","物流"]} value={tab} set={next => {setTab(next);setShopPage("browse");setStatus("全部");}} icons={[<Home/>,<ShoppingBag/>,<Truck/>]}/>
+  </div>;
 }
+
 export function DeliverySkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "商家");
-  const shop = useLocalShop(p, "delivery");
-  const list = items.filter((i) =>
-    tab === "订单" ? i.folder === "订单" : i.folder !== "订单",
-  );
-  return (
-    <div className="catalog-skin delivery-ui">
-      <Header p={p} />
-      <div className="delivery-location">
-        <MapPin size={18} />
-        <strong>{meta(items[0], "address", "作品配送地址")}</strong>
-      </div>
-      <SearchBox value={q} set={setQ} placeholder="搜索商家或订单" />
-      <div className="catalog-scroll">
-        {tab === "商家"
-          ? list.map((i) => (
-              <article className="delivery-merchant" key={i.id}>
-                <button className="delivery-shop-detail" onClick={() => p.onItem(i)}>
-                <Media item={i} />
-                <div>
-                  <h3>{i.title}</h3>
-                  <p>
-                    <Star size={12} />
-                    {meta(i, "rating", "—")}
-                    <span>{meta(i, "duration")}</span>
-                  </p>
-                  <small>{i.body.split("\n")[0]}</small>
-                  <strong>¥ {meta(i, "price", "—")}</strong>
-                </div>
-                </button>
-                <button className="local-shop-add" aria-label={`加入餐车${i.title}`} onClick={() => shop.add(i)}>加入餐车 +</button>
-              </article>
-            ))
-          : list.map((i) => (
-              <button
-                className="delivery-order"
-                key={i.id}
-                onClick={() => p.onItem(i)}
-              >
-                <header>
-                  <Utensils size={18} />
-                  <strong>{i.sender}</strong>
-                  <span>{meta(i, "status", "配送记录")}</span>
-                </header>
-                <section>
-                  <Media item={i} />
-                  <div>
-                    <strong>{i.title}</strong>
-                    <p>{i.body}</p>
-                    <small>{i.time}</small>
-                  </div>
-                  <b>¥ {meta(i, "price", "—")}</b>
-                </section>
-                <footer>
-                  <MapPin size={13} />
-                  {meta(i, "address")}
-                </footer>
-              </button>
-            ))}
-        <Empty items={list} />
-      </div>
-      <CartPanel shop={shop} items={p.items.filter(i=>i.folder !== "订单")} title="模拟餐车" />
-      <OrderPanel shop={shop} />
-      <Tabs
-        tabs={["商家", "订单"]}
-        value={tab}
-        set={setTab}
-        icons={[<Utensils />, <Receipt />]}
-      />
+  const [shopPage, setShopPage] = useState<"browse" | "cart" | "orders">("browse");
+  const shop = useLocalShop(p,"delivery");
+  const products = p.items.filter(i => i.folder !== "订单");
+  const list = items.filter(i => tab === "订单" ? i.folder === "订单" : i.folder !== "订单");
+  const quantity = Object.values(shop.cart).reduce((sum,n) => sum+n,0);
+  return <div className="catalog-skin delivery-ui">
+    <Header p={p}/>
+    <div className="local-shop-switch" aria-label="外卖页面">
+      <button className={shopPage === "browse" ? "selected" : ""} onClick={() => setShopPage("browse")}>商家</button>
+      <button className={shopPage === "cart" ? "selected" : ""} onClick={() => setShopPage("cart")}>餐车 ({quantity})</button>
+      <button className={shopPage === "orders" ? "selected" : ""} onClick={() => setShopPage("orders")}>我的订单 ({shop.orders.length})</button>
     </div>
-  );
+    <div className="delivery-location"><MapPin size={18}/><strong>{meta(items[0],"address","作品内虚构配送地址")}</strong></div>
+    {shopPage === "browse" && <SearchBox value={q} set={setQ} placeholder="搜索商家或订单"/>}
+    <div className="catalog-scroll">
+      {shopPage === "cart" ? <CartPanel shop={shop} items={products} title="模拟餐车"/> :
+        shopPage === "orders" ? <OrderPanel shop={shop}/> :
+        tab === "商家" ? <>
+          {list.map(i => <article className="delivery-merchant" key={i.id}>
+            <button className="delivery-shop-detail" onClick={() => p.onItem(i)}>
+              <Media item={i}/>
+              <div><h3>{i.title}</h3><p><Star size={12}/>{meta(i,"rating","—")}<span>{meta(i,"duration")}</span></p><small>{i.body.split("\n")[0]}</small><strong>¥ {meta(i,"price","—")}</strong></div>
+            </button>
+            <button className="local-shop-add" aria-label={`加入餐车${i.title}`} onClick={() => shop.add(i)}>加入餐车 +</button>
+          </article>)}
+          <Empty items={list}/>
+        </> : <>
+          {list.map(i => <button className="delivery-order" key={i.id} onClick={() => p.onItem(i)}>
+            <header><Utensils size={18}/><strong>{i.sender}</strong><span>{meta(i,"status","配送记录")}</span></header>
+            <section><Media item={i}/><div><strong>{i.title}</strong><p>{i.body}</p><small>{i.time}</small></div><b>¥ {meta(i,"price","—")}</b></section>
+            <footer><MapPin size={13}/>{meta(i,"address")}</footer>
+          </button>)}
+          <Empty items={list}/>
+        </>}
+    </div>
+    <Tabs tabs={["商家","订单"]} value={tab} set={t => {setTab(t);setShopPage("browse");}} icons={[<Utensils/>,<Receipt/>]}/>
+  </div>;
 }
