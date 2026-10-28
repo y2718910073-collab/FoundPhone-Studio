@@ -64,7 +64,8 @@ import {
 } from "./schema";
 import { dispatch, choose, visible, advance } from "./engine";
 import { db } from "./persistence";
-import { isKpopWork } from "./kpop/profile";
+import { isKpopWork, readKpopProfile } from "./kpop/profile";
+import { renderKpopItem } from "./kpop/language";
 import { kpopWorldStep, type KpopAction } from "./kpop/world";
 import { KpopJournal } from "./kpop/Journal";
 export function AppIcon({
@@ -909,6 +910,7 @@ function AppContent({
   const [likes, setLikes] = useState<string[]>([]);
   const shown = items
     .filter((i) => creator || visible(i, state))
+    .map((i) => !creator && isKpopWork(state.workId) ? renderKpopItem(i,readKpopProfile()?.language||"dual") : i)
     .filter((i) =>
       (i.title + i.body + i.sender).toLowerCase().includes(q.toLowerCase()),
     );
