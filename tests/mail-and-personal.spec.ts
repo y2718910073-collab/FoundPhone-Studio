@@ -18,9 +18,11 @@ test("mail app creates and saves a draft, with explicit native-mail handoff",asy
   await page.getByRole("textbox",{name:"邮件正文"}).fill("记得核对票根和账本");
   await expect(page.getByRole("link",{name:"用系统邮件应用编辑真实邮件"})).toHaveAttribute("href",/mailto:/);
   await page.getByRole("button",{name:"保存草稿"}).click();
+  await page.getByRole("button",{name:"草稿",exact:true}).first().click();
   await expect(page.getByRole("region",{name:"我的本机邮件"})).toContainText("雨夜计划");
   await page.getByRole("button",{name:"编辑邮件雨夜计划"}).click();
   await page.getByRole("button",{name:"模拟发送"}).click();
+  await page.getByRole("button",{name:"已发送",exact:true}).first().click();
   await expect(page.getByRole("region",{name:"我的本机邮件"})).toContainText("已发送（模拟）");
   await page.reload();
   await page.getByRole("button",{name:"轻触解锁"}).click();
