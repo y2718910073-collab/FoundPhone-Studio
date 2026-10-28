@@ -5,6 +5,7 @@ import type { SkinProps } from "../AppSkins";
 import { useSkinState } from "../skinState";
 import { getAiSession, requestAiReply, type CharacterReply, type ChatTurn } from "./ai";
 import { readKpopProfile, type LanguageMode } from "./profile";
+import { parseCastNames, parseExtraCouples } from "./content";
 
 export type LocalKpopMessage = {
   thread: string;
@@ -13,6 +14,7 @@ export type LocalKpopMessage = {
   zh: string;
   time: string;
   status?: string;
+  speaker?: string;
 };
 export function parseKpopMessage(raw: string): LocalKpopMessage | null {
   try {
@@ -23,7 +25,7 @@ export function parseKpopMessage(raw: string): LocalKpopMessage | null {
       !["out","in"].includes(m.direction || "") ||
       typeof m.ko !== "string" || typeof m.zh !== "string" ||
       typeof m.time !== "string") return null;
-    return { thread:m.thread, direction:m.direction!, ko:m.ko.slice(0,500), zh:m.zh.slice(0,500), time:m.time, status:m.status };
+    return { thread:m.thread, direction:m.direction!, ko:m.ko.slice(0,500), zh:m.zh.slice(0,500), time:m.time, status:m.status, speaker: typeof m.speaker==="string" ? m.speaker.slice(0,80) : undefined };
   } catch { return null; }
 }
 export function displayKpopMessage(ko: string, zh: string, mode: LanguageMode): string {
@@ -116,20 +118,30 @@ export function useKpopChat(p: SkinProps) {
     title:thread,
     body:displayKpopMessage(entry.ko,entry.zh,mode),
     time:entry.time,
-    sender:entry.direction==="out"?(p.owner||"我"):thread,
+    sender:entry.direction==="out"?(p.owner||"我"):(entry.speaker||thread),
     outgoing:entry.direction==="out",
     meta:{ko:entry.ko,zh:entry.zh,kpopStatus:entry.status||"",local:"true"},
   }));
   const cancel = () => controller.current?.abort();
+  const speakerForThread = (conversation: string, n: number): string => {
+    if (conversation.includes("宿舍小群")) {
+      const roster=parseCastNames(profile?.dormMembers||"朴雅凛、李玟娥");
+      return roster[n%Math.max(roster.length,1)] || "朴雅凛";
+    }
+    const couple=parseExtraCouples(profile?.extraCouples||"").find(pair=>conversation.includes(pair[0])&&conversation.includes(pair[1]));
+    if(couple)return couple[n%2];
+    return conversation;
+  };
   useEffect(() => () => controller.current?.abort(), []);
   const send = async (draft:string) => {
     const body=draft.trim().slice(0,300);
     if (!body||!thread||pending) return;
     setError("");
     const stamp=new Date().toISOString().slice(0,16).replace("T"," ");
-    const outgoing: LocalKpopMessage={thread,direction:"out",ko:body,zh:body,time:stamp};
+    const outgoing: LocalKpopMessage={thread,direction:"out",ko:body,zh:body,time:stamp,status:"未读"};
     const next=[...raw,JSON.stringify(outgoing)].slice(-500);
     setRaw(next);
+    p.onKpopAction?.("impersonate",thread);
     setPending(true);
     const config=getAiSession();
     const ac=new AbortController();
@@ -148,12 +160,12 @@ export function useKpopChat(p: SkinProps) {
           role:x.direction==="out"?"user":"assistant",
           content:x.ko,
         })),{role:"user",content:body}];
-        answer=await requestAiReply(config,thread,messages,profile,"",ac.signal);
+        answer=await requestAiReply(config,thread,messages,profile,"这次发言人："+speakerForThread(thread,forThread.length)+"。团体聊天只能让这位发言人回复。",ac.signal);
       } else answer=offlineKpopReply(thread,body,forThread.length,profile?.crush||"柳时恩");
       const duration=config?900:Math.min(2200,1200+answer.ko.length*35);
       await new Promise<void>(resolve=>setTimeout(resolve,duration));
       if (ac.signal.aborted) return;
-      const incoming:LocalKpopMessage={thread,direction:"in",ko:answer.ko,zh:answer.zh,time:new Date().toISOString().slice(0,16).replace("T"," ")};
+      const incoming:LocalKpopMessage={thread,direction:"in",ko:answer.ko,zh:answer.zh,time:new Date().toISOString().slice(0,16).replace("T"," "),speaker:speakerForThread(thread,forThread.length)};
       setRaw([...next,JSON.stringify(incoming)].slice(-500));
     } catch(cause) {
       if(!ac.signal.aborted) setError(cause instanceof Error?cause.message:"回复失败。");
