@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import "./chat.css";
 import { makeItem, type Item } from "../schema";
 import type { SkinProps } from "../AppSkins";
 import { useSkinState } from "../skinState";
