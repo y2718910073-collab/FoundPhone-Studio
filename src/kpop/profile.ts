@@ -14,6 +14,18 @@ export type KpopProfile = {
   phone: string;
   friends: string;
   extraCouples: string;
+  ownerPosition: string;
+  debutYear: string;
+  publicImage: string;
+  crushRelation: string;
+  publicImpression: string;
+  closeFriends: string;
+  dormMembers: string;
+  crossFriends: string;
+  familyName: string;
+  managerName: string;
+  previousCareer: string;
+  guests: string;
 };
 export const defaultKpopProfile: KpopProfile = {
   fan: "路人粉",
@@ -29,6 +41,18 @@ export const defaultKpopProfile: KpopProfile = {
   phone: "iPhone 16 · 48% 电量 · 未上锁",
   friends: "朴雅凛（同团练习伙伴）、金智秀（经纪人）、妈妈",
   extraCouples: "",
+  ownerPosition: "主唱 / 主要编舞",
+  debutYear: "2022",
+  publicImage: "台上认真克制，私下话少、作息忙，工作时用敬语",
+  crushRelation: "跨团同期",
+  publicImpression: "公开活动时互相客气打招呼",
+  closeFriends: "朴雅凛",
+  dormMembers: "朴雅凛、李玟娥",
+  crossFriends: "",
+  familyName: "엄마",
+  managerName: "金智秀 실장님",
+  previousCareer: "",
+  guests: "",
 };
 const key = "foundphone-kpop-profile-v1";
 function safeText(value: unknown, length: number, fallback: string) {
@@ -50,6 +74,18 @@ export function normalizeKpopProfile(raw: unknown): KpopProfile {
     phone: safeText(x.phone, 100, defaultKpopProfile.phone),
     friends: safeText(x.friends, 400, defaultKpopProfile.friends),
     extraCouples: typeof x.extraCouples === "string" ? x.extraCouples.slice(0, 350) : "",
+    ownerPosition: safeText(x.ownerPosition,350,defaultKpopProfile.ownerPosition),
+    debutYear: safeText(x.debutYear,350,defaultKpopProfile.debutYear),
+    publicImage: safeText(x.publicImage,350,defaultKpopProfile.publicImage),
+    crushRelation: safeText(x.crushRelation,350,defaultKpopProfile.crushRelation),
+    publicImpression: safeText(x.publicImpression,350,defaultKpopProfile.publicImpression),
+    closeFriends: safeText(x.closeFriends,350,defaultKpopProfile.closeFriends),
+    dormMembers: safeText(x.dormMembers,350,defaultKpopProfile.dormMembers),
+    crossFriends: typeof x.crossFriends === "string" ? x.crossFriends.slice(0,350) : "",
+    familyName: safeText(x.familyName,350,defaultKpopProfile.familyName),
+    managerName: safeText(x.managerName,350,defaultKpopProfile.managerName),
+    previousCareer: typeof x.previousCareer === "string" ? x.previousCareer.slice(0,350) : "",
+    guests: typeof x.guests === "string" ? x.guests.slice(0,350) : "",
   };
 }
 export function saveKpopProfile(profile: KpopProfile) {

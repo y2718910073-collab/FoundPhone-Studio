@@ -4,7 +4,9 @@ import { makeItem, type Item } from "../schema";
 import type { SkinProps } from "../AppSkins";
 import { useSkinState } from "../skinState";
 import { getAiSession, requestAiReply, type CharacterReply, type ChatTurn } from "./ai";
+import { requestPuterReply } from "./puter";
 import { readKpopProfile, type LanguageMode } from "./profile";
+import { parseCastNames, parseExtraCouples } from "./content";
 
 export type LocalKpopMessage = {
   thread: string;
@@ -13,6 +15,7 @@ export type LocalKpopMessage = {
   zh: string;
   time: string;
   status?: string;
+  speaker?: string;
 };
 export function parseKpopMessage(raw: string): LocalKpopMessage | null {
   try {
@@ -23,13 +26,21 @@ export function parseKpopMessage(raw: string): LocalKpopMessage | null {
       !["out","in"].includes(m.direction || "") ||
       typeof m.ko !== "string" || typeof m.zh !== "string" ||
       typeof m.time !== "string") return null;
-    return { thread:m.thread, direction:m.direction!, ko:m.ko.slice(0,500), zh:m.zh.slice(0,500), time:m.time, status:m.status };
+    return { thread:m.thread, direction:m.direction!, ko:m.ko.slice(0,500), zh:m.zh.slice(0,500), time:m.time, status:m.status, speaker: typeof m.speaker==="string" ? m.speaker.slice(0,80) : undefined };
   } catch { return null; }
 }
 export function displayKpopMessage(ko: string, zh: string, mode: LanguageMode): string {
   if (mode === "ko") return ko;
   if (mode === "zh") return zh;
   return ko === zh ? ko : ko + "\n" + zh;
+}
+export function styleMismatch(thread:string, message:string, managerName:string, crushName:string):boolean {
+  const manager=thread===managerName||/실장|经纪|매니저/.test(thread);
+  if(manager)return /(^|\s)(야|뭐해|너|반말|ㅋㅋㅋ|꺼져)(\s|$)|给我滚|你个|搞快点/.test(message);
+  if(thread===crushName||/雅凛|宿舍|小群|跨团同期群/.test(thread)){
+    return /안녕하십니까|귀하께서|존경하는|삼가 인사|谨此致函|尊敬的|贵司|敬启者/.test(message);
+  }
+  return false;
 }
 function offlineKpopReply(thread: string, text: string, count: number, crush: string): CharacterReply {
   const norm = text.toLowerCase();
@@ -116,20 +127,31 @@ export function useKpopChat(p: SkinProps) {
     title:thread,
     body:displayKpopMessage(entry.ko,entry.zh,mode),
     time:entry.time,
-    sender:entry.direction==="out"?(p.owner||"我"):thread,
+    sender:entry.direction==="out"?(p.owner||"我"):(entry.speaker||thread),
     outgoing:entry.direction==="out",
     meta:{ko:entry.ko,zh:entry.zh,kpopStatus:entry.status||"",local:"true"},
   }));
   const cancel = () => controller.current?.abort();
+  const speakerForThread = (conversation: string, n: number): string => {
+    if (conversation.includes("宿舍小群")) {
+      const roster=parseCastNames(profile?.dormMembers||"朴雅凛、李玟娥");
+      return roster[n%Math.max(roster.length,1)] || "朴雅凛";
+    }
+    const couple=parseExtraCouples(profile?.extraCouples||"").find(pair=>conversation.includes(pair[0])&&conversation.includes(pair[1]));
+    if(couple)return couple[n%2];
+    return conversation;
+  };
   useEffect(() => () => controller.current?.abort(), []);
   const send = async (draft:string) => {
     const body=draft.trim().slice(0,300);
     if (!body||!thread||pending) return;
     setError("");
     const stamp=new Date().toISOString().slice(0,16).replace("T"," ");
-    const outgoing: LocalKpopMessage={thread,direction:"out",ko:body,zh:body,time:stamp};
+    const unusual=styleMismatch(thread,body,profile?.managerName||"金智秀 실장님",profile?.crush||"柳时恩");
+    const outgoing: LocalKpopMessage={thread,direction:"out",ko:body,zh:body,time:stamp,status:"未读"};
     const next=[...raw,JSON.stringify(outgoing)].slice(-500);
     setRaw(next);
+    p.onKpopAction?.("impersonate",unusual?thread+"::style-anomaly":thread);
     setPending(true);
     const config=getAiSession();
     const ac=new AbortController();
@@ -148,18 +170,53 @@ export function useKpopChat(p: SkinProps) {
           role:x.direction==="out"?"user":"assistant",
           content:x.ko,
         })),{role:"user",content:body}];
-        answer=await requestAiReply(config,thread,messages,profile,"",ac.signal);
-      } else answer=offlineKpopReply(thread,body,forThread.length,profile?.crush||"柳时恩");
+        const persona="这次发言人："+speakerForThread(thread,forThread.length)+"。团体聊天只能让这位发言人回复。"+(unusual?"玩家此条消息的说话习惯与机主以往语气不一致，请适度表现疑问，不能直接断言被盗号。":"");
+        answer=config.provider==="puter"
+          ? await requestPuterReply(thread,messages,profile,persona,config.model,ac.signal)
+          : await requestAiReply(config,thread,messages,profile,persona,ac.signal);
+      } else answer=unusual
+        ? (thread===profile?.managerName
+          ? {ko:"말씀하신 내용이 평소와 조금 다른데, 확인이 필요하신가요?",zh:"您的说法和平时有些不同，需要我再确认一下吗？"}
+          : {ko:"잠깐, 너 오늘 왜 그렇게 딱딱하게 말해? ㅋㅋ 무슨 일 있어?",zh:"等一下，你今天说话怎么这么正式ㅋㅋ发生什么了？"})
+        : offlineKpopReply(thread,body,forThread.length,profile?.crush||"柳时恩");
+      const updated=next.map(raw=>{
+        const m=parseKpopMessage(raw);
+        return m?.thread===thread && m.direction==="out" && m.status==="未读"
+          ? JSON.stringify({...m,status:"已读"}) : raw;
+      });
+      setRaw(updated);
+      // A character occasionally starts typing, then decides not to answer.
+      // This is not proof of romantic interest or intentional avoidance.
+      const silent=!config && forThread.length>0 && forThread.length%13===0;
+      if (silent) {
+        setTyping(false);
+        setError("对方已读，暂时没有回复。");
+        return;
+      }
       const duration=config?900:Math.min(2200,1200+answer.ko.length*35);
       await new Promise<void>(resolve=>setTimeout(resolve,duration));
       if (ac.signal.aborted) return;
-      const incoming:LocalKpopMessage={thread,direction:"in",ko:answer.ko,zh:answer.zh,time:new Date().toISOString().slice(0,16).replace("T"," ")};
-      setRaw([...next,JSON.stringify(incoming)].slice(-500));
+      const incoming:LocalKpopMessage={thread,direction:"in",ko:answer.ko,zh:answer.zh,time:new Date().toISOString().slice(0,16).replace("T"," "),speaker:speakerForThread(thread,forThread.length)};
+      setRaw([...updated,JSON.stringify(incoming)].slice(-500));
     } catch(cause) {
       if(!ac.signal.aborted) setError(cause instanceof Error?cause.message:"回复失败。");
     } finally {
       if(!ac.signal.aborted){setTyping(false);setPending(false);}
     }
   };
-  return {local,mode,pending,typing,error,send,cancel,isAi:!!getAiSession(),observation:kpopObservation(thread,p.kpopTurns||1,profile?.crush||"柳时恩",profile?.fan||"路人粉")};
+  const retract=(id:string)=>{
+    const prefix="kpop-chat-"+thread+"-";
+    if(!id.startsWith(prefix))return;
+    const at=Number(id.slice(prefix.length));
+    if(!Number.isSafeInteger(at)||at<0)return;
+    let n=-1;
+    setRaw(raw.map(entry=>{
+      const message=parseKpopMessage(entry);
+      if(message?.thread!==thread)return entry;
+      n++;
+      if(n!==at||message.direction!=="out")return entry;
+      return JSON.stringify({...message,ko:"삭제된 메시지입니다.",zh:"已删除的消息",status:"已撤回"});
+    }));
+  };
+  return {local,mode,pending,typing,error,send,cancel,retract,isAi:!!getAiSession(),observation:kpopObservation(thread,p.kpopTurns||1,profile?.crush||"柳时恩",profile?.fan||"路人粉")};
 }

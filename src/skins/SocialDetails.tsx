@@ -22,6 +22,7 @@ import { useSkinState } from "../skinState";
 import { RichText } from "../RichText";
 import { Avatar, Media, meta } from "./shared";
 import type { Item, UiValue } from "../schema";
+import type { KpopAction } from "../kpop/world";
 import "./social-details.css";
 export const socialDetailApps = new Set(["twitter", "weibo"]);
 const count = (n: number) =>
@@ -33,6 +34,7 @@ export function SocialDetail(p: {
   owner: string;
   ui?: Record<string, UiValue>;
   onUi?: (key: string, value: UiValue) => void;
+  onKpopAction?: (kind: KpopAction, target: string) => void;
 }) {
   const { item } = p,
     weibo = p.app === "weibo";
@@ -63,6 +65,7 @@ export function SocialDetail(p: {
   const submit = () => {
     if (!draft.trim()) return;
     setExtra([...extra, (p.owner || "机主") + "：" + draft.trim()]);
+    p.onKpopAction?.("public-comment",item.id);
     setDraft("");
     setTarget("");
     setTab("评论");

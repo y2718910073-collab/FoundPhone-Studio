@@ -7,7 +7,7 @@ import { MAX_BACKUP_BYTES, parseBackup, serializeBackup } from "./saveBackup";
 import { FrameRateMonitor } from "./FrameRateMonitor";
 import { KpopSetup } from "../kpop/Setup";
 import { createKpopWork } from "../kpop/content";
-import type { KpopProfile } from "../kpop/profile";
+import { readKpopProfile, type KpopProfile } from "../kpop/profile";
 import "../styles.css";
 import "./player.css";
 
@@ -38,7 +38,16 @@ function StoryPlayer() {
         const w = validateWork(x);
         document.title =
           w.title === "捡手机" ? "捡手机" : w.title + " · 捡手机";
-        if (isKpop) { setKpopBase(w); } else { setWork(w); }
+        if (isKpop) {
+          setKpopBase(w);
+          if (new URLSearchParams(location.search).get("new") !== "1") {
+            const savedProfile = readKpopProfile();
+            if (savedProfile) {
+              setWork(createKpopWork(w,savedProfile));
+              setInitialized(true);
+            }
+          }
+        } else setWork(w);
       })
       .catch((e) => {
         if (e.name !== "AbortError") setError(String(e));
@@ -119,6 +128,11 @@ function StoryPlayer() {
               <summary>存档</summary>
               <div className="runtime-save-panel">
                 <p><a href={isKpop ? "./" : "./?mode=kpop"}>{isKpop ? "返回雨夜捡手机" : "体验韩娱平行世界新模式"}</a></p>
+                {isKpop&&<button type="button" onClick={async()=>{
+                  if(!work||!window.confirm("重新开始会删除当前韩娱角色的本地游玩进度。确定吗？"))return;
+                  await db.saves.delete(work.id);
+                  location.href="./?mode=kpop&new=1";
+                }}>重新开始韩娱模式与角色设定</button>}
                 <strong>本机游玩进度</strong>
                 <p>可以导出备份，或在另一台设备导入同版本故事的存档。</p>
                 <button type="button" disabled={busy} onClick={() => void exportBackup()}>
