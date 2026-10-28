@@ -10,6 +10,7 @@ export default defineConfig({
     "shop-and-records.spec.ts",
     "saved-chat.spec.ts",
     "social-authoring.spec.ts",
+    "mail-and-personal.spec.ts",
     "save-backup.spec.ts",
     "release.spec.ts",
     "launcher.spec.ts",
