@@ -1,4 +1,5 @@
 import { makeItem, type Item, type Runtime, type Work } from "../schema";
+import { kpopLiveEntries } from "./liveFeed";
 
 export const RISK_LEVELS = [
   "尚无公开猜测",
@@ -47,8 +48,16 @@ export function traceFor(item: Item): string {
   }
   return "";
 }
-function targetItem(work: Work, target: string): Item | undefined {
-  return Object.values(work.data).flat().find(i=>i.id===target);
+function targetItem(work: Work, messages: Runtime["messages"], target: string): Item | undefined {
+  for(const items of Object.values(work.data)){
+    const item=items.find(i=>i.id===target);
+    if(item)return item;
+  }
+  for(const items of Object.values(messages)){
+    const item=items.find(i=>i.id===target);
+    if(item)return item;
+  }
+  return undefined;
 }
 function newItem(
   app: string, turn: number, offset: number, date: string, sender: string,
@@ -62,20 +71,6 @@ function newItem(
     meta:{ko,zh,fiction:"true",sync:"true"},
   });
 }
-const syncScenes = [
-  {app:"kakao",thread:"朴雅凛",sender:"朴雅凛",ko:"언니 숙소 냉장고에 두부 있어? 나 지금 마트야.",zh:"姐，宿舍冰箱还有豆腐吗？我正在超市。"},
-  {app:"instagram",thread:"限时快拍更新",sender:"机主",ko:"오늘도 늦은 퇴근. 커피는 여기까지 ☕",zh:"今天又晚下班了。咖啡喝到这里为止 ☕"},
-  {app:"notes",thread:"随手备忘",sender:"机主",ko:"내일 리허설 시간 다시 확인하기.",zh:"明天再确认一次彩排时间。"},
-  {app:"kakao",thread:"金智秀 실장님",sender:"金智秀 실장님",ko:"내일 집합 시간은 05:30으로 변경됐습니다.",zh:"明日集合时间改为05:30。"},
-  {app:"twitter",thread:"回归舞台讨论",sender:"舞台观众",ko:"오늘 무대 표정 연기 진짜 좋았다.",zh:"今天舞台的表情管理真不错。"},
-  {app:"calendar",thread:"更新的行程",sender:"机主",ko:"라디오 리허설은 18:20부터.",zh:"电台彩排从18:20开始。"},
-  {app:"kakao",thread:"엄마",sender:"엄마",ko:"밥은 먹었니? 너무 늦게 자지 마.",zh:"吃饭了吗？别睡太晚。"},
-  {app:"instagram",thread:"练习室夜景",sender:"朴雅凛",ko:"오늘 연습 끝! 발이 아파 ㅠㅠ",zh:"今天练习结束！脚好酸ㅠㅠ"},
-  {app:"files",thread:"新版录制安排",sender:"机主",ko:"스태프 출입구 및 차량 동선 확인.",zh:"确认工作人员入口和车辆动线。"},
-  {app:"kakao",thread:"柳时恩",sender:"柳时恩",ko:"오늘 하늘 예쁘더라. 늦게 퇴근하지?",zh:"今天的天很好看。你又要很晚才结束吧？"},
-  {app:"phone",thread:"未接来电",sender:"金智秀 실장님",ko:"통화 기록 · 응답 없음",zh:"通话记录 · 未接听"},
-  {app:"kakao",thread:"朴雅凛",sender:"朴雅凛",ko:"우리 내일 점심은 꼭 같이 먹자ㅋㅋ",zh:"我们明天中午一定要一起吃饭ㅋㅋ"},
-];
 const audience: [string,string,string][]=[
   ["CP粉","两个人又用了类似的歌单？我先存图，不敢下结论。","这个剪辑我愿意再看三遍ㅋㅋ"],
   ["唯粉","别拿一个巧合说事。请尊重演员／艺人个人边界。","本人从没公开承认，别替他们说话。"],
@@ -118,21 +113,8 @@ function growMessages(current:Record<string,Item[]>, work:Work, turn:number, sta
     const fresh=records.filter(x=>!seen.has(x.id));
     out[app]=[...old,...fresh].slice(-750);
   };
-  if(turn>=16){
-    // Initial delta is small; subsequent updates are incremental. Never regenerate archives.
-    const scenes=firstSync?[syncScenes[0],syncScenes[1],syncScenes[2],syncScenes[3]]:[syncScenes[(turn-16)%syncScenes.length]];
-    scenes.forEach((scene,index)=>{
-      const names:Record<string,string>={
-        "机主":work.phone.owner,
-        "柳时恩":String(work.variables["kpop-crush"]||"柳时恩"),
-        "朴雅凛":String(work.variables["kpop-friend"]||"朴雅凛"),
-        "金智秀 실장님":String(work.variables["kpop-manager"]||"金智秀 실장님"),
-        "엄마":String(work.variables["kpop-family"]||"엄마"),
-      };
-      const sender=names[scene.sender]||scene.sender;
-      const title=names[scene.thread]||scene.thread;
-      push(scene.app,[newItem(scene.app,turn,index,work.phone.date||"2026-10-28",sender,title,scene.ko,scene.zh,"新同步")]);
-    });
+  for(const [app,entries] of Object.entries(kpopLiveEntries(work,turn,firstSync))) {
+    push(app,entries);
   }
   if(turn>16 && turn%5===0){
     const groups=[...new Set((work.data.kakao||[]).map(x=>x.title).filter(x=>x.startsWith("跨团同期群 · ")))];
@@ -170,7 +152,7 @@ export function kpopWorldStep(work:Work, current:Runtime,kind:KpopAction,target:
       s.notifications.push("KakaoTalk · 对方可能注意到了说话习惯的变化（虚构）");
   }
   if(isRead&&isNewRead){
-    const it=targetItem(work,target);
+    const it=targetItem(work,s.messages,target);
     const clue=it && traceFor(it);
     if(clue&&!s.clues.includes(clue))s.clues.push(clue);
   }
@@ -189,7 +171,7 @@ export function kpopWorldStep(work:Work, current:Runtime,kind:KpopAction,target:
   const firstSync=turn>15 && v["kpop-sync"]!==true;
   if(firstSync){
     v["kpop-sync"]=true;
-    s.notifications.push("云同步 · 新手机的记录开始在旧设备更新（剧情设定）");
+    s.notifications.push("三天后 · 新手机开始同步，旧设备收到新消息和快拍（虚构设定）");
   }
   if(turn>15 && (firstSync || pageEvent && turn%2===0)){
     const stage=Number(v["kpop-risk"]||0);
