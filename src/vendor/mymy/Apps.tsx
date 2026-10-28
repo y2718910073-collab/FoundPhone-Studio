@@ -599,6 +599,7 @@ export function MymyInstagram(p: SkinProps) {
                 e.preventDefault();
                 if (draft.trim()) {
                   setReplies([...replies, sheet.id + "\t" + draft.trim()]);
+                  if (p.kpopMode) p.onKpopAction?.("public-comment",sheet.id);
                   setDraft("");
                 }
               }}
