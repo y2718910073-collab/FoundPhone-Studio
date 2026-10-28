@@ -471,7 +471,7 @@ function PhoneRuntime({
                   onAdd={() => onAdd?.(app)}
                   onBack={() => setApp("")}
                   onSettings={onSettings}
-                  getUi={(key) => runtimeRef.current.ui?.[app.id]?.[key]}
+                  getUi={(key) => runtimeRef.current.ui?.[app]?.[key]}
                   onUi={(key, value) => {
                     const current = runtimeRef.current;
                     update(
