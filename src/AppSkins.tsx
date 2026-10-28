@@ -40,6 +40,8 @@ export type SkinProps = {
   appId?: string;
   owner?: string;
   virtualTime?: string;
+  kpopMode?: boolean;
+  kpopSync?: boolean;
   name: string;
   items: Item[];
   creator: boolean;
