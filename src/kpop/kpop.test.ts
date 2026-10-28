@@ -51,6 +51,6 @@ describe("fictional K-pop phone", () => {
     expect(characterGuide("金智秀 실장님").includes("敬语")).toBe(true);
     expect(characterGuide("柳时恩").includes("半语")).toBe(true);
     expect(parseAiResponse('{"ko":"네","zh":"是"}')).toEqual({ko:"네",zh:"是"});
-    expect(parseAiResponse('Not JSON')).toThrow;
+    expect(() => parseAiResponse('Not JSON')).toThrow();
   });
 });
