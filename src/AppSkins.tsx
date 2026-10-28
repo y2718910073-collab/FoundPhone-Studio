@@ -3,6 +3,7 @@ import { buildChatExchange, decodeChatEntry } from "./fictionChat";
 import { useSkinState } from "./skinState";
 import { CommentsSheet } from "./skins/CommentsSheet";
 import { useState } from "react";
+import type { KpopAction } from "./kpop/world";
 import {
   ChevronLeft,
   Plus,
@@ -43,6 +44,8 @@ export type SkinProps = {
   kpopMode?: boolean;
   kpopSync?: boolean;
   kpopTurns?: number;
+  kpopRisk?: number;
+  onKpopAction?: (action: KpopAction, target: string) => void;
   name: string;
   items: Item[];
   creator: boolean;
