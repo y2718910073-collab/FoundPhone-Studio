@@ -9,6 +9,7 @@ export function setAiSession(config: AiSessionConfig | null) {
   aiSession = config ? { ...config } : null;
   if(config?.provider==="puter")localStorage.setItem("foundphone-kpop-ai-choice","puter");
   else localStorage.removeItem("foundphone-kpop-ai-choice");
+  if(typeof window!=="undefined")window.dispatchEvent(new Event("foundphone:kpop-ai-changed"));
 }
 export function getAiSession() {
   if(aiSession)return aiSession;
