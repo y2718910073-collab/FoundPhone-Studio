@@ -64,7 +64,8 @@ import {
 } from "./schema";
 import { dispatch, choose, visible, advance } from "./engine";
 import { db } from "./persistence";
-import { isKpopWork } from "./kpop/profile";
+import { isKpopWork, readKpopProfile } from "./kpop/profile";
+import { renderKpopItem } from "./kpop/language";
 import { kpopWorldStep, type KpopAction } from "./kpop/world";
 import { KpopJournal } from "./kpop/Journal";
 export function AppIcon({
@@ -470,6 +471,7 @@ function PhoneRuntime({
                   onAdd={() => onAdd?.(app)}
                   onBack={() => setApp("")}
                   onSettings={onSettings}
+                  getUi={(key) => runtimeRef.current.ui?.[app]?.[key]}
                   onUi={(key, value) => {
                     const current = runtimeRef.current;
                     update(
@@ -882,6 +884,7 @@ function AppContent({
   onBack,
   onSettings,
   onUi,
+  getUi,
   work,
 }: {
   app: AppPlugin;
@@ -897,6 +900,7 @@ function AppContent({
   onBack: () => void;
   onSettings?: () => void;
   onUi?: (key: string, value: UiValue) => void;
+  getUi?: (key: string) => UiValue | undefined;
   work: Work;
 }) {
   const [detail, setDetail] = useState<Item | null>(null);
@@ -909,6 +913,7 @@ function AppContent({
   const [likes, setLikes] = useState<string[]>([]);
   const shown = items
     .filter((i) => creator || visible(i, state))
+    .map((i) => !creator && isKpopWork(state.workId) ? renderKpopItem(i,readKpopProfile()?.language||"dual") : i)
     .filter((i) =>
       (i.title + i.body + i.sender).toLowerCase().includes(q.toLowerCase()),
     );
@@ -1005,6 +1010,7 @@ function AppContent({
           <Suspense fallback={<div className="catalog-loading">正在打开…</div>}>
             <Skin
               appId={app.id}
+              workId={state.workId}
               owner={work.phone.owner}
               virtualTime={state.time}
               kpopMode={isKpopWork(state.workId)}
@@ -1013,6 +1019,7 @@ function AppContent({
               kpopRisk={Number(state.variables["kpop-risk"] || 0)}
               onKpopAction={onKpopAction}
               ui={state.ui?.[app.id]}
+              getUi={getUi}
               onUi={creator ? undefined : onUi}
               name={name}
               items={shown}

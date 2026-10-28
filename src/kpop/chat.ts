@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./chat.css";
 import { makeItem, type Item } from "../schema";
 import type { SkinProps } from "../AppSkins";
@@ -16,6 +16,7 @@ export type LocalKpopMessage = {
   time: string;
   status?: string;
   speaker?: string;
+  id?: string;
 };
 export function parseKpopMessage(raw: string): LocalKpopMessage | null {
   try {
@@ -26,7 +27,7 @@ export function parseKpopMessage(raw: string): LocalKpopMessage | null {
       !["out","in"].includes(m.direction || "") ||
       typeof m.ko !== "string" || typeof m.zh !== "string" ||
       typeof m.time !== "string") return null;
-    return { thread:m.thread, direction:m.direction!, ko:m.ko.slice(0,500), zh:m.zh.slice(0,500), time:m.time, status:m.status, speaker: typeof m.speaker==="string" ? m.speaker.slice(0,80) : undefined };
+    return { thread:m.thread, direction:m.direction!, ko:m.ko.slice(0,500), zh:m.zh.slice(0,500), time:m.time, status:m.status, speaker: typeof m.speaker==="string" ? m.speaker.slice(0,80) : undefined, id: typeof m.id==="string" ? m.id.slice(0,80) : undefined };
   } catch { return null; }
 }
 export function displayKpopMessage(ko: string, zh: string, mode: LanguageMode): string {
@@ -111,19 +112,45 @@ export function kpopObservation(thread:string, turn:number, ownerCrush:string, f
   return curious ? scenes[index] + "（你下意识记下了这条时间线。）" : scenes[index];
 }
 
+/** A shared session-owned queue keeps a response alive when the player navigates
+ * away from the chat. The original story save is always read immediately before
+ * any edit, so a late reply does not overwrite subsequent actions in other threads. */
+type Delivery = { stage:"waiting"|"typing"|"error"; message?:string };
+const deliveries=new Map<string,Delivery>();
+const controllers=new Map<string,AbortController>();
+const subscribers=new Set<()=>void>();
+function setDelivery(key:string,value:Delivery|null) {
+  if(value)deliveries.set(key,value);else deliveries.delete(key);
+  for(const notify of subscribers)notify();
+}
+export function hasPendingKpopReply(key:string) {
+  const state=deliveries.get(key);
+  return state?.stage==="waiting"||state?.stage==="typing";
+}
 export function useKpopChat(p: SkinProps) {
-  const [raw, setRaw] = useSkinState<string[]>(p, "kpop-conversations", []);
-  const [pending, setPending] = useState(false);
-  const [typing, setTyping] = useState(false);
-  const [error, setError] = useState("");
-  const controller = useRef<AbortController | null>(null);
-  const profile = readKpopProfile();
-  const mode = profile?.language || "dual";
-  const thread = p.thread;
-  const records = raw.map(parseKpopMessage).filter((x): x is LocalKpopMessage => !!x);
-  const forThread = records.filter(x=>x.thread===thread);
-  const local: Item[] = forThread.map((entry,index)=>makeItem({
-    id:`kpop-chat-${thread}-${index}`,
+  const [raw,setRaw] = useSkinState<string[]>(p,"kpop-conversations",[]);
+  const [revision,setRevision] = useState(0);
+  const profile=readKpopProfile();
+  const mode=profile?.language||"dual";
+  const thread=p.thread;
+  const key=(p.workId||"kpop")+"/"+(p.appId||"kakao")+"/"+thread;
+  // Hook listeners only affect the visible UI; delivery itself is not coupled to
+  // the React component's lifetime or to the currently selected conversation.
+  useEffect(()=>{
+    const listener=()=>setRevision(n=>n+1);
+    subscribers.add(listener);
+    window.addEventListener("foundphone:kpop-ai-changed",listener);
+    return ()=>{subscribers.delete(listener);window.removeEventListener("foundphone:kpop-ai-changed",listener);};
+  },[]);
+  void revision;
+  const delivery=deliveries.get(key);
+  const pending=delivery?.stage==="waiting"||delivery?.stage==="typing";
+  const typing=delivery?.stage==="typing";
+  const error=delivery?.stage==="error" ? delivery.message||"回复失败。" : "";
+  const stored=raw.map(parseKpopMessage).filter((x):x is LocalKpopMessage=>!!x);
+  const forThread=stored.filter(x=>x.thread===thread);
+  const local:Item[]=forThread.map((entry,index)=>makeItem({
+    id:"kpop-chat-"+thread+"-"+(entry.id||index),
     title:thread,
     body:displayKpopMessage(entry.ko,entry.zh,mode),
     time:entry.time,
@@ -131,92 +158,121 @@ export function useKpopChat(p: SkinProps) {
     outgoing:entry.direction==="out",
     meta:{ko:entry.ko,zh:entry.zh,kpopStatus:entry.status||"",local:"true"},
   }));
-  const cancel = () => controller.current?.abort();
-  const speakerForThread = (conversation: string, n: number): string => {
-    if (conversation.includes("宿舍小群")) {
-      const roster=parseCastNames(profile?.dormMembers||"朴雅凛、李玟娥");
-      return roster[n%Math.max(roster.length,1)] || "朴雅凛";
+  const readCurrent=():string[]=>{
+    const value=p.getUi?.("kpop-conversations");
+    return Array.isArray(value)&&value.every(x=>typeof x==="string")?value:raw;
+  };
+  const save=(next:string[])=>{
+    if(p.onUi)p.onUi("kpop-conversations",next.slice(-500));
+    else setRaw(next.slice(-500));
+  };
+  const speakerForThread=(conversation:string,n:number):string=>{
+    if(conversation.includes("宿舍小群")){
+      const names=parseCastNames(profile?.dormMembers||"朴雅凛、李玟娥");
+      return names[n%Math.max(1,names.length)]||"朴雅凛";
     }
-    const couple=parseExtraCouples(profile?.extraCouples||"").find(pair=>conversation.includes(pair[0])&&conversation.includes(pair[1]));
-    if(couple)return couple[n%2];
+    const pair=parseExtraCouples(profile?.extraCouples||"").find(x=>conversation.includes(x[0])&&conversation.includes(x[1]));
+    if(pair)return pair[n%2];
     return conversation;
   };
-  useEffect(() => () => controller.current?.abort(), []);
-  const send = async (draft:string) => {
+  const cancel=()=>controllers.get(key)?.abort();
+  const send=async (draft:string)=>{
     const body=draft.trim().slice(0,300);
-    if (!body||!thread||pending) return;
-    setError("");
+    if(!body||!thread||hasPendingKpopReply(key))return;
     const stamp=new Date().toISOString().slice(0,16).replace("T"," ");
+    const messageId=crypto.randomUUID();
     const unusual=styleMismatch(thread,body,profile?.managerName||"金智秀 실장님",profile?.crush||"柳时恩");
-    const outgoing: LocalKpopMessage={thread,direction:"out",ko:body,zh:body,time:stamp,status:"未读"};
-    const next=[...raw,JSON.stringify(outgoing)].slice(-500);
-    setRaw(next);
+    const outgoing:LocalKpopMessage={id:messageId,thread,direction:"out",ko:body,zh:body,time:stamp,status:"未读"};
+    const before=readCurrent();
+    const history=before.map(parseKpopMessage).filter((x):x is LocalKpopMessage=>!!x&&x.thread===thread);
+    save([...before,JSON.stringify(outgoing)]);
     p.onKpopAction?.("impersonate",unusual?thread+"::style-anomaly":thread);
-    setPending(true);
-    const config=getAiSession();
     const ac=new AbortController();
-    controller.current=ac;
+    controllers.set(key,ac);
+    setDelivery(key,{stage:"waiting"});
+    const config=getAiSession();
+    const watchdog=setTimeout(()=>ac.abort(),35000);
     try {
-      // Unlike the old instant keyword system, replies show a visible status.
       await new Promise<void>(resolve=>setTimeout(resolve,config?350:850));
-      setTyping(true);
+      if(ac.signal.aborted)throw new Error("等待回复已取消或超时。");
+      setDelivery(key,{stage:"typing"});
       let answer:CharacterReply;
-      if(config && profile) {
-        const old:ChatTurn[]=p.items.filter(i=>i.title===thread).slice(-34).map(i=>({
+      const otherSpeaker=speakerForThread(thread,history.length);
+      if(config&&profile){
+        const archived:ChatTurn[]=p.items.filter(i=>i.title===thread).slice(-34).map(i=>({
           role:i.outgoing?"user":"assistant",
           content:i.meta.ko||i.body,
         }));
-        const messages:ChatTurn[]=[...old,...forThread.map((x):ChatTurn=>({
-          role:x.direction==="out"?"user":"assistant",
-          content:x.ko,
-        })),{role:"user",content:body}];
-        const persona="这次发言人："+speakerForThread(thread,forThread.length)+"。团体聊天只能让这位发言人回复。"+(unusual?"玩家此条消息的说话习惯与机主以往语气不一致，请适度表现疑问，不能直接断言被盗号。":"");
+        const turns:ChatTurn[]=[
+          ...archived,
+          ...history.map(x=>({role:x.direction==="out"?"user":"assistant",content:x.ko} as ChatTurn)),
+          {role:"user",content:body},
+        ];
+        const persona="这次发言人："+otherSpeaker+"。群聊只能让这位角色回复，不能同时扮演整个群。"+
+          (unusual?"这条消息敬语或说话习惯异常，可以自然感到疑惑，但不能直接认定账户被盗。":"");
         answer=config.provider==="puter"
-          ? await requestPuterReply(thread,messages,profile,persona,config.model,ac.signal)
-          : await requestAiReply(config,thread,messages,profile,persona,ac.signal);
-      } else answer=unusual
-        ? (thread===profile?.managerName
-          ? {ko:"말씀하신 내용이 평소와 조금 다른데, 확인이 필요하신가요?",zh:"您的说法和平时有些不同，需要我再确认一下吗？"}
-          : {ko:"잠깐, 너 오늘 왜 그렇게 딱딱하게 말해? ㅋㅋ 무슨 일 있어?",zh:"等一下，你今天说话怎么这么正式ㅋㅋ发生什么了？"})
-        : offlineKpopReply(thread,body,forThread.length,profile?.crush||"柳时恩");
-      const updated=next.map(raw=>{
-        const m=parseKpopMessage(raw);
-        return m?.thread===thread && m.direction==="out" && m.status==="未读"
-          ? JSON.stringify({...m,status:"已读"}) : raw;
+          ? await requestPuterReply(thread,turns,profile,persona,config.model,ac.signal)
+          : await requestAiReply(config,thread,turns,profile,persona,ac.signal);
+      } else {
+        answer=unusual ? thread===profile?.managerName
+          ? {ko:"말씀하신 표현이 평소와 조금 다른데, 확인이 필요하실까요?",zh:"您的措辞和平常有些不同，需要我再确认一下吗？"}
+          : {ko:"잠깐, 너 오늘 왜 그렇게 딱딱하게 말해? ㅋㅋ 무슨 일 있어?",zh:"等一下，你今天说话怎么这么正式ㅋㅋ发生什么了？"}
+          : offlineKpopReply(thread,body,history.length,profile?.crush||"柳时恩");
+      }
+      if(ac.signal.aborted)throw new Error("等待回复已取消或超时。");
+      // An acknowledged message can stay unanswered. Do not reveal any unseen motive.
+      const acknowledged=readCurrent().map(entry=>{
+        const msg=parseKpopMessage(entry);
+        return msg?.id===messageId&&msg.direction==="out"&&msg.status!=="已撤回"
+          ? JSON.stringify({...msg,status:"已读"}) : entry;
       });
-      setRaw(updated);
-      // A character occasionally starts typing, then decides not to answer.
-      // This is not proof of romantic interest or intentional avoidance.
-      const silent=!config && forThread.length>0 && forThread.length%13===0;
-      if (silent) {
-        setTyping(false);
-        setError("对方已读，暂时没有回复。");
+      save(acknowledged);
+      const silent=!config && history.length>0 && history.length%13===0;
+      if(silent){
+        setDelivery(key,{stage:"error",message:"对方已读，暂时没有回复。"});
         return;
       }
-      const duration=config?900:Math.min(2200,1200+answer.ko.length*35);
-      await new Promise<void>(resolve=>setTimeout(resolve,duration));
-      if (ac.signal.aborted) return;
-      const incoming:LocalKpopMessage={thread,direction:"in",ko:answer.ko,zh:answer.zh,time:new Date().toISOString().slice(0,16).replace("T"," "),speaker:speakerForThread(thread,forThread.length)};
-      setRaw([...updated,JSON.stringify(incoming)].slice(-500));
-    } catch(cause) {
-      if(!ac.signal.aborted) setError(cause instanceof Error?cause.message:"回复失败。");
-    } finally {
-      if(!ac.signal.aborted){setTyping(false);setPending(false);}
+      await new Promise<void>(resolve=>setTimeout(resolve,config?900:Math.min(2200,1200+answer.ko.length*35)));
+      if(ac.signal.aborted)throw new Error("等待回复已取消或超时。");
+      const current=readCurrent();
+      const wasRecalled=current.some(entry=>{
+        const msg=parseKpopMessage(entry);
+        return msg?.id===messageId&&msg.status==="已撤回";
+      });
+      if(!wasRecalled){
+        const response:LocalKpopMessage={
+          id:crypto.randomUUID(),thread,direction:"in",speaker:otherSpeaker,
+          ko:answer.ko,zh:answer.zh,
+          time:new Date().toISOString().slice(0,16).replace("T"," "),
+        };
+        save([...current,JSON.stringify(response)]);
+      }
+      setDelivery(key,null);
+    }catch(reason){
+      setDelivery(key,{stage:"error",message:reason instanceof Error?reason.message:"暂时无法获得回复。"});
+    }finally{
+      clearTimeout(watchdog);
+      controllers.delete(key);
     }
   };
   const retract=(id:string)=>{
     const prefix="kpop-chat-"+thread+"-";
     if(!id.startsWith(prefix))return;
-    const at=Number(id.slice(prefix.length));
-    if(!Number.isSafeInteger(at)||at<0)return;
-    let n=-1;
-    setRaw(raw.map(entry=>{
-      const message=parseKpopMessage(entry);
-      if(message?.thread!==thread)return entry;
-      n++;
-      if(n!==at||message.direction!=="out")return entry;
-      return JSON.stringify({...message,ko:"삭제된 메시지입니다.",zh:"已删除的消息",status:"已撤回"});
-    }));
+    const token=id.slice(prefix.length);
+    let i=-1;
+    const current=readCurrent();
+    const record=current.map(entry=>{
+      const msg=parseKpopMessage(entry);
+      if(msg?.thread!==thread)return entry;
+      i++;
+      if((msg.id||String(i))!==token||msg.direction!=="out")return entry;
+      if(hasPendingKpopReply(key))cancel();
+      return JSON.stringify({...msg,ko:"삭제된 메시지입니다.",zh:"已删除的消息",status:"已撤回"});
+    });
+    save(record);
   };
-  return {local,mode,pending,typing,error,send,cancel,retract,isAi:!!getAiSession(),observation:kpopObservation(thread,p.kpopTurns||1,profile?.crush||"柳时恩",profile?.fan||"路人粉")};
+  return {
+    local,mode,pending:!!pending,typing:!!typing,error,send,cancel,retract,isAi:!!getAiSession(),
+    observation:kpopObservation(thread,p.kpopTurns||1,profile?.crush||"柳时恩",profile?.fan||"路人粉"),
+  };
 }
