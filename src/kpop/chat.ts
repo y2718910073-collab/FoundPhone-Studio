@@ -187,5 +187,19 @@ export function useKpopChat(p: SkinProps) {
       if(!ac.signal.aborted){setTyping(false);setPending(false);}
     }
   };
-  return {local,mode,pending,typing,error,send,cancel,isAi:!!getAiSession(),observation:kpopObservation(thread,p.kpopTurns||1,profile?.crush||"柳时恩",profile?.fan||"路人粉")};
+  const retract=(id:string)=>{
+    const prefix="kpop-chat-"+thread+"-";
+    if(!id.startsWith(prefix))return;
+    const at=Number(id.slice(prefix.length));
+    if(!Number.isSafeInteger(at)||at<0)return;
+    let n=-1;
+    setRaw(raw.map(entry=>{
+      const message=parseKpopMessage(entry);
+      if(message?.thread!==thread)return entry;
+      n++;
+      if(n!==at||message.direction!=="out")return entry;
+      return JSON.stringify({...message,ko:"삭제된 메시지입니다.",zh:"已删除的消息",status:"已撤回"});
+    }));
+  };
+  return {local,mode,pending,typing,error,send,cancel,retract,isAi:!!getAiSession(),observation:kpopObservation(thread,p.kpopTurns||1,profile?.crush||"柳时恩",profile?.fan||"路人粉")};
 }
