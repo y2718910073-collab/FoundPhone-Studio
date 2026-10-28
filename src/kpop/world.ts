@@ -27,8 +27,18 @@ const PUBLIC_ACTIONS = new Set<KpopAction>([
   "publish","public-comment","public-repost","screenshot-leak",
 ]);
 export const storyPhase = (turn: number) => turn <= 8 ? 1 : turn <= 15 ? 2 : 3;
-function traceFor(item: Item): string {
+export function traceFor(item: Item): string {
   if (item.meta.trace) return item.meta.trace;
+  const crossApp: Record<string,string> = {
+    "kpop-photos-0":"sky","kpop-photos-12":"sky","kpop-instagram-1":"sky",
+    "kpop-spotify-0":"song","kpop-files-5":"song",
+    "kpop-photos-6":"object","kpop-taobao-2":"object",
+    "kpop-notes-2":"concern","kpop-health-0":"concern",
+    "kpop-calendar-1":"routine","kpop-files-0":"routine",
+    "kpop-contacts-0":"nickname","kpop-phone-0":"routine",
+  };
+  if (crossApp[item.id]) return crossApp[item.id];
+  if (item.id.startsWith("kpop-extra-") && item.meta.cross==="true") return "extra";
   if (item.id.startsWith("kpop-crush-")) {
     const index=Number(item.id.split("-")[2]);
     if ([7,17].includes(index)) return "song";
