@@ -251,7 +251,7 @@ function PhoneRuntime({
     if (isKpopWork(work.id) && ["openApp","read","kpopBrowse"].includes(kind)) {
       const turns = Number(next.variables["kpop-turn"] || 0) + 1;
       const firstSync = turns >= 15 && next.variables["kpop-sync"] !== true;
-      const messages = firstSync ? syncKpopContent(work) : {};
+      const synced = syncKpopContent(work);
       update({
         ...next,
         variables: { ...next.variables, "kpop-turn": turns, "kpop-sync": firstSync || next.variables["kpop-sync"] === true },
@@ -261,7 +261,7 @@ function PhoneRuntime({
         ] : next.notifications,
         messages: firstSync ? {
           ...next.messages,
-          ...Object.fromEntries(Object.entries(messages).map(([appId, entries]) =>
+          ...Object.fromEntries(Object.entries(synced).map(([appId, entries]) =>
             [appId, [...(next.messages[appId] || []), ...entries]])),
         } : next.messages,
       });
