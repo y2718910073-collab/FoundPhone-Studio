@@ -9,6 +9,7 @@ import {
 import { useState, type ReactNode } from "react";
 import type { SkinProps } from "../AppSkins";
 import { safeMedia, type Item } from "../schema";
+import { parseLocalPosts } from "./localContent";
 export type Props = SkinProps;
 export const meta = (
   i: Pick<Item, "meta"> | undefined,
@@ -179,7 +180,7 @@ export function Add({ p, label = "添加内容" }: { p: Props; label?: string })
 export function useContent(p: Props, first: string) {
   const [tab, setTab] = useState(first),
     [q, setQ] = useState("");
-  const items = p.items.filter((i) =>
+  const items = [...parseLocalPosts(p.ui?.["local-posts"]), ...p.items].filter((i) =>
     (
       i.title +
       i.body +
