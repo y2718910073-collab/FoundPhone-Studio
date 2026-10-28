@@ -5,7 +5,8 @@ import type { SkinProps } from "../AppSkins";
 import { useSkinState } from "../skinState";
 import { getAiSession, requestAiReply, type CharacterReply, type ChatTurn } from "./ai";
 import { requestPuterReply } from "./puter";
-import { readKpopProfile, type LanguageMode } from "./profile";
+import { readKpopProfile, defaultKpopProfile, type KpopProfile, type LanguageMode } from "./profile";
+import { fictionCharacter, buildCharacterRules } from "./persona";
 import { parseCastNames, parseExtraCouples } from "./content";
 import { observationFromRead } from "./observations";
 
@@ -44,11 +45,22 @@ export function styleMismatch(thread:string, message:string, managerName:string,
   }
   return false;
 }
-function offlineKpopReply(thread: string, text: string, count: number, crush: string): CharacterReply {
+export function offlineKpopReply(thread: string, text: string, count: number, profile: KpopProfile = defaultKpopProfile, speaker = thread): CharacterReply {
   const norm = text.toLowerCase();
-  const closeness = thread === crush;
-  const isManager = /실장|经纪|智秀/.test(thread);
-  const isFriend = /雅凛/.test(thread);
+  const person = fictionCharacter(profile,thread,speaker);
+  const closeness = person.name === profile.crush;
+  const isManager = person.relationship.includes("经纪人") || person.relationship.includes("专业工作");
+  const isFriend = person.relationship.includes("亲近") || person.relationship.includes("团员");
+  const isFamily = person.relationship.includes("母亲");
+  if(isFamily) {
+    if(/饭|吃|배고|먹|음식/.test(norm)) return {ko:"밥은 꼭 챙겨 먹어. 엄마는 오늘 반찬 만들었어.",zh:"一定记得好好吃饭。妈妈今天做了几样小菜。"};
+    if(/晚安|睡|피곤|잘 자/.test(norm)) return {ko:"응, 오늘도 고생 많았지. 푹 자고 내일 연락해.",zh:"嗯，今天也辛苦了。好好睡，明天再联系。"};
+    return [
+      {ko:"엄마는 잘 지내. 너도 오늘 너무 무리하지 마.",zh:"妈妈挺好的，你今天也别太累。"},
+      {ko:"우리 동네 빵집이 새로 열었어. 다음에 같이 가자.",zh:"我们这儿新开了家面包店，下次一起去吧。"},
+      {ko:"그랬구나. 네 얘기 좀 더 해 줘. 천천히 답해도 돼.",zh:"原来如此，再跟妈妈讲讲。不用急着回复。"},
+    ][count%3];
+  }
   if (/练习|舞蹈|무대|연습|彩排|工作|录制/.test(norm)) return isManager ?
     {ko:"네. 일정표에서 확인 후 알려드리겠습니다.",zh:"好的，我确认行程表后再通知您。"} :
     closeness ? {ko:"오늘도 늦게 끝나? 끝나면 쉬어. 답장은 천천히 해도 돼.",zh:"今天也会很晚结束吗？结束就休息吧，不用急着回复。"} :
@@ -185,7 +197,7 @@ export function useKpopChat(p: SkinProps) {
           ...history.map(x=>({role:x.direction==="out"?"user":"assistant",content:x.ko} as ChatTurn)),
           {role:"user",content:body},
         ];
-        const persona="这次发言人："+otherSpeaker+"。群聊只能让这位角色回复，不能同时扮演整个群。"+
+        const persona=buildCharacterRules(profile,thread,otherSpeaker)+"\n这次发言人："+otherSpeaker+"。群聊只能让这位角色回复，不能同时扮演整个群。"+
           (unusual?"这条消息敬语或说话习惯异常，可以自然感到疑惑，但不能直接认定账户被盗。":"");
         answer=config.provider==="puter"
           ? await requestPuterReply(thread,turns,profile,persona,config.model,ac.signal)
@@ -194,7 +206,7 @@ export function useKpopChat(p: SkinProps) {
         answer=unusual ? thread===profile?.managerName
           ? {ko:"말씀하신 표현이 평소와 조금 다른데, 확인이 필요하실까요?",zh:"您的措辞和平常有些不同，需要我再确认一下吗？"}
           : {ko:"잠깐, 너 오늘 왜 그렇게 딱딱하게 말해? ㅋㅋ 무슨 일 있어?",zh:"等一下，你今天说话怎么这么正式ㅋㅋ发生什么了？"}
-          : offlineKpopReply(thread,body,history.length,profile?.crush||"柳时恩");
+          : offlineKpopReply(thread,body,history.length,profile||defaultKpopProfile,otherSpeaker);
       }
       if(ac.signal.aborted)throw new Error("等待回复已取消或超时。");
       // An acknowledged message can stay unanswered. Do not reveal any unseen motive.
