@@ -1,14 +1,20 @@
 import type { KpopProfile } from "./profile";
 import { defaultKpopProfile } from "./profile";
 
-export type AiSessionConfig = { endpoint: string; model: string; apiKey: string };
+export type AiSessionConfig = { provider?: "custom"; endpoint: string; model: string; apiKey: string } | { provider: "puter"; model: string };
 let aiSession: AiSessionConfig | null = null;
 
 /** Keys live in process memory only. Never put these in the story, logs or browser save. */
 export function setAiSession(config: AiSessionConfig | null) {
   aiSession = config ? { ...config } : null;
+  if(config?.provider==="puter")localStorage.setItem("foundphone-kpop-ai-choice","puter");
+  else localStorage.removeItem("foundphone-kpop-ai-choice");
 }
-export function getAiSession() { return aiSession; }
+export function getAiSession() {
+  if(aiSession)return aiSession;
+  try {return localStorage.getItem("foundphone-kpop-ai-choice")==="puter" ? {provider:"puter" as const,model:"gpt-5.4-nano"} : null;}
+  catch{return null;}
+}
 function validEndpoint(raw: string): string {
   const url = new URL(raw);
   const local = ["localhost", "127.0.0.1"].includes(url.hostname);
@@ -37,12 +43,15 @@ export function characterGuide(thread: string, profile: KpopProfile = defaultKpo
   return [
     "你在扮演一部虚构手机里的聊天人物。所有内容都是平行世界创作，不是任何现实艺人的私生活事实。",
     `机主：${profile.owner}；意中人：${profile.crush}；团体：${profile.group}；公司：${profile.agency}。`,
+    `机主定位：${profile.ownerPosition}；出道年份：${profile.debutYear}；形象和打字习惯：${profile.publicImage}。`,
+    `与意中人的身份关系：${profile.crushRelation}；公开印象：${profile.publicImpression}；同团人员：${profile.dormMembers}；经纪人：${profile.managerName}。`,
+    `其他圈内朋友：${profile.crossFriends||"未指定"}；前公司经历：${profile.previousCareer||"未指定"}。`,
     `当前情况：${profile.background}。角色关系的写作基调（不要对玩家宣布真相）：${profile.relationship}。`,
     `当前会话：${thread}。`,
     persona ? `该角色的既定特征：${persona.slice(0,500)}。` : "",
     temperament,
     "注意：玩家是一名捡到手机的路人，所发的消息实际上冒充了机主。可察觉口吻异常，但不能一条消息就识破或制造确定爆料。",
-    "结合会话中最近40轮的实际上下文回应最新一条话。只回复人物此刻会打出的自然短信，不要旁白，不要把任何猜测当作事实；不必每条都提CP、票根或剧情。",
+    "结合会话中最近40轮的实际上下文回应最新一条话。只回复人物此刻会打出的自然短信，不要旁白，不要把任何猜测当作事实；不必每条都提CP、票根或剧情。可以已读后暂不回复，不要固定每句秒回。",
     "要保留韩语长幼敬语／半语习惯、亲疏距离；如果玩家问到不存在的事实，不要捏造现实细节。",
     "严格输出 JSON 对象：{\"ko\":\"自然韩文聊天回复\",\"zh\":\"准确的简体中文翻译\"}。不得有Markdown代码块。每项1至3短句，总长度不超过200字。",
   ].filter(Boolean).join("\n");
@@ -65,7 +74,7 @@ export function parseAiResponse(text: string): CharacterReply {
   }
 }
 export async function requestAiReply(
-  config: AiSessionConfig,
+  config: Extract<AiSessionConfig,{endpoint:string}>,
   thread: string,
   history: ChatTurn[],
   profile: KpopProfile,
