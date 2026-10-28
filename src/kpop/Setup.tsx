@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Music2, ShieldCheck, ChevronRight, ChevronLeft } from "lucide-react";
-import { defaultKpopProfile, normalizeKpopProfile, saveKpopProfile, type KpopProfile, type LanguageMode, type FanLevel } from "./profile";
+import { defaultKpopProfile, normalizeKpopProfile, readKpopProfile, saveKpopProfile, type KpopProfile, type LanguageMode, type FanLevel } from "./profile";
 import { setAiSession } from "./ai";
 import "./setup.css";
 
 export function KpopSetup({ onStart }: { onStart: (p: KpopProfile) => void }) {
-  const [draft, setDraft] = useState<KpopProfile>(defaultKpopProfile);
+  const [draft, setDraft] = useState<KpopProfile>(()=>readKpopProfile()||defaultKpopProfile);
   const [step, setStep] = useState<"edit" | "review">("edit");
   const [endpoint, setEndpoint] = useState("");
   const [model, setModel] = useState("");
@@ -49,6 +49,18 @@ export function KpopSetup({ onStart }: { onStart: (p: KpopProfile) => void }) {
           <label>当前活动／行程节点<textarea aria-label="行程节点" rows={2} maxLength={200} value={draft.background} onChange={e=>set("background",e.target.value)}/></label>
           <label>联系人与群聊名单<textarea aria-label="联系人名单" rows={2} maxLength={400} value={draft.friends} onChange={e=>set("friends",e.target.value)}/></label>
           <label>额外 CP 线索（可留空）<input aria-label="额外CP" maxLength={350} value={draft.extraCouples} onChange={e=>set("extraCouples",e.target.value)}/></label>
+          <label>团内定位／主舞／主唱等<input aria-label="团内定位／主舞／主唱等" maxLength={350} value={draft.ownerPosition} onChange={e=>set("ownerPosition",e.target.value)}/></label>
+          <label>出道年份<input aria-label="出道年份" maxLength={350} value={draft.debutYear} onChange={e=>set("debutYear",e.target.value)}/></label>
+          <label>公众形象与真实打字习惯<textarea aria-label="公众形象与真实打字习惯" rows={2} maxLength={350} value={draft.publicImage} onChange={e=>set("publicImage",e.target.value)}/></label>
+          <label>两人身份关系<input aria-label="两人身份关系" maxLength={350} value={draft.crushRelation} onChange={e=>set("crushRelation",e.target.value)}/></label>
+          <label>公众对两人关系的印象<textarea aria-label="公众对两人关系的印象" rows={2} maxLength={350} value={draft.publicImpression} onChange={e=>set("publicImpression",e.target.value)}/></label>
+          <label>最亲密的朋友（逗号分隔）<input aria-label="最亲密的朋友（逗号分隔）" maxLength={350} value={draft.closeFriends} onChange={e=>set("closeFriends",e.target.value)}/></label>
+          <label>同团小群成员（逗号分隔）<input aria-label="同团小群成员（逗号分隔）" maxLength={350} value={draft.dormMembers} onChange={e=>set("dormMembers",e.target.value)}/></label>
+          <label>跨团／同期好友名单（可留空）<textarea aria-label="跨团／同期好友名单（可留空）" rows={2} maxLength={350} value={draft.crossFriends} onChange={e=>set("crossFriends",e.target.value)}/></label>
+          <label>家人备注名<input aria-label="家人备注名" maxLength={350} value={draft.familyName} onChange={e=>set("familyName",e.target.value)}/></label>
+          <label>经纪人备注名<input aria-label="经纪人备注名" maxLength={350} value={draft.managerName} onChange={e=>set("managerName",e.target.value)}/></label>
+          <label>前公司、练习生／选秀／前团经历<textarea aria-label="前公司、练习生／选秀／前团经历" rows={2} maxLength={350} value={draft.previousCareer} onChange={e=>set("previousCareer",e.target.value)}/></label>
+          <label>想加入的前辈／制作人／演员<textarea aria-label="想加入的前辈／制作人／演员" rows={2} maxLength={350} value={draft.guests} onChange={e=>set("guests",e.target.value)}/></label>
           <label>捡到手机的日期<input aria-label="游戏日期" type="date" value={draft.date} onChange={e=>set("date",e.target.value)}/></label>
           <label>捡到的地点<input aria-label="捡到地点" maxLength={120} value={draft.location} onChange={e=>set("location",e.target.value)}/></label>
           <label>手机机型与电量<input aria-label="手机信息" maxLength={100} value={draft.phone} onChange={e=>set("phone",e.target.value)}/></label>
@@ -57,7 +69,7 @@ export function KpopSetup({ onStart }: { onStart: (p: KpopProfile) => void }) {
       </> : <>
         <button className="kpop-back" onClick={()=>setStep("edit")}><ChevronLeft size={16}/> 修改档案</button>
         <h2>手机档案</h2>
-        <dl>{([["粉圈资历",draft.fan],["消息语言",draft.language==="dual"?"韩文＋简中":draft.language==="ko"?"仅韩文":"简中"],["机主",draft.owner],["意中人",draft.crush],["团体",draft.group],["公司",draft.agency],["活动",draft.background],["日期",draft.date],["地点",draft.location],["手机",draft.phone],["联系人",draft.friends],["额外CP",draft.extraCouples||"无"]] as string[][]).map(([k,v])=><div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+        <dl>{([["粉圈资历",draft.fan],["消息语言",draft.language==="dual"?"韩文＋简中":draft.language==="ko"?"仅韩文":"简中"],["机主",draft.owner],["意中人",draft.crush],["团体",draft.group],["公司",draft.agency],["活动",draft.background],["日期",draft.date],["地点",draft.location],["手机",draft.phone],["联系人",draft.friends],["额外CP",draft.extraCouples||"无"],["出道年份",draft.debutYear],["团内定位",draft.ownerPosition],["公众形象",draft.publicImage],["两人身份关系",draft.crushRelation],["成员名单",draft.dormMembers],["前公司经历",draft.previousCareer||"未设定"]] as string[][]).map(([k,v])=><div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
         <details className="kpop-ai-config"><summary>可选：连接真正的 AI，让人物理解任何话题</summary>
           <p>本网站是静态网页，默认仅有离线预设回应，无法凭空接入 GPT。可填入你自己管理的、支持浏览器跨域的 OpenAI 兼容聊天服务。若不填写，会明确显示「离线剧情回复」，不会伪装成自由 AI。</p>
           <label>AI 聊天服务端点<input aria-label="AI服务地址" type="url" placeholder="https://your-proxy.example/v1/chat/completions" value={endpoint} onChange={e=>setEndpoint(e.target.value)}/></label>
