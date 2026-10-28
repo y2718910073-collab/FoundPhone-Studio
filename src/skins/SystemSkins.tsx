@@ -1,6 +1,7 @@
 export { WeatherSkin, HealthSkin } from "./CalibratedSystemApps";
 import { AudioPlayer, useTrack } from "../audio";
 import { useSkinState } from "../skinState";
+import { PersonalRecordsPanel } from "./PersonalRecords";
 import {
   Calendar,
   Camera,
@@ -155,6 +156,7 @@ export function ContactsSkin(p: Props) {
     <div className="catalog-skin native-contacts">
       <Header p={p} />
       <div className="catalog-scroll">
+        <PersonalRecordsPanel p={p} kind="contacts" query={q} />
         <h1>通讯录</h1>
         <SearchBox value={q} set={setQ} />
         <button
@@ -382,6 +384,7 @@ export function NotesSkin(p: Props) {
     <div className="catalog-skin native-notes">
       <Header p={p} />
       <div className="catalog-scroll">
+        <PersonalRecordsPanel p={p} kind="notes" query={q} />
         <button className="notes-back" onClick={() => setFolder(null)}>
           <Folder size={17} />
           文件夹
@@ -636,6 +639,7 @@ export function RemindersSkin(p: Props) {
     <div className="catalog-skin native-reminders">
       <Header p={p} />
       <div className="catalog-scroll">
+        <PersonalRecordsPanel p={p} kind="reminders" query={q} />
         <SearchBox value={q} set={setQ} />
         <div className="reminder-categories">
           {["全部", "已完成"].map((t) => (
