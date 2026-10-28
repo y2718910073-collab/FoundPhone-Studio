@@ -262,6 +262,6 @@ export function useKpopChat(p: SkinProps) {
   };
   return {
     local,mode,pending:!!pending,typing:!!typing,error,send,cancel,retract,isAi:!!getAiSession(),
-    observation:observationFromRead(thread,p.kpopTurns||1,profile?.crush||"柳时恩",profile?.fan||"路人粉",p.items),
+    observation:observationFromRead(thread,p.kpopTurns||1,profile?.crush||"柳时恩",profile?.fan||"路人粉",p.items,p.kpopReadIds),
   };
 }
