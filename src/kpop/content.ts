@@ -5,6 +5,7 @@ import { dormScenes } from "./dormScenes";
 import { familyScenes } from "./familyScenes";
 import { extraScenesOne } from "./extraScenes";
 import { extraScenesTwo } from "./extraScenesTwo";
+import { localizeKpopRecords } from "./language";
 
 function dateOffset(date: string, days: number) {
   const value = new Date(date + "T12:00:00Z");
@@ -240,6 +241,8 @@ export function createKpopWork(original: Work, profile: KpopProfile): Work {
   d.qq=records("qq",[["海外活动筹备群","行程表以经纪人最新邮件为准。"]],name,stamp);
   d.discord=records("discord",[["游戏小队","等录制结束再上线打两局。","general"]],name,stamp);
   d.whatsapp=records("whatsapp",[["海外巡演协调","Please check the travel time before rehearsal."]],name,stamp);
+  // Private notes, calendar, files and phone records obey the selected language.
+  localizeKpopRecords(d,profile.language);
   // App Store and native utilities retain built-in working UI.
   return validateWork(w);
 }
