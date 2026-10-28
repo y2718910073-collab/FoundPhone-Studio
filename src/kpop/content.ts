@@ -3,6 +3,7 @@ import type { KpopProfile } from "./profile";
 import { privateScenes, friendScenes, managerScenes, sceneMessages } from "./scenes";
 import { dormScenes } from "./dormScenes";
 import { familyScenes } from "./familyScenes";
+import { roommateScenes } from "./roommateScenes";
 import { extraScenesOne } from "./extraScenes";
 import { extraScenesTwo } from "./extraScenesTwo";
 import { localizeKpopRecords } from "./language";
@@ -68,6 +69,7 @@ export function createKpopWork(original: Work, profile: KpopProfile): Work {
     ...timeline(manager,name,managerScenes,stamp,{name:manager,code:"manager"},"工作"),
   ];
   d.kakao.push(...timeline(family,name,familyScenes,stamp,{name:family,code:"family"},"家人"));
+  if(mate!==friend) d.kakao.push(...timeline(mate,name,roommateScenes,stamp,{name:mate,code:"mate"},"宿舍"));
   dormScenes.forEach((scene,sceneIndex)=>{
     const lines=sceneMessages(scene);
     const date=dateOffset(stamp,-4+Math.floor(sceneIndex/6));
