@@ -2,6 +2,7 @@ export { WeatherSkin, HealthSkin } from "./CalibratedSystemApps";
 import { AudioPlayer, useTrack } from "../audio";
 import { useSkinState } from "../skinState";
 import { PersonalRecordsPanel } from "./PersonalRecords";
+import { LocalMailPanel } from "./LocalMail";
 import {
   Calendar,
   Camera,
@@ -526,6 +527,7 @@ export function MailSkin(p: Props) {
         ))}
       </div>
       <div className="catalog-scroll">
+        <LocalMailPanel p={p} tab={tab} query={q}/>
         <h1>{tab}</h1>
         <SearchBox value={q} set={setQ} />
         {list.map((i) => (
