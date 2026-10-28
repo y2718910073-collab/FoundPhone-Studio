@@ -85,7 +85,7 @@ export function kpopLiveEntries(work:Work,turn:number,firstSync=false):Record<st
   if(turn<16)return {};
   const out:Record<string,Item[]>={};
   // First arrival presents a plausible cluster, subsequent rounds 1 authored update every second turn.
-  const indices=firstSync?[0,1,2,3]:turn%2===0?[3+Math.floor((turn-17)/2)]:[];
+  const indices=firstSync?[0,1,2,3]:turn%2===0?[4+Math.floor((turn-18)/2)]:[];
   for(const [order,index] of indices.entries()){
     const scene=AFTER_LOST_SCENES[index];
     if(!scene)continue; // Never recycle identical texts simply to simulate infinity.
