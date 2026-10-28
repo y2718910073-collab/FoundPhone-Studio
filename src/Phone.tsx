@@ -471,6 +471,7 @@ function PhoneRuntime({
                   onAdd={() => onAdd?.(app)}
                   onBack={() => setApp("")}
                   onSettings={onSettings}
+                  getUi={(key) => runtimeRef.current.ui?.[app.id]?.[key]}
                   onUi={(key, value) => {
                     const current = runtimeRef.current;
                     update(
@@ -883,6 +884,7 @@ function AppContent({
   onBack,
   onSettings,
   onUi,
+  getUi,
   work,
 }: {
   app: AppPlugin;
@@ -898,6 +900,7 @@ function AppContent({
   onBack: () => void;
   onSettings?: () => void;
   onUi?: (key: string, value: UiValue) => void;
+  getUi?: (key: string) => UiValue | undefined;
   work: Work;
 }) {
   const [detail, setDetail] = useState<Item | null>(null);
@@ -1016,7 +1019,7 @@ function AppContent({
               kpopRisk={Number(state.variables["kpop-risk"] || 0)}
               onKpopAction={onKpopAction}
               ui={state.ui?.[app.id]}
-              getUi={(key:string)=>state.ui?.[app.id]?.[key]}
+              getUi={getUi}
               onUi={creator ? undefined : onUi}
               name={name}
               items={shown}
