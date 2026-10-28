@@ -64,6 +64,8 @@ import {
 } from "./schema";
 import { dispatch, choose, visible, advance } from "./engine";
 import { db } from "./persistence";
+import { isKpopWork } from "./kpop/profile";
+import { syncKpopContent } from "./kpop/content";
 export function AppIcon({
   id,
   name,
@@ -243,8 +245,27 @@ function PhoneRuntime({
     }, 1000);
     return () => clearInterval(interval);
   }, [creator, ready, work.id, work.updatedAt]);
-  const event = (event: string, target: string) => {
-    if (!creator) update(dispatch(work, runtimeRef.current, event, target));
+  const event = (kind: string, target: string) => {
+    if (creator) return;
+    const next = dispatch(work, runtimeRef.current, kind, target);
+    if (isKpopWork(work.id) && ["openApp","read","kpopBrowse"].includes(kind)) {
+      const turns = Number(next.variables["kpop-turn"] || 0) + 1;
+      const firstSync = turns >= 15 && next.variables["kpop-sync"] !== true;
+      const messages = firstSync ? syncKpopContent(work) : {};
+      update({
+        ...next,
+        variables: { ...next.variables, "kpop-turn": turns, "kpop-sync": firstSync || next.variables["kpop-sync"] === true },
+        notifications: firstSync ? [
+          ...next.notifications,
+          "云同步 · 新手机继续使用，旧手机收到新的 KakaoTalk 和动态（虚构剧情）",
+        ] : next.notifications,
+        messages: firstSync ? {
+          ...next.messages,
+          ...Object.fromEntries(Object.entries(messages).map(([appId, entries]) =>
+            [appId, [...(next.messages[appId] || []), ...entries]])),
+        } : next.messages,
+      });
+    } else update(next);
   };
   const captureApp = () => {
     if (!app) return;
@@ -861,6 +882,7 @@ function AppContent({
   creator,
   state,
   onRead,
+  onBrowse,
   onEdit,
   onAdd,
   onBack,
@@ -874,6 +896,7 @@ function AppContent({
   creator: boolean;
   state: Runtime;
   onRead: (id: string) => void;
+  onBrowse?: () => void;
   onEdit: (item: Item) => void;
   onAdd: () => void;
   onBack: () => void;
