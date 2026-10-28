@@ -3,6 +3,7 @@ import { BookOpen, Camera, ChevronRight, ShieldAlert, X } from "lucide-react";
 import type { Runtime } from "../schema";
 import { RISK_LEVELS, TRACE_NAMES, kpopSuggestions, storyPhase } from "./world";
 import type { KpopAction } from "./world";
+import { KpopAiSettingsPanel } from "./AiSettingsPanel";
 import "./journal.css";
 
 export function KpopJournal({runtime,openApp,onAction}:{
@@ -11,7 +12,7 @@ export function KpopJournal({runtime,openApp,onAction}:{
   onAction:(kind:KpopAction,target:string)=>void;
 }) {
   const [visible,setVisible]=useState(false);
-  const [tab,setTab]=useState<"navigate"|"clues"|"world">("navigate");
+  const [tab,setTab]=useState<"navigate"|"clues"|"world"|"ai">("navigate");
   const [confirm,setConfirm]=useState(false);
   const turns=Number(runtime.variables["kpop-turn"]||0);
   const phase=storyPhase(turns);
@@ -41,6 +42,7 @@ export function KpopJournal({runtime,openApp,onAction}:{
           <button className={tab==="navigate"?"selected":""} onClick={()=>setTab("navigate")}>你现在可以</button>
           <button className={tab==="clues"?"selected":""} onClick={()=>setTab("clues")}>已知线索</button>
           <button className={tab==="world"?"selected":""} onClick={()=>setTab("world")}>舆论与行动</button>
+          <button className={tab==="ai"?"selected":""} onClick={()=>setTab("ai")}>角色回复</button>
         </nav>
         <div className="kpop-journal-scroll">
           {tab==="navigate"&&<>
@@ -66,6 +68,7 @@ export function KpopJournal({runtime,openApp,onAction}:{
               </div>)}
             <small>已阅内容：{runtime.read.length} 条 · 浏览的 App：{runtime.visited.length} 个</small>
           </>}
+          {tab==="ai"&&<KpopAiSettingsPanel/>}
           {tab==="world"&&<>
             <p>公开讨论只来自你在手机里看得到的帖子。没有现实中的媒体爆料或真实艺人私生活信息。</p>
             <div className="kpop-risk-stage"><ShieldAlert size={20}/><div><b>外界关注：{RISK_LEVELS[risk] || RISK_LEVELS[0]}</b><small>阶段 {risk}/6，舆论不会自动跳级</small></div></div>
