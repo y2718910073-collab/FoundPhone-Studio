@@ -48,7 +48,7 @@ export function characterGuide(thread: string, profile: KpopProfile = defaultKpo
   ].filter(Boolean).join("\n");
 }
 export function parseAiResponse(text: string): CharacterReply {
-  const cleaned = text.trim().replace(/^\`\`\`(?:json)?\s*/i, "").replace(/\s*\`\`\`$/, "");
+  const cleaned = text.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
   const parse = (x: string) => {
     const obj: unknown = JSON.parse(x);
     if (!obj || typeof obj !== "object") throw new Error("AI 返回内容不是对象。");
