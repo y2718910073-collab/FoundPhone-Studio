@@ -12,7 +12,7 @@ async function enterPhone(page:Page,mode:"dual"|"ko"|"zh"="dual",puter=false){
       (window as unknown as {puter:unknown}).puter=mock;
     });
   }
-  await page.goto("/?mode=kpop&new=1");
+  await page.goto("/?mode=kpop");
   if(mode==="ko")await page.getByText("仅韩文",{exact:true}).click();
   if(mode==="zh")await page.getByText("直接以简体中文呈现",{exact:true}).click();
   await page.getByRole("button",{name:/生成手机档案/}).click();
