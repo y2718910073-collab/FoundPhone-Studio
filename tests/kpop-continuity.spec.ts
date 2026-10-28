@@ -35,10 +35,10 @@ test("Korean-only applies to private notes and calendar, not just Kakao",async (
   await enterPhone(page,"ko");
   await openApp(page,"备忘录");
   await expect(page.locator(".notes-list button").first()).toContainText("컴백 주간 체크");
-  await expect(page.locator(".catalog-row").first()).not.toContainText("复归周提醒");
-  await page.locator(".catalog-row").first().click();
+  await expect(page.locator(".notes-list button").first()).not.toContainText("复归周提醒");
+  await page.locator(".notes-list button").first().click();
   await expect(page.locator(".native-note-paper")).toContainText("사전 녹화");
-  await expect(page.locator(".detail-content")).not.toContainText("事前录制");
+  await expect(page.locator(".native-note-paper")).not.toContainText("事前录制");
 });
 test("delayed AI replies land in correct threads even after navigating between two chats",async ({page})=>{
   await enterPhone(page,"dual",true);
