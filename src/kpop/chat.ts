@@ -34,6 +34,14 @@ export function displayKpopMessage(ko: string, zh: string, mode: LanguageMode): 
   if (mode === "zh") return zh;
   return ko === zh ? ko : ko + "\n" + zh;
 }
+export function styleMismatch(thread:string, message:string, managerName:string, crushName:string):boolean {
+  const manager=thread===managerName||/실장|经纪|매니저/.test(thread);
+  if(manager)return /(^|\s)(야|뭐해|너|반말|ㅋㅋㅋ|꺼져)(\s|$)|给我滚|你个|搞快点/.test(message);
+  if(thread===crushName||/雅凛|宿舍|小群|跨团同期群/.test(thread)){
+    return /안녕하십니까|귀하께서|존경하는|삼가 인사|谨此致函|尊敬的|贵司|敬启者/.test(message);
+  }
+  return false;
+}
 function offlineKpopReply(thread: string, text: string, count: number, crush: string): CharacterReply {
   const norm = text.toLowerCase();
   const closeness = thread === crush;
@@ -139,10 +147,11 @@ export function useKpopChat(p: SkinProps) {
     if (!body||!thread||pending) return;
     setError("");
     const stamp=new Date().toISOString().slice(0,16).replace("T"," ");
+    const unusual=styleMismatch(thread,body,profile?.managerName||"金智秀 실장님",profile?.crush||"柳时恩");
     const outgoing: LocalKpopMessage={thread,direction:"out",ko:body,zh:body,time:stamp,status:"未读"};
     const next=[...raw,JSON.stringify(outgoing)].slice(-500);
     setRaw(next);
-    p.onKpopAction?.("impersonate",thread);
+    p.onKpopAction?.("impersonate",unusual?thread+"::style-anomaly":thread);
     setPending(true);
     const config=getAiSession();
     const ac=new AbortController();
@@ -161,11 +170,15 @@ export function useKpopChat(p: SkinProps) {
           role:x.direction==="out"?"user":"assistant",
           content:x.ko,
         })),{role:"user",content:body}];
-        const persona="这次发言人："+speakerForThread(thread,forThread.length)+"。团体聊天只能让这位发言人回复。";
+        const persona="这次发言人："+speakerForThread(thread,forThread.length)+"。团体聊天只能让这位发言人回复。"+(unusual?"玩家此条消息的说话习惯与机主以往语气不一致，请适度表现疑问，不能直接断言被盗号。":"");
         answer=config.provider==="puter"
           ? await requestPuterReply(thread,messages,profile,persona,config.model,ac.signal)
           : await requestAiReply(config,thread,messages,profile,persona,ac.signal);
-      } else answer=offlineKpopReply(thread,body,forThread.length,profile?.crush||"柳时恩");
+      } else answer=unusual
+        ? (thread===profile?.managerName
+          ? {ko:"말씀하신 내용이 평소와 조금 다른데, 확인이 필요하신가요?",zh:"您的说法和平时有些不同，需要我再确认一下吗？"}
+          : {ko:"잠깐, 너 오늘 왜 그렇게 딱딱하게 말해? ㅋㅋ 무슨 일 있어?",zh:"等一下，你今天说话怎么这么正式ㅋㅋ发生什么了？"})
+        : offlineKpopReply(thread,body,forThread.length,profile?.crush||"柳时恩");
       const updated=next.map(raw=>{
         const m=parseKpopMessage(raw);
         return m?.thread===thread && m.direction==="out" && m.status==="未读"
