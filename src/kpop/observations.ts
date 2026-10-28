@@ -19,8 +19,9 @@ const generic=[
   "某条消息有可能很平常，也可能在另一页找到呼应。你得自己继续翻。",
   "对方有没有回复，得看时间、行程和具体文字；不能单凭一个未读数字判断。",
 ];
-export function observationFromRead(thread:string,turn:number,crush:string,fan:string,items:Item[]):string{
-  const seen=items.filter(i=>i.title===thread&&i.read);
+export function observationFromRead(thread:string,turn:number,crush:string,fan:string,items:Item[],readIds:string[]=[]):string{
+  const readSet=new Set(readIds);
+  const seen=items.filter(i=>i.title===thread&&(readSet.has(i.id)||i.read));
   if(!seen.length) return generic[Math.max(0,turn-1)%generic.length];
   const entry=seen[seen.length-1];
   const trace=traceFor(entry);
