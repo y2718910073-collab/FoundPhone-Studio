@@ -532,7 +532,7 @@ function PhoneRuntime({
               />
             )}
           </AnimatePresence>
-          {!creator && !locked && isKpopWork(work.id) && <KpopJournal runtime={s} openApp={open} onAction={(kind,target)=>event(kind,target)}/>}
+          {!creator && !locked && isKpopWork(work.id) && <KpopJournal runtime={s} work={work} openApp={open} onAction={(kind,target)=>event(kind,target)}/>}
           {folder && (
             <div className="folder-overlay" onClick={() => setFolder("")}>
               <h2>{folder}</h2>
