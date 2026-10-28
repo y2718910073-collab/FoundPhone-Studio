@@ -162,11 +162,25 @@ export function useKpopChat(p: SkinProps) {
         })),{role:"user",content:body}];
         answer=await requestAiReply(config,thread,messages,profile,"这次发言人："+speakerForThread(thread,forThread.length)+"。团体聊天只能让这位发言人回复。",ac.signal);
       } else answer=offlineKpopReply(thread,body,forThread.length,profile?.crush||"柳时恩");
+      const updated=next.map(raw=>{
+        const m=parseKpopMessage(raw);
+        return m?.thread===thread && m.direction==="out" && m.status==="未读"
+          ? JSON.stringify({...m,status:"已读"}) : raw;
+      });
+      setRaw(updated);
+      // A character occasionally starts typing, then decides not to answer.
+      // This is not proof of romantic interest or intentional avoidance.
+      const silent=!config && forThread.length>0 && forThread.length%13===0;
+      if (silent) {
+        setTyping(false);
+        setError("对方已读，暂时没有回复。");
+        return;
+      }
       const duration=config?900:Math.min(2200,1200+answer.ko.length*35);
       await new Promise<void>(resolve=>setTimeout(resolve,duration));
       if (ac.signal.aborted) return;
       const incoming:LocalKpopMessage={thread,direction:"in",ko:answer.ko,zh:answer.zh,time:new Date().toISOString().slice(0,16).replace("T"," "),speaker:speakerForThread(thread,forThread.length)};
-      setRaw([...next,JSON.stringify(incoming)].slice(-500));
+      setRaw([...updated,JSON.stringify(incoming)].slice(-500));
     } catch(cause) {
       if(!ac.signal.aborted) setError(cause instanceof Error?cause.message:"回复失败。");
     } finally {
