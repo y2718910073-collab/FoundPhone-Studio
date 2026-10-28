@@ -1,5 +1,3 @@
-import { validateWork, type Work } from "../schema";
-
 export type LanguageMode = "dual" | "ko" | "zh";
 export type FanLevel = "路人粉" | "资深粉" | "显微镜粉" | "自定义";
 export type KpopProfile = {
@@ -62,24 +60,3 @@ export function readKpopProfile(): KpopProfile | null {
   catch { return null; }
 }
 export function isKpopWork(workId: string) { return workId.startsWith("kpop-foundphone-"); }
-function hashId(x: string) {
-  let hash = 2166136261;
-  for (let i = 0; i < x.length; i++) hash = Math.imul(hash ^ x.charCodeAt(i), 16777619);
-  return (hash >>> 0).toString(36);
-}
-export function personalizeKpopWork(template: Work, profile: KpopProfile): Work {
-  const substitutions: [string, string][] = [
-    ["尹曦雅", profile.owner], ["柳时恩", profile.crush],
-    ["HAZE", profile.group], ["LUMEN Entertainment", profile.agency],
-  ];
-  let json = JSON.stringify(template);
-  for (const [from, to] of substitutions) json = json.replaceAll(from, to.replaceAll("\\", "\\\\").replaceAll('"', '\\"'));
-  const clone: Work = JSON.parse(json);
-  clone.phone.owner = profile.owner;
-  clone.phone.date = profile.date;
-  clone.description = "虚构韩娱手机故事。所有人物关系、私信与事件均属平行世界创作，并非现实爆料。";
-  // Separate identities save to separate IndexedDB keys.
-  clone.id = "kpop-foundphone-" + hashId(JSON.stringify([profile.owner, profile.crush, profile.group, profile.agency, profile.date]));
-  clone.variables = { ...clone.variables, "kpop-fan": profile.fan, "kpop-lang": profile.language };
-  return validateWork(clone);
-}
