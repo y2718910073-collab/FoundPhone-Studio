@@ -38,6 +38,8 @@ import { makeItem, safeMedia, type Item, type UiValue } from "./schema";
 export type SkinProps = {
   ui?: Record<string, UiValue>;
   onUi?: (key: string, value: UiValue) => void;
+  getUi?: (key: string) => UiValue | undefined;
+  workId?: string;
   appId?: string;
   owner?: string;
   virtualTime?: string;
