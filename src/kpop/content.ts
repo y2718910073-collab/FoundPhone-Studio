@@ -3,6 +3,8 @@ import type { KpopProfile } from "./profile";
 import { privateScenes, friendScenes, managerScenes, sceneMessages } from "./scenes";
 import { dormScenes } from "./dormScenes";
 import { familyScenes } from "./familyScenes";
+import { extraScenesOne } from "./extraScenes";
+import { extraScenesTwo } from "./extraScenesTwo";
 
 function dateOffset(date: string, days: number) {
   const value = new Date(date + "T12:00:00Z");
@@ -33,6 +35,13 @@ function timeline(name: string, owner: string, scenes: string[], date: string, s
 function records(app: string, names: [string,string,string?][], owner: string, date: string, kind: Item["kind"]="text") {
   return names.map(([title,body,folder],i)=>item(`kpop-${app}-${i}`,title,body,date+" "+String(8+i%12).padStart(2,"0")+":"+String(i*7%60).padStart(2,"0"),owner,folder||"",{fiction:"true"},kind));
 }
+export function parseCastNames(raw:string):string[] {
+  return [...new Set(raw.split(/[、，,;；\n]/).map(x=>x.trim()).filter(Boolean))].slice(0,12);
+}
+export function parseExtraCouples(raw:string):[string,string][] {
+  return raw.split(/[;；\n]/).map(entry=>entry.split(/[×xX&／/]/).map(x=>x.trim()).filter(Boolean))
+    .filter(pair=>pair.length>=2 && pair[0]!==pair[1]).slice(0,2).map(pair=>[pair[0],pair[1]]);
+}
 export function createKpopWork(original: Work, profile: KpopProfile): Work {
   // Original player mechanics, 49 registered apps and data shape remain unchanged.
   const w: Work = structuredClone(original);
@@ -41,21 +50,26 @@ export function createKpopWork(original: Work, profile: KpopProfile): Work {
   w.description = "平行世界虚构作品。所有人物关系、私信、公司信息和行程只是游戏设定，并非有关现实艺人的报道。";
   w.phone = {...w.phone,owner:profile.owner,date:profile.date,time:"22:17",passcode:"",battery:48,theme:"dark",network:"5G"};
   w.mode = "explore";
+  const [friend = "朴雅凛", mate = "李玟娥"] = parseCastNames(profile.dormMembers);
+  const manager = profile.managerName;
+  const family = profile.familyName;
+  const pinned = new Set(["kakao","instagram","photos","notes","calendar","spotify","files","contacts","phone","settings","appstore","twitter","forum","messages"]);
+  w.apps = w.apps.map(a=>pinned.has(a.id)?{...a,installed:true,visible:true}:a);
   w.nodes = [];
-  w.variables = {"kpop-mode":true,"kpop-turn":0,"kpop-sync":false,"kpop-phase":1,"kpop-risk":0,"kpop-public-actions":0,"kpop-impersonations":0,"kpop-crush":profile.crush};
+  w.variables = {"kpop-mode":true,"kpop-turn":0,"kpop-sync":false,"kpop-phase":1,"kpop-risk":0,"kpop-public-actions":0,"kpop-impersonations":0,"kpop-crush":profile.crush,"kpop-friend":friend,"kpop-mate":mate,"kpop-manager":manager,"kpop-family":family};
   w.data = Object.fromEntries(w.apps.map(app=>[app.id,[] as Item[]]));
   const d=w.data, stamp=profile.date, name=profile.owner;
   d.kakao=[
     ...timeline(profile.crush,name,privateScenes,stamp,{name:profile.crush,code:"crush"},"私信"),
-    ...timeline("朴雅凛",name,friendScenes,stamp,{name:"朴雅凛",code:"friend"},"宿舍"),
-    ...timeline("金智秀 실장님",name,managerScenes,stamp,{name:"金智秀 실장님",code:"manager"},"工作"),
+    ...timeline(friend,name,friendScenes,stamp,{name:friend,code:"friend"},"宿舍"),
+    ...timeline(manager,name,managerScenes,stamp,{name:manager,code:"manager"},"工作"),
   ];
-  d.kakao.push(...timeline("엄마",name,familyScenes,stamp,{name:"엄마",code:"family"},"家人"));
+  d.kakao.push(...timeline(family,name,familyScenes,stamp,{name:family,code:"family"},"家人"));
   dormScenes.forEach((scene,sceneIndex)=>{
     const lines=sceneMessages(scene);
     const date=dateOffset(stamp,-4+Math.floor(sceneIndex/6));
     lines.forEach((m,n)=>{
-      const person=m.who==="o"?name:m.who==="a"?"朴雅凛":"李玟娥";
+      const person=m.who==="o"?name:m.who==="a"?friend:mate;
       const time=date+" "+String(12+(sceneIndex%6)*2).padStart(2,"0")+":"+String(4+n*3).padStart(2,"0");
       const record=item(`kpop-dorm-${sceneIndex}-${n}`,profile.group+" 宿舍小群",m.ko+"\n"+m.zh,time,person,"群聊",{
         ko:m.ko,zh:m.zh,fiction:"true",conversationId:"dorm-group",
@@ -64,8 +78,22 @@ export function createKpopWork(original: Work, profile: KpopProfile): Work {
       d.kakao.push(record);
     });
   });
+  parseExtraCouples(profile.extraCouples).forEach(([first,second],groupIndex)=>{
+    const thread="跨团同期群 · "+first+" × "+second;
+    const scenes=groupIndex===0?extraScenesOne:extraScenesTwo;
+    scenes.forEach((scene,index)=>sceneMessages(scene).forEach((line,n)=>{
+      const who=line.who==="o"?name:line.who==="a"?first:second;
+      const time=dateOffset(stamp,-4+Math.floor(index/6))+" "+String(8+(index%6)*2).padStart(2,"0")+":"+String(4+n*3).padStart(2,"0");
+      const record=item(`kpop-extra-${groupIndex}-${index}-${n}`,thread,line.ko+"\n"+line.zh,time,who,"交叉群聊",{
+        ko:line.ko,zh:line.zh,fiction:"true",cross:index===3?"true":"false",
+        conversationId:"extra-"+groupIndex,
+      });
+      record.outgoing=line.who==="o";
+      d.kakao.push(record);
+    }));
+  });
   // Personal contacts are shown as found-phone records even if no private chat exists.
-  d.contacts=records("contacts",[[profile.crush,"同业朋友 · 录制时段常静音"],["朴雅凛","团体成员 · 同住宿舍"],["金智秀 실장님","经纪人 · 行程确认"],["엄마","家人"],["李玟娥","团体成员 · 群聊"],["录音室","工作号码"],["造型师","服装与造型"],["舞蹈老师","舞台走位"]],name,stamp);
+  d.contacts=records("contacts",[[profile.crush,"同业朋友 · 录制时段常静音"],[friend,"团体成员 · 同住宿舍"],[manager,"经纪人 · 行程确认"],[family,"家人"],[mate,"团体成员 · 群聊"],["录音室","工作号码"],["造型师","服装与造型"],["舞蹈老师","舞台走位"],...parseExtraCouples(profile.extraCouples).flatMap(pair=>pair.map(x=>[x,"跨团好友 · 平行世界剧情"] as [string,string])),...parseCastNames(profile.guests).map(x=>[x,"制作及合作方 · 虚构联络"] as [string,string])],name,stamp);
   d.notes=records("notes",[
     ["复归周提醒","事前录制、彩排、采访，各时间以经纪人最终版本为准。"],
     ["试着写的歌","第二段主旋律需要留白。手机录音里还有未完成的哼唱。"],
