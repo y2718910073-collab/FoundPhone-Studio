@@ -10,6 +10,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { useState } from "react";
+import { CartPanel, OrderPanel, useLocalShop } from "./LocalShop";
 import {
   Empty,
   Header,
@@ -93,6 +94,7 @@ export function AlipaySkin(p: Props) {
 export function TaobaoSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "商品");
   const [status, setStatus] = useState("全部");
+  const shop = useLocalShop(p, "taobao");
   const list = items
     .filter((i) =>
       tab === "商品"
@@ -204,6 +206,7 @@ export function DeliverySkin(p: Props) {
                   </p>
                   <small>{i.body.split("\n")[0]}</small>
                   <strong>¥ {meta(i, "price", "—")}</strong>
+                  <span className="local-shop-add" onClick={e=>{e.stopPropagation();shop.add(i);}}>加入餐车 +</span>
                 </div>
               </button>
             ))
