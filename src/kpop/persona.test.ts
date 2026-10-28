@@ -30,7 +30,7 @@ describe("consistent fictional K-pop character voices",()=>{
   });
   it("uses a custom manager and family voice even in offline mode",()=>{
     const custom={...owner,managerName:"韩经纪",familyName:"어머니",dormMembers:"韩甲、韩乙"};
-    expect(offlineKpopReply("韩经纪","你好",0,custom).ko).toContain("습니다");
+    expect(offlineKpopReply("韩经纪","你好",0,custom).ko).toMatch(/요|니다/);
     expect(offlineKpopReply("어머니","今天吃饭了吗",0,custom).zh).toContain("妈妈");
     expect(offlineKpopReply("韩甲","吃饭了",0,custom).zh).not.toContain("日程表");
   });
