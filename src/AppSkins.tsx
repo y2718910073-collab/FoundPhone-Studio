@@ -1,6 +1,7 @@
 import { NativeComposer } from "./DeviceSystem";
 import { buildChatExchange, decodeChatEntry } from "./fictionChat";
 import { useSkinState } from "./skinState";
+import { SavedChatComposer, useSavedChat } from "./skins/SavedChat";
 import { CommentsSheet } from "./skins/CommentsSheet";
 import { useState } from "react";
 import type { KpopAction } from "./kpop/world";
@@ -207,6 +208,7 @@ export function WeChatSkin(p: SkinProps) {
     [],
   );
   const [sentMessages, setSentMessages] = useSkinState<string[]>(p, "local-chat-messages", []);
+  const kpopChat = useSavedChat(p);
   const conversations = [
     ...new Set(
       p.items
@@ -322,12 +324,12 @@ export function WeChatSkin(p: SkinProps) {
       ) : p.thread ? (
         <>
           <MessageList
-            items={[...p.items.filter((i) => i.title === p.thread), ...localChatItems(p, sentMessages, "wechat")]}
+            items={[...p.items.filter((i) => i.title === p.thread), ...(p.kpopMode ? kpopChat.local : localChatItems(p, sentMessages, "wechat"))]}
             creator={p.creator}
             onItem={p.onItem}
             onRead={p.onRead}
           />
-          {p.creator ? <Compose creator onAdd={p.onAdd} /> : <LocalChatComposer onSend={(body) => setSentMessages(buildChatExchange(p.thread, body, sentMessages))} />}
+          {p.creator ? <Compose creator onAdd={p.onAdd} /> : p.kpopMode ? <SavedChatComposer p={p} /> : <LocalChatComposer onSend={(body) => setSentMessages(buildChatExchange(p.thread, body, sentMessages))} />}
         </>
       ) : moments ? (
         <div className="wx-moments">
@@ -552,6 +554,7 @@ export function WhatsAppSkin(p: SkinProps) {
     [query, setQuery] = useState(""),
     [filter, setFilter] = useState("全部");
   const [sentMessages, setSentMessages] = useSkinState<string[]>(p, "local-chat-messages", []);
+  const kpopChat = useSavedChat(p);
   const tabs = [
     { label: "动态", icon: Compass },
     { label: "通话", icon: Phone },
@@ -611,13 +614,13 @@ export function WhatsAppSkin(p: SkinProps) {
             <Phone size={17} />
           </div>
           <MessageList
-            items={[...p.items.filter((i) => i.title === p.thread), ...localChatItems(p, sentMessages, "whatsapp")]}
+            items={[...p.items.filter((i) => i.title === p.thread), ...(p.kpopMode ? kpopChat.local : localChatItems(p, sentMessages, "whatsapp"))]}
             creator={p.creator}
             onItem={p.onItem}
             onRead={p.onRead}
             whatsapp
           />
-          {p.creator ? <Compose creator onAdd={p.onAdd} wa /> : <LocalChatComposer onSend={(body) => setSentMessages(buildChatExchange(p.thread, body, sentMessages))} />}
+          {p.creator ? <Compose creator onAdd={p.onAdd} wa /> : p.kpopMode ? <SavedChatComposer p={p} /> : <LocalChatComposer onSend={(body) => setSentMessages(buildChatExchange(p.thread, body, sentMessages))} />}
         </>
       ) : (
         <div className="skin-scroll">
