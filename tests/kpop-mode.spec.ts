@@ -44,7 +44,8 @@ test("K-pop scene preserves source language mode and original rainy story",async
   await page.goto("/");
   await page.getByRole("button",{name:"轻触解锁"}).click();
   await page.getByRole("button",{name:"打开微信",exact:true}).click();
-  await expect(page.locator(".wx-ui")).toBeVisible();
+  await expect(page.locator(".app-screen:not([inert])")).toHaveCSS("transform","none");
+  await expect(page.locator(".wx-chat-row").first()).toBeVisible();
 });
 test("fifteen phone views enable fictional sync and newly received messages",async ({page})=>{
   await start(page);
