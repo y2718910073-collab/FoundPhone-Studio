@@ -2,6 +2,7 @@ import { describe,expect,it } from "vitest";
 import { defaultKpopProfile } from "./profile";
 import { fictionCharacter,buildCharacterRules } from "./persona";
 import { characterGuide } from "./ai";
+import { offlineKpopReply } from "./chat";
 
 describe("consistent fictional K-pop character voices",()=>{
   const owner=defaultKpopProfile;
@@ -26,6 +27,12 @@ describe("consistent fictional K-pop character voices",()=>{
     expect(fictionCharacter(custom,"跨团同期群 · 韩丁 × 韩戊","韩丁").style).toContain("谨慎");
     expect(fictionCharacter(custom,"跨团同期群 · 韩丁 × 韩戊","韩戊").style).toContain("活泼");
     expect(buildCharacterRules(custom,"韩甲")).toContain("不能知道幕后有玩家");
+  });
+  it("uses a custom manager and family voice even in offline mode",()=>{
+    const custom={...owner,managerName:"韩经纪",familyName:"어머니",dormMembers:"韩甲、韩乙"};
+    expect(offlineKpopReply("韩经纪","你好",0,custom).ko).toContain("습니다");
+    expect(offlineKpopReply("어머니","今天吃饭了吗",0,custom).zh).toContain("妈妈");
+    expect(offlineKpopReply("韩甲","吃饭了",0,custom).zh).not.toContain("日程表");
   });
   it("does not reveal the person who found the phone to a virtual contact",()=>{
     const guide=characterGuide(owner.crush,owner);
