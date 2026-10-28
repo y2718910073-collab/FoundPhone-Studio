@@ -19,6 +19,7 @@ export function SocialPostComposer({ p }: { p: Props }) {
     const post = createLocalPost(p.owner || "我", title, body, localFeedFolder(p.appId || ""));
     if (previous) post.id = previous.id;
     setRaw(JSON.stringify((editing ? posts.map(x=>x.id===editing?post:x) : [post,...posts]).slice(0,50)));
+    if (!editing && p.kpopMode) p.onKpopAction?.("publish",post.id);
     setTitle("");setBody("");setEditing("");setOpen(false);
   };
   const edit = (id: string) => {
