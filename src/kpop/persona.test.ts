@@ -30,7 +30,7 @@ describe("consistent fictional K-pop character voices",()=>{
   it("does not reveal the person who found the phone to a virtual contact",()=>{
     const guide=characterGuide(owner.crush,owner);
     expect(guide).toContain("不知道幕后玩家");
-    expect(guide).toContain("不能主动揭露");
+    expect(guide).toContain("不会主动揭露");
     expect(guide).toContain("1—3");
     expect(guide).not.toContain("玩家是一名捡到手机的路人，所发的消息实际上冒充了机主");
   });
