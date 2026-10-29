@@ -37,7 +37,7 @@ export function KpopJournal({runtime,work,openApp,onAction}:{
   const language=readKpopProfile()?.language||"dual";
   const visibleEvidence=(trace:string)=>evidence.filter(x=>x.trace===trace);
   const timeline=archive.filter(x=>(!timelineOnlyClues||!!x.trace)&&
-    (!timelineSearch.trim()||[x.app,x.item.title,x.item.sender,excerpt(x.item)].join(" ").toLowerCase().includes(timelineSearch.trim().toLowerCase())));
+    (!timelineSearch.trim()||[x.app,x.item.title,x.item.sender,renderKpopItem(x.item,language).body].join(" ").toLowerCase().includes(timelineSearch.trim().toLowerCase())));
   const displayedTimeline=timeline.slice(0,70);
   const excerpt=(i:Item)=>renderKpopItem(i,language).body.slice(0,190);
   const appNames:Record<string,string>={kakao:"KakaoTalk",instagram:"Instagram",photos:"相册",spotify:"Spotify",notes:"备忘录",files:"文件",calendar:"日历",contacts:"通讯录",twitter:"X",taobao:"购物",health:"健康"};
