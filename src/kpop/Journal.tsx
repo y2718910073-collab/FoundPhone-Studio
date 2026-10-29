@@ -29,9 +29,10 @@ export function KpopJournal({runtime,work,openApp,onAction}:{
   const suggestions=kpopSuggestions(runtime);
   const completed=getKpopEnding(runtime);
   const endingGate=kpopEndingGate(runtime);
-  const endingResult=completed ? kpopEndingStory(completed,runtime,work.phone.owner) : null;
+
   const archive=readKpopArchive(work,runtime);
   const knownTraces=verifiedReadTraces(archive);
+  const endingResult=completed ? kpopEndingStory(completed,runtime,work.phone.owner,knownTraces) : null;
   const evidence=archive.filter(x=>!!x.trace);
   const echoes=crossAppEchoes(evidence);
   const language=readKpopProfile()?.language||"dual";
