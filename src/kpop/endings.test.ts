@@ -58,6 +58,17 @@ describe("K-pop deliberate phone-return endings",()=>{
     expect(result).toContain("尹曦雅");
     expect(result).not.toContain("已经在一起");
   });
+  it("freezes observed clues at decision time even when a player reads more later",()=>{
+    const s=ready();
+    const finale=kpopWorldStep(work,s,"resolve","return",s.read);
+    const frozen=finale.ui?.["kpop-world"]?.["ending-traces"];
+    expect(frozen).toEqual(["sky","concern"]);
+    const before=kpopEndingStory("return",finale,defaultKpopProfile.owner,frozen as string[]).paragraphs.join(" ");
+    const reread={...finale,read:[...finale.read,"kpop-spotify-0"],clues:[...finale.clues,"song"]};
+    const after=kpopEndingStory("return",reread,defaultKpopProfile.owner,frozen as string[]).paragraphs.join(" ");
+    expect(after).toBe(before);
+    expect(after).not.toContain("钢琴");
+  });
   it("never narrates a cached but unread private clue as observed fact",()=>{
     const s=ready();
     s.clues=["song","sky","concern","object"];
