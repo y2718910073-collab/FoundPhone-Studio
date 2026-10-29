@@ -19,3 +19,26 @@
 .kpop-ending-confirm{background:#f6f1fa;border:1px solid #aa98bc;border-radius:10px;padding:12px}
 .kpop-ending-confirm button{background:#574367;color:#fff;border-radius:8px;padding:9px 11px;font-size:11px;margin:8px 6px 0 0}
 .kpop-ending-confirm button:last-child{background:#e3dfe9;color:#463b4c}
+
+
+/* Reader-side chronological archive: no unseen sources, no fabricated clock. */
+.kpop-cross-evidence{display:flex;flex-direction:column;gap:10px;margin-top:17px;padding-top:13px;border-top:1px solid #ddd5e8}
+.kpop-cross-evidence h3{font-size:14px;margin:0;color:#473753}
+.kpop-cross-evidence>p,.kpop-read-timeline>p{font-size:11px;line-height:1.7;color:#6d6279;margin:2px 0 5px}
+.kpop-cross-pair{display:flex;flex-direction:column;gap:6px;padding:12px;background:#f2eef8;border:1px solid #e1d8ea;border-radius:10px}
+.kpop-cross-pair strong{font-size:12px;color:#453256}
+.kpop-cross-pair small,.kpop-cross-pair span{font-size:10px;line-height:1.6;color:#70647d}
+.kpop-cross-pair button{width:100%;text-align:left;padding:8px;border-radius:7px;color:#514363;background:#fff;border:1px solid #e2dce9;font-size:10px;line-height:1.5}
+.kpop-cross-pair button:hover{background:#f9f7fd}
+.kpop-read-timeline{display:flex;flex-direction:column;gap:11px}
+.kpop-read-timeline>small{font-size:10px;color:#7c7289}
+.kpop-timeline-tools{display:flex;flex-wrap:wrap;gap:7px}
+.kpop-timeline-tools input{flex:1;min-width:145px;background:#fff;border:1px solid #d6cede;color:#292033;border-radius:8px;padding:9px;font-size:11px}
+.kpop-timeline-tools button{padding:8px 9px;border-radius:8px;background:#e9e1f2;color:#5a4770;font-size:10px}
+.kpop-timeline-records{display:flex;flex-direction:column;gap:8px}
+.kpop-timeline-record{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:12px;text-align:left;background:#fff;border:1px solid #e7e2ee;border-radius:10px;color:#30303c;overflow-wrap:anywhere}
+.kpop-timeline-record>span{font-size:10px;color:#867899}
+.kpop-timeline-record strong{font-size:12px;font-weight:650}
+.kpop-timeline-record small{font-size:10px;line-height:1.55;color:#696077;white-space:pre-wrap}
+.kpop-timeline-record em{font-size:9px;color:#715588;background:#f3edf8;padding:4px 7px;border-radius:6px;font-style:normal}
+.kpop-timeline-record:hover{border-color:#a48bb8}
