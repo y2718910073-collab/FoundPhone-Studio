@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BookOpen, Camera, ChevronRight, ShieldAlert, X } from "lucide-react";
 import type { Runtime, Work, Item } from "../schema";
-import { traceFor } from "./world";
+import { readKpopArchive, crossAppEchoes, verifiedReadTraces } from "./readerArchive";
 import { readKpopProfile } from "./profile";
 import { renderKpopItem } from "./language";
 import { RISK_LEVELS, TRACE_NAMES, kpopSuggestions, storyPhase } from "./world";
@@ -17,7 +17,9 @@ export function KpopJournal({runtime,work,openApp,onAction}:{
   onAction:(kind:KpopAction,target:string)=>void;
 }) {
   const [visible,setVisible]=useState(false);
-  const [tab,setTab]=useState<"navigate"|"clues"|"world"|"ai"|"ending">("navigate");
+  const [tab,setTab]=useState<"navigate"|"clues"|"timeline"|"world"|"ai"|"ending">("navigate");
+  const [timelineSearch,setTimelineSearch]=useState("");
+  const [timelineOnlyClues,setTimelineOnlyClues]=useState(false);
   const [pendingEnding,setPendingEnding]=useState<KpopEndingId|null>(null);
   const [confirm,setConfirm]=useState(false);
   const turns=Number(runtime.variables["kpop-turn"]||0);
@@ -28,14 +30,15 @@ export function KpopJournal({runtime,work,openApp,onAction}:{
   const completed=getKpopEnding(runtime);
   const endingGate=kpopEndingGate(runtime);
   const endingResult=completed ? kpopEndingStory(completed,runtime,work.phone.owner) : null;
-  const rawEvidence=runtime.ui?.["kpop-world"]?.["seen-evidence"];
-  const evidenceIds=Array.isArray(rawEvidence)&&rawEvidence.every(x=>typeof x==="string") ? rawEvidence:[];
-  const archive=Object.entries(work.data).flatMap(([app,items])=>items.map(i=>({app,item:i})))
-    .concat(Object.entries(runtime.messages).flatMap(([app,items])=>items.map(i=>({app,item:i}))));
-  const evidence=archive.filter(x=>evidenceIds.includes(x.item.id)&&!!traceFor(x.item))
-    .sort((a,b)=>a.item.time.localeCompare(b.item.time));
+  const archive=readKpopArchive(work,runtime);
+  const knownTraces=verifiedReadTraces(archive);
+  const evidence=archive.filter(x=>!!x.trace);
+  const echoes=crossAppEchoes(evidence);
   const language=readKpopProfile()?.language||"dual";
-  const visibleEvidence=(trace:string)=>evidence.filter(x=>traceFor(x.item)===trace);
+  const visibleEvidence=(trace:string)=>evidence.filter(x=>x.trace===trace);
+  const timeline=archive.filter(x=>(!timelineOnlyClues||!!x.trace)&&
+    (!timelineSearch.trim()||[x.app,x.item.title,x.item.sender,excerpt(x.item)].join(" ").toLowerCase().includes(timelineSearch.trim().toLowerCase())));
+  const displayedTimeline=timeline.slice(0,70);
   const excerpt=(i:Item)=>renderKpopItem(i,language).body.slice(0,190);
   const appNames:Record<string,string>={kakao:"KakaoTalk",instagram:"Instagram",photos:"相册",spotify:"Spotify",notes:"备忘录",files:"文件",calendar:"日历",contacts:"通讯录",twitter:"X",taobao:"购物",health:"健康"};
 
@@ -46,7 +49,7 @@ export function KpopJournal({runtime,work,openApp,onAction}:{
   return <>
     <button type="button" className="kpop-journal-handle" aria-label="打开线索整理" onClick={()=>setVisible(true)}>
       <BookOpen size={15}/> 线索
-      {runtime.clues.length>0&&<span>{runtime.clues.length}</span>}
+      {knownTraces.length>0&&<span>{knownTraces.length}</span>}
     </button>
     {visible&&<div className="kpop-journal-shade">
       <section className="kpop-journal" aria-label="手机线索整理" role="dialog" aria-modal="true">
@@ -61,6 +64,7 @@ export function KpopJournal({runtime,work,openApp,onAction}:{
         <nav aria-label="线索页面">
           <button className={tab==="navigate"?"selected":""} onClick={()=>setTab("navigate")}>你现在可以</button>
           <button className={tab==="clues"?"selected":""} onClick={()=>setTab("clues")}>已知线索</button>
+          <button className={tab==="timeline"?"selected":""} onClick={()=>setTab("timeline")}>已读时间线</button>
           <button className={tab==="world"?"selected":""} onClick={()=>setTab("world")}>舆论与行动</button>
           <button className={tab==="ai"?"selected":""} onClick={()=>setTab("ai")}>角色回复</button>
           <button className={tab==="ending"?"selected":""} onClick={()=>setTab("ending")}>{completed?"结局":"尾声"}</button>
@@ -81,9 +85,9 @@ export function KpopJournal({runtime,work,openApp,onAction}:{
           </>}
           {tab==="clues"&&<>
             <p>这里只整理你在手机里实际点开并读到的痕迹，不会直接宣布任何关系真相。</p>
-            {runtime.clues.filter(x=>TRACE_NAMES[x]).length===0
+            {knownTraces.filter(x=>TRACE_NAMES[x]).length===0
               ? <p className="kpop-quiet">目前还没有记录到可以互相对照的细节。去看几段聊天、照片或备忘录吧。</p>
-              :runtime.clues.filter(x=>TRACE_NAMES[x]).map(x=><div className="kpop-clue" key={x}>
+              :knownTraces.filter(x=>TRACE_NAMES[x]).map(x=><div className="kpop-clue" key={x}>
                 <b>{TRACE_NAMES[x]}</b>
                 <span>这是你记下的观察，不是实锤。已读来源 {visibleEvidence(x).length} 条。</span>
                 {visibleEvidence(x).map(({app,item})=><button type="button" className="kpop-evidence-record" key={item.id} onClick={()=>go(app)}>
@@ -92,8 +96,35 @@ export function KpopJournal({runtime,work,openApp,onAction}:{
                   <small>重新打开此 App 核对 <ChevronRight size={12}/></small>
                 </button>)}
               </div>)}
-            <small>已阅内容：{runtime.read.length} 条 · 浏览的 App：{runtime.visited.length} 个</small>
+            <small>已阅内容：{runtime.read.length} 条 · 浏览的 App：{new Set(runtime.visited).size} 个</small>
+            {echoes.length>0&&<section className="kpop-cross-evidence" aria-label="跨应用对照">
+              <h3>跨 App 呼应 · {echoes.length} 组</h3>
+              <p>以下只是你亲自看过的不同 App 记录之间的相似之处。它们可能对应同一日常习惯，也可能完全是巧合。</p>
+              {echoes.map(echo=><div className="kpop-cross-pair" key={echo.trace}>
+                <strong>{TRACE_NAMES[echo.trace]||"值得复查的细节"}</strong>
+                <small>{echo.appCount} 个 App · {echo.sources.length} 条已读记录</small>
+                {echo.sources.slice(0,4).map(({app,item})=><button type="button" key={item.id} onClick={()=>go(app)}>
+                  {appNames[app]||app} · {item.time} · {renderKpopItem(item,language).title}
+                </button>)}
+                <span>不同来源互相呼应，不代表任何私人关系得到证实。</span>
+              </div>)}
+            </section>}
           </>}
+          {tab==="timeline"&&<section className="kpop-read-timeline" aria-label="已读记录时间线">
+            <p>只列出这次游玩中真正打开或滚动看到的记录，不显示尚未阅读的私人内容。时间沿用各记录的原始时间戳，不推测时区。</p>
+            <div className="kpop-timeline-tools">
+              <input aria-label="搜索已读记录" value={timelineSearch} onChange={e=>setTimelineSearch(e.target.value)} placeholder="搜索已读标题、内容或 App"/>
+              <button type="button" aria-pressed={timelineOnlyClues} onClick={()=>setTimelineOnlyClues(v=>!v)}>{timelineOnlyClues?"仅线索 · 已选":"全部已读 · 已选"}</button>
+            </div>
+            <small>已读档案 {archive.length} 条 · 当前匹配 {timeline.length} 条{timeline.length>70?" · 显示最新 70 条":""}</small>
+            {displayedTimeline.length===0?<p className="kpop-quiet">还没有符合条件的已读记录。你可以先打开聊天、相册或备忘录。</p>:
+              <div className="kpop-timeline-records">{displayedTimeline.map(({app,item,trace})=><button type="button" className="kpop-timeline-record" key={item.id} onClick={()=>go(app)}>
+                <span>{item.time} · {appNames[app]||app}</span>
+                <strong>{renderKpopItem(item,language).title}</strong>
+                <small>{excerpt(item)}</small>
+                {trace&&<em>{TRACE_NAMES[trace]||"可核对细节"}</em>}
+              </button>)}</div>}
+          </section>}
           {tab==="ai"&&<KpopAiSettingsPanel/>}
           {tab==="ending"&&<section className="kpop-ending-section">
             {endingResult ? <>
