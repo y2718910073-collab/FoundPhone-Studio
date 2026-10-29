@@ -1,5 +1,6 @@
 import { makeItem, type Item, type Runtime, type Work } from "../schema";
 import { kpopLiveEntries } from "./liveFeed";
+import { getKpopEnding, kpopEndingGate, KPOP_ENDINGS } from "./endings";
 
 export const RISK_LEVELS = [
   "尚无公开猜测",
@@ -12,7 +13,7 @@ export const RISK_LEVELS = [
 ] as const;
 export type KpopAction =
   | "openApp" | "read" | "kpopBrowse" | "impersonate"
-  | "publish" | "public-comment" | "public-repost" | "screenshot-leak";
+  | "publish" | "public-comment" | "public-repost" | "screenshot-leak" | "resolve";
 export const TRACE_NAMES: Record<string,string> = {
   song: "歌单中反复出现的第三首钢琴曲",
   sky: "相似的雨后天空与拍摄时间",
@@ -133,6 +134,20 @@ function growMessages(current:Record<string,Item[]>, work:Work, turn:number, sta
 export function kpopWorldStep(work:Work, current:Runtime,kind:KpopAction,target:string,previousRead:string[]=[]):Runtime {
   const s:Runtime={...current,variables:{...current.variables},clues:[...current.clues],notifications:[...current.notifications]};
   const v=s.variables;
+  if(getKpopEnding(s))return s; // Archive remains readable, world time and rumors freeze.
+  if(kind==="resolve"){
+    const ending=KPOP_ENDINGS.find(x=>x.id===target);
+    if(!ending || !kpopEndingGate(s).ready)return s;
+    if(target==="leak"){
+      const oldRisk=Number(v["kpop-risk"]||0);
+      v["kpop-public-actions"]=Number(v["kpop-public-actions"]||0)+1;
+      v["kpop-risk"]=Math.min(6,oldRisk+1);
+      s.messages=growMessages(s.messages,work,Number(v["kpop-turn"]||16),Number(v["kpop-risk"]),false);
+    }
+    v["kpop-ending"]=ending.id;
+    s.notifications.push("虚构手机故事 · "+ending.title+"（已保存至本机进度）");
+    return s;
+  }
   const was=Number(v["kpop-turn"]||0);
   const isRead=kind==="read";
   const pageEvent=kind==="kpopBrowse"||kind==="openApp" && !!target && target!=="appstore"||kind==="read";
