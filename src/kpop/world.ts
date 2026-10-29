@@ -146,6 +146,13 @@ export function kpopWorldStep(work:Work, current:Runtime,kind:KpopAction,target:
       v["kpop-risk"]=Math.min(6,oldRisk+1);
       s.messages=growMessages(s.messages,work,Number(v["kpop-turn"]||16),Number(v["kpop-risk"]),false);
     }
+    // Freeze the exact set of known clues at decision time. The player may
+    // browse the archive afterwards, but new reads cannot rewrite the finale.
+    const rawSeen=s.ui?.["kpop-world"]?.["seen-evidence"];
+    const readSet=new Set(s.read);
+    const readEvidence=Array.isArray(rawSeen)?rawSeen.filter((id):id is string=>typeof id==="string"&&readSet.has(id)):[];
+    const endingTraces=[...new Set(readEvidence.map(id=>targetItem(work,s.messages,id)).filter((item):item is Item=>!!item).map(traceFor).filter(Boolean))];
+    s.ui={...s.ui,"kpop-world":{...(s.ui?.["kpop-world"]||{}),"ending-traces":endingTraces}};
     v["kpop-ending"]=ending.id;
     s.notifications.push("虚构手机故事 · "+ending.title+"（已保存至本机进度）");
     return s;
