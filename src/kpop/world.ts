@@ -11,7 +11,7 @@ export const RISK_LEVELS = [
   "经纪公司开始谨慎关注",
 ] as const;
 export type KpopAction =
-  | "openApp" | "read" | "kpopBrowse" | "impersonate"
+  | "openApp" | "read" | "kpopBrowse" | "kpopSeen" | "impersonate"
   | "publish" | "public-comment" | "public-repost" | "screenshot-leak";
 export const TRACE_NAMES: Record<string,string> = {
   song: "歌单中反复出现的第三首钢琴曲",
@@ -134,7 +134,7 @@ export function kpopWorldStep(work:Work, current:Runtime,kind:KpopAction,target:
   const s:Runtime={...current,variables:{...current.variables},clues:[...current.clues],notifications:[...current.notifications]};
   const v=s.variables;
   const was=Number(v["kpop-turn"]||0);
-  const isRead=kind==="read";
+  const isRead=kind==="read"||kind==="kpopSeen";
   const pageEvent=kind==="kpopBrowse"||kind==="openApp" && !!target && target!=="appstore"||kind==="read";
   const isNewRead=isRead&&!previousRead.includes(target);
   if(pageEvent && (!isRead||isNewRead)) v["kpop-turn"]=was+1;
