@@ -112,6 +112,21 @@ describe("K-pop reading phase, clues and natural historical archives",()=>{
     expect(last).toBe(6);
     expect(s.messages.forum?.some(x=>x.title.includes("公司"))||s.messages.kakao?.some(x=>x.id.startsWith("kpop-world"))).toBe(true);
   });
+  it("keeps public posts and new synced chats on the same three-days-later clock",()=>{
+    let s=start();
+    for(let i=0;i<16;i++)s=page(s);
+    const sync=s.messages.kakao.find(x=>x.id.startsWith("kpop-live-"));
+    expect(sync).toBeDefined();
+    s=kpopWorldStep(work,s,"screenshot-leak","player",s.read);
+    const post=s.messages.forum?.find(x=>x.id.startsWith("kpop-world-forum-"));
+    expect(post).toBeDefined();
+    const lost=Date.parse(work.phone.date+"T00:00:00Z");
+    const syncedTime=Date.parse(sync!.time.replace(" ","T")+"Z");
+    const forumTime=Date.parse(post!.time.replace(" ","T")+"Z");
+    expect(syncedTime-lost).toBeGreaterThanOrEqual(3*86400_000);
+    expect(forumTime-lost).toBeGreaterThanOrEqual(3*86400_000);
+    expect(Math.abs(forumTime-syncedTime)).toBeLessThanOrEqual(5*3600_000);
+  });
   it("passively sees real chat bubbles without counting each as another story turn",()=>{
     let s=start();
     s=page(s,"kakao");
