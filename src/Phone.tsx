@@ -250,9 +250,9 @@ function PhoneRuntime({
   const event = (kind: string, target: string) => {
     if (creator) return;
     const previous=runtimeRef.current;
-    const next=dispatch(work,previous,kind,target);
+    const next=dispatch(work,previous,kind==="kpopSeen"?"read":kind,target);
     if (isKpopWork(work.id) && (
-      kind==="openApp" || kind==="read" || kind==="kpopBrowse" ||
+      kind==="openApp" || kind==="read" || kind==="kpopSeen" || kind==="kpopBrowse" ||
       kind==="impersonate" || kind==="publish" || kind==="public-comment" ||
       kind==="public-repost" || kind==="screenshot-leak"
     )) update(kpopWorldStep(work,next,kind as KpopAction,target,previous.read));
@@ -466,6 +466,7 @@ function PhoneRuntime({
                   state={s}
                   onRead={(id) => event("read", id)}
                   onBrowse={() => event("kpopBrowse", "thread")}
+                  onKpopSeen={(id) => event("kpopSeen", id)}
                   onKpopAction={(kind,target) => event(kind,target)}
                   onEdit={(item) => onEdit?.(app, item)}
                   onAdd={() => onAdd?.(app)}
@@ -878,6 +879,7 @@ function AppContent({
   state,
   onRead,
   onBrowse,
+  onKpopSeen,
   onKpopAction,
   onEdit,
   onAdd,
@@ -894,6 +896,7 @@ function AppContent({
   state: Runtime;
   onRead: (id: string) => void;
   onBrowse?: () => void;
+  onKpopSeen?: (id: string) => void;
   onKpopAction?: (kind: KpopAction, target: string) => void;
   onEdit: (item: Item) => void;
   onAdd: () => void;
@@ -1017,6 +1020,7 @@ function AppContent({
               kpopSync={state.variables["kpop-sync"] === true}
               kpopTurns={Number(state.variables["kpop-turn"] || 0)}
               kpopReadIds={state.read}
+              onKpopSeen={onKpopSeen}
               kpopRisk={Number(state.variables["kpop-risk"] || 0)}
               onKpopAction={onKpopAction}
               ui={state.ui?.[app.id]}
