@@ -58,6 +58,17 @@ describe("K-pop deliberate phone-return endings",()=>{
     expect(result).toContain("尹曦雅");
     expect(result).not.toContain("已经在一起");
   });
+  it("never narrates a cached but unread private clue as observed fact",()=>{
+    const s=ready();
+    s.clues=["song","sky","concern","object"];
+    const withoutVerified=kpopEndingStory("return",s,"尹曦雅").paragraphs.join(" ");
+    expect(withoutVerified).not.toContain("钢琴");
+    expect(withoutVerified).not.toContain("小物件");
+    const withVerified=kpopEndingStory("return",s,"尹曦雅",["sky","concern"]).paragraphs.join(" ");
+    expect(withVerified).toContain("相似的天空");
+    expect(withVerified).not.toContain("钢琴");
+    expect(withVerified).not.toContain("小物件");
+  });
   it("remembers earlier public exposure and impersonation in a voluntary return",()=>{
     const s=ready();
     s.variables["kpop-public-actions"]=3;
