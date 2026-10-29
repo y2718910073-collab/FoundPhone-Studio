@@ -120,3 +120,14 @@ test("reading visible Kakao messages discovers content without burning through s
   await journal.getByRole("button",{name:"已知线索"}).click();
   await expect(journal).toContainText(/已阅内容：[1-9][0-9]* 条/);
 });
+
+test("K-pop finale stays locked until the reader actually explores the phone",async ({page})=>{
+  await start(page);
+  await page.getByRole("button",{name:"打开线索整理"}).click();
+  const journal=page.getByRole("dialog",{name:"手机线索整理"});
+  await journal.getByRole("button",{name:"尾声"}).click();
+  await expect(journal).toContainText("先继续探索手机");
+  await expect(journal.getByRole("button",{name:/把手机交给失物招领处/})).toBeDisabled();
+  await expect(journal.getByRole("button",{name:/只联系公开的失物招领渠道/})).toBeDisabled();
+  await expect(journal.getByRole("button",{name:/把看到的截图匿名公开/})).toBeDisabled();
+});
