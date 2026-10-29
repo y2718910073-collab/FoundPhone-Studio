@@ -32,7 +32,11 @@ export function KpopJournal({runtime,work,openApp,onAction}:{
 
   const archive=readKpopArchive(work,runtime);
   const knownTraces=verifiedReadTraces(archive);
-  const endingResult=completed ? kpopEndingStory(completed,runtime,work.phone.owner,knownTraces) : null;
+  // A finished branch keeps its decision-time evidence snapshot even if the
+  // player revisits more messages while rereading the virtual phone.
+  const endingSnapshot=runtime.ui?.["kpop-world"]?.["ending-traces"];
+  const endingTraces=completed&&Array.isArray(endingSnapshot) ? endingSnapshot.filter((v):v is string=>typeof v==="string") : knownTraces;
+  const endingResult=completed ? kpopEndingStory(completed,runtime,work.phone.owner,endingTraces) : null;
   const evidence=archive.filter(x=>!!x.trace);
   const echoes=crossAppEchoes(evidence);
   const language=readKpopProfile()?.language||"dual";
