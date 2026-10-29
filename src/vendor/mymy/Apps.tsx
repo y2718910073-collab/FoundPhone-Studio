@@ -101,6 +101,27 @@ export function MymyKakao(p: SkinProps) {
     ],
     scroll = useRef<HTMLDivElement>(null);
   const displayed=messages.slice(-historyLimit);
+  // A visible chat bubble counts as material the player actually saw, not as
+  // a separate story turn. It must never reveal off-screen history or private facts.
+  const seenOnScreen=useRef(new Set<string>());
+  const onSeenRef=useRef(p.onKpopSeen);
+  onSeenRef.current=p.onKpopSeen;
+  useEffect(()=>{
+    if(!p.kpopMode||!p.thread||!scroll.current||typeof IntersectionObserver==="undefined")return;
+    const root=scroll.current;
+    const observer=new IntersectionObserver((entries)=>{
+      for(const entry of entries){
+        if(!entry.isIntersecting||entry.intersectionRatio<0.65)continue;
+        const id=(entry.target as HTMLElement).dataset.kpopItem;
+        if(!id||seenOnScreen.current.has(id))continue;
+        seenOnScreen.current.add(id);
+        onSeenRef.current?.(id);
+        observer.unobserve(entry.target);
+      }
+    },{root,threshold:[0.65]});
+    root.querySelectorAll<HTMLElement>("[data-kpop-item]").forEach(el=>observer.observe(el));
+    return ()=>observer.disconnect();
+  },[p.kpopMode,p.thread,messages.length,historyLimit]);
   useEffect(() => {
     const node = scroll.current;
     if (node) node.scrollTop = node.scrollHeight;
@@ -125,6 +146,7 @@ export function MymyKakao(p: SkinProps) {
               return (
                 <div
                   key={m.id}
+                  data-kpop-item={p.kpopMode && m.meta.local!=="true"?m.id:undefined}
                   className={
                     "kzm " +
                     (m.outgoing ? "kzmy" : "kzot") +
