@@ -254,7 +254,7 @@ function PhoneRuntime({
     if (isKpopWork(work.id) && (
       kind==="openApp" || kind==="read" || kind==="kpopBrowse" ||
       kind==="impersonate" || kind==="publish" || kind==="public-comment" ||
-      kind==="public-repost" || kind==="screenshot-leak"
+      kind==="public-repost" || kind==="screenshot-leak" || kind==="resolve"
     )) update(kpopWorldStep(work,next,kind as KpopAction,target,previous.read));
     else update(next);
   };
