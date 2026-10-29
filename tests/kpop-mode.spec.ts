@@ -131,3 +131,31 @@ test("K-pop finale stays locked until the reader actually explores the phone",as
   await expect(journal.getByRole("button",{name:/只联系公开的失物招领渠道/})).toBeDisabled();
   await expect(journal.getByRole("button",{name:/把看到的截图匿名公开/})).toBeDisabled();
 });
+
+
+test("K-pop read timeline never reveals unopened private records and supports on-device search",async ({page})=>{
+  await start(page);
+  await page.getByRole("button",{name:"打开线索整理"}).click();
+  const journal=page.getByRole("dialog",{name:"手机线索整理"});
+  await journal.getByRole("button",{name:"已读时间线"}).click();
+  await expect(journal.getByRole("region",{name:"已读记录时间线"})).toContainText("已读档案 0 条");
+  await expect(journal.locator(".kpop-timeline-record")).toHaveCount(0);
+  await journal.getByRole("button",{name:"关闭线索整理"}).click();
+  await openKakao(page);
+  const chat=page.locator(".mymy-kakao");
+  await chat.getByRole("button",{name:/柳时恩/}).first().click();
+  await expect.poll(async()=>{
+    await page.getByRole("button",{name:"打开线索整理"}).click();
+    const count=await page.locator(".kpop-timeline-record").count();
+    await page.getByRole("button",{name:"关闭线索整理"}).click();
+    return count;
+  },{timeout:12000}).toBeGreaterThan(0);
+  await page.getByRole("button",{name:"打开线索整理"}).click();
+  const reopened=page.getByRole("dialog",{name:"手机线索整理"});
+  await reopened.getByRole("button",{name:"已读时间线"}).click();
+  await expect(reopened.locator(".kpop-timeline-record").first()).toBeVisible();
+  await reopened.getByRole("textbox",{name:"搜索已读记录"}).fill("没有这段内容的虚构专有字");
+  await expect(reopened.locator(".kpop-timeline-record")).toHaveCount(0);
+  await reopened.getByRole("textbox",{name:"搜索已读记录"}).fill("");
+  await expect(reopened.locator(".kpop-timeline-record").first()).toBeVisible();
+});
