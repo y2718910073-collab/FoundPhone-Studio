@@ -112,4 +112,19 @@ describe("K-pop reading phase, clues and natural historical archives",()=>{
     expect(last).toBe(6);
     expect(s.messages.forum?.some(x=>x.title.includes("公司"))||s.messages.kakao?.some(x=>x.id.startsWith("kpop-world"))).toBe(true);
   });
+  it("passively sees real chat bubbles without counting each as another story turn",()=>{
+    let s=start();
+    s=page(s,"kakao");
+    expect(s.variables["kpop-turn"]).toBe(1);
+    const first=work.data.kakao.find(x=>x.id==="kpop-crush-7-0")!;
+    s=kpopWorldStep(work,{...s,read:[...s.read,first.id]},"kpopSeen",first.id,s.read);
+    expect(s.variables["kpop-turn"]).toBe(1);
+    expect(s.read).toContain(first.id);
+    expect(s.clues).toContain("song");
+    const same=kpopWorldStep(work,s,"kpopSeen",first.id,s.read);
+    expect(same.variables["kpop-turn"]).toBe(1);
+    expect(same.clues.filter(x=>x==="song")).toHaveLength(1);
+    expect(same.variables["kpop-risk"]).toBe(0);
+  });
+
 });
