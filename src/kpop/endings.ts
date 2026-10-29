@@ -37,11 +37,19 @@ export function kpopEndingStory(id:KpopEndingId,runtime:Runtime,owner:string):{t
     ? runtime.clues.filter(x=>hints[x]).slice(0,3).map(x=>hints[x]):[];
   const detail=clues.length?clues.join("、"):"那些你确实翻过的日常记录";
   const preface="你曾看见"+detail+"。它们互相照应，却从没构成一份可以替别人宣布的恋爱证明。";
+  const pastExposure=Number(runtime.variables["kpop-public-actions"]||0);
+  const suspicion=Number(runtime.variables["kpop-suspicion"]||0);
+  const reputation=pastExposure>0
+    ? "此前你在虚构论坛留下的公开痕迹不会随着手机归还而消失。"
+    : "你没有把任何一条私人聊天发布到公开平台。";
+  const remembered=suspicion>0
+    ? "你曾试着以机主身份回复消息；那些不自然的停顿，也属于这个选择之前的经历。"
+    : "你没有代替机主给任何人下结论。";
   if(id==="return")return {
     title:"尾声 · 归还",
     paragraphs:[
       preface,
-      "你关上了"+owner+"的聊天窗口，把这部手机交到正规的失物招领处。你没有拍下任何一页，也没有向任何人解释你看过的故事。",
+      "你关上了"+owner+"的聊天窗口，把这部手机交到正规的失物招领处。"+reputation+remembered,
       "失物招领的登记簿翻过了一页。之后有没有人来取，手机之外的你不知道。某些故事，原本就不需要一个旁观者来替它写结局。",
     ],
   };
@@ -50,14 +58,14 @@ export function kpopEndingStory(id:KpopEndingId,runtime:Runtime,owner:string):{t
     paragraphs:[
       preface,
       "你只使用公开的官方失物招领渠道，留下发现时间和交接地点，没有提供截图，也没有念出任何私人称呼。对面简单回复：会安排人员核实。",
-      "这或许并不是最快的归还方式。可是你把可以说的事情和不属于你的秘密分开了。那两个人究竟如何相处，仍留在他们自己的生活里。",
+      "这或许并不是最快的归还方式。可是你把可以说的事情和不属于你的秘密分开了。"+reputation+"那两个人究竟如何相处，仍留在他们自己的生活里。",
     ],
   };
   return {
     title:"尾声 · 被看见的代价",
     paragraphs:[
       preface,
-      "你还是把一张私人截图放进了模拟讨论区。有人质疑截图的来源，有人忙着考据，也有人提醒别再扩散。帖子的热度开始超过它所能证明的事实。",
+      (pastExposure>1?"你又一次":"你还是") +"把一张私人截图放进了模拟讨论区。有人质疑截图的来源，有人忙着考据，也有人提醒别再扩散。帖子的热度开始超过它所能证明的事实。",
       "在这部纯虚构的手机里，消息通知越来越响；而屏幕之外，那些被议论的人没有机会告诉旁观者自己愿意被看见多少。你得到了讨论，却依然没有得到真相。",
     ],
   };
