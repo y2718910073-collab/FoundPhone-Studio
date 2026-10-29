@@ -48,6 +48,7 @@ export type SkinProps = {
   kpopSync?: boolean;
   kpopTurns?: number;
   kpopReadIds?: string[];
+  onKpopSeen?: (id: string) => void;
   kpopRisk?: number;
   onKpopAction?: (action: KpopAction, target: string) => void;
   name: string;

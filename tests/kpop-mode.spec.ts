@@ -107,3 +107,16 @@ test("K-pop saved profile restores after reload without repeating questionnaire"
   await page.getByRole("button",{name:"打开线索整理"}).click();
   await expect(page.getByRole("dialog",{name:"手机线索整理"})).toContainText("第 2 页");
 });
+
+test("reading visible Kakao messages discovers content without burning through story phases",async ({page})=>{
+  await start(page);
+  await openKakao(page);
+  const chat=page.locator(".mymy-kakao");
+  await chat.getByRole("button",{name:/柳时恩/}).first().click();
+  await expect.poll(()=>chat.locator("[data-kpop-item]").count()).toBeGreaterThan(150);
+  await page.getByRole("button",{name:"打开线索整理"}).click();
+  const journal=page.getByRole("dialog",{name:"手机线索整理"});
+  await expect(journal).toContainText("第 2 页");
+  await journal.getByRole("button",{name:"已知线索"}).click();
+  await expect(journal).toContainText(/已阅内容：[1-9][0-9]* 条/);
+});
