@@ -58,4 +58,16 @@ describe("K-pop deliberate phone-return endings",()=>{
     expect(result).toContain("尹曦雅");
     expect(result).not.toContain("已经在一起");
   });
+  it("remembers earlier public exposure and impersonation in a voluntary return",()=>{
+    const s=ready();
+    s.variables["kpop-public-actions"]=3;
+    s.variables["kpop-suspicion"]=2;
+    const text=kpopEndingStory("return",s,"尹曦雅").paragraphs.join(" ");
+    expect(text).toContain("公开痕迹不会随着手机归还而消失");
+    expect(text).toContain("机主身份回复");
+    expect(text).not.toContain("没有把任何一条私人聊天发布");
+    const leaked=kpopEndingStory("leak",s,"尹曦雅").paragraphs.join(" ");
+    expect(leaked).toContain("又一次");
+  });
+
 });
