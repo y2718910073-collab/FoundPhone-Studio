@@ -27,14 +27,15 @@ export function kpopEndingGate(runtime:Runtime):{ready:boolean;reason:string}{
     return {ready:false,reason:"至少实际点开 2 条带线索的记录。只看会话列表不算阅读证据。"};
   return {ready:true,reason:"你已看到足够多的片段。如何处理手机，由你决定。"};
 }
-export function kpopEndingStory(id:KpopEndingId,runtime:Runtime,owner:string):{title:string;paragraphs:string[]}{
+export function kpopEndingStory(id:KpopEndingId,runtime:Runtime,owner:string,confirmedTraces:readonly string[]=[]):{title:string;paragraphs:string[]}{
   const hints:Record<string,string>={
     song:"一段被反复提起的旋律",sky:"两张相似的天空",concern:"几句过分细致的关心",
     routine:"交叠的日程",object:"重复出现的小物件",nickname:"微妙变化的称呼",
     daily:"宿舍里平凡的琐事",extra:"另一些似近似远的关系",address:"重合的地点",
   };
-  const clues=observedKpopEvidence(runtime).length
-    ? runtime.clues.filter(x=>hints[x]).slice(0,3).map(x=>hints[x]):[];
+  // Only accepted, actually-read sources can enter the prose. Cached clue flags
+  // by themselves are insufficient proof that the player saw those records.
+  const clues=confirmedTraces.filter(x=>hints[x]).slice(0,3).map(x=>hints[x]);
   const detail=clues.length?clues.join("、"):"那些你确实翻过的日常记录";
   const preface="你曾看见"+detail+"。它们互相照应，却从没构成一份可以替别人宣布的恋爱证明。";
   const pastExposure=Number(runtime.variables["kpop-public-actions"]||0);
