@@ -1,5 +1,5 @@
 import { makeItem, type Item, type Runtime, type Work } from "../schema";
-import { kpopLiveEntries } from "./liveFeed";
+import { kpopLiveEntries, kpopSyncTimestamp } from "./liveFeed";
 import { getKpopEnding, kpopEndingGate, KPOP_ENDINGS } from "./endings";
 
 export const RISK_LEVELS = [
@@ -64,8 +64,10 @@ function newItem(
   app: string, turn: number, offset: number, date: string, sender: string,
   title: string, ko: string, zh: string, folder = "",
 ): Item {
+  // Post-loss sync begins three days later. Risk posts must use the same
+  // fictional clock as the newly synced chats, not the original lost-phone day.
   const ms=Date.parse(date+"T22:17:00Z")+turn*18*60_000+offset*65_000;
-  const time=new Date(ms).toISOString().slice(0,16).replace("T"," ");
+  const time=turn>=16 ? kpopSyncTimestamp(date,turn,offset) : new Date(ms).toISOString().slice(0,16).replace("T"," ");
   return makeItem({
     id:`kpop-world-${app}-${turn}-${offset}`,time,sender,title,
     body:ko+"\n"+zh,folder,kind:app==="instagram"||app==="twitter"||app==="forum"?"post":"text",
